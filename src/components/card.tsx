@@ -12,11 +12,16 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { MdArrowRightAlt, MdOpenInNew } from "react-icons/md";
 
 export default function Card({ data }: any) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = useState("blur");
-
+  const base64regex =
+    /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+  const image = base64regex.test(data.icon)
+    ? `data:image/png;base64,${data.icon}`
+    : data.icon;
   return (
     <>
       <NextCard
@@ -25,22 +30,23 @@ export default function Card({ data }: any) {
       >
         <CardHeader className="flex-col items-center rounded-xl bg-white">
           <Image
-            src={data.icon}
+            src={image}
             alt={data.name}
             width="100%"
             className="object-cover h-[140px]"
           />
         </CardHeader>
-        <CardBody className="py-4 text-default">
+        <CardBody className="py-4 text-default dark:text-white">
           <a
             href={`#${data.id}`}
-            className="font-bold"
+            className="font-bold flex items-center justify-between w-full"
             onClick={(e) => {
               e.preventDefault();
               onOpen();
             }}
           >
-            {data.name}
+            <span>{data.name}</span>
+            <MdArrowRightAlt />
           </a>
         </CardBody>
       </NextCard>
@@ -48,7 +54,7 @@ export default function Card({ data }: any) {
         backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
         isOpen={isOpen}
         onClose={onClose}
-        size="2xl"
+        size="4xl"
         placement="top"
       >
         <ModalContent>
@@ -59,20 +65,34 @@ export default function Card({ data }: any) {
                   src={data.icon}
                   alt={data.name}
                   width="100%"
-                  className="object-cover h-auto"
+                  className="object-cover h-[140px]"
                 />
               </ModalHeader>
-              <ModalBody className="flex gap-4">
+              <ModalBody className="flex gap-4 text-default dark:text-white py-8">
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <div>
-                    <a href={data.url} target="blank" className="font-bold">
-                      {data.name}
+                  <div className="flex flex-col gap-4">
+                    <a
+                      href={data.url}
+                      target="blank"
+                      className="font-bold flex items-center gap-2"
+                    >
+                      <span>{data.name}</span>
+                      <MdOpenInNew />
                     </a>
                     <p>{data.description}</p>
+                    <p>
+                      <a
+                        href={data.url}
+                        target="blank"
+                        className="font-bold flex items-center gap-2"
+                      >
+                        <span>Go to website</span> <MdOpenInNew />
+                      </a>
+                    </p>
                   </div>
-                  <div>Ads</div>
+                  {/* <div>Ads</div> */}
                 </div>
-                <div>More</div>
+                {/* <div>More</div> */}
               </ModalBody>
             </>
           )}

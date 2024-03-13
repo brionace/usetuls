@@ -11,8 +11,10 @@ export default function Categories({ params }: { params: { slug: string } }) {
   return (
     <>
       <Header />
-      <Banner content={category} />
-      <List slug={slug} />
+      <main className="max-w-7xl mx-auto">
+        <Banner content={category} />
+        <List slug={slug} />
+      </main>
     </>
   );
 }

@@ -13,10 +13,12 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="[&>*]:!mx-auto">
-        <Banner content={content} direction="text-center" />
-      </div>
-      <List />
+      <main className="max-w-7xl mx-auto">
+        <div className="[&>*]:!mx-auto">
+          <Banner content={content} direction="text-center" />
+        </div>
+        <List />
+      </main>
     </>
   );
 }
