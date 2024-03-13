@@ -1,0 +1,20 @@
+[
+  {
+    "id": "design",
+    "name": "Design",
+    "image": "designs.jpg",
+    "description": "Design is the creation of a plan or convention for the construction of an object, system or measurable human interaction. Design has different connotations in different fields. In some cases, the direct construction of an object is also considered to be design."
+  },
+  {
+    "id": "marketing",
+    "name": "Marketing",
+    "image": "marketing.jpg",
+    "description": "Marketing is the study and management of exchange relationships. Marketing is the business process of creating relationships with and satisfying customers. With its focus on the customer, marketing is one of the premier components of business management."
+  },
+  {
+    "id": "engineering",
+    "name": "Engineering",
+    "image": "engineering.jpg",
+    "description": "Engineering is the application of mathematics, science, economics, and social and practical knowledge to invent, innovate, design, build, maintain, research, and improve structures, machines, tools, systems, components, materials, processes, solutions, and organizations."
+  }
+]
