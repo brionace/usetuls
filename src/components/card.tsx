@@ -57,7 +57,7 @@ export default function Card({ data }: any) {
         isOpen={isOpen}
         onClose={onClose}
         size="4xl"
-        placement="bottom"
+        // placement="bottom"
       >
         <ModalContent>
           {(onClose) => (
