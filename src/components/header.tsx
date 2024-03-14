@@ -7,6 +7,14 @@ import { MdMoreHoriz, MdSearch, MdMenu } from "react-icons/md";
 
 export default function Header() {
   const [categoryListOpen, setCategoryListOpen] = React.useState(false);
+
+  const categoryFeatList = categories.map((category) => (
+    <li key={category.name}>
+      <Link isBlock href={`/tools/${category.id}`}>
+        {category.name}
+      </Link>
+    </li>
+  ));
   const categoryList = categories.map((category) => (
     <li key={category.name}>
       <Link isBlock href={`/tools/${category.id}`}>
@@ -14,6 +22,7 @@ export default function Header() {
       </Link>
     </li>
   ));
+
   return (
     <div className="flex flex-col sticky top-0 h-auto py-2 px-4 gap-4 align-center z-50 bg-slate-500 dark:bg-black border-b border-slate-500">
       <header className="flex w-full gap-4">
@@ -33,7 +42,9 @@ export default function Header() {
         </Button>
         <nav className="flex items-center">
           {/* <span>{`Browse${categoryList && ":"}`}</span> */}
-          {categoryList && <ul className="hidden sm:flex">{categoryList}</ul>}
+          {categoryFeatList && (
+            <ul className="hidden sm:flex">{categoryFeatList}</ul>
+          )}
           <Button
             variant="bordered"
             size="sm"

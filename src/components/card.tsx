@@ -57,7 +57,7 @@ export default function Card({ data }: any) {
         isOpen={isOpen}
         onClose={onClose}
         size="4xl"
-        placement="top"
+        placement="bottom"
       >
         <ModalContent>
           {(onClose) => (
@@ -73,24 +73,18 @@ export default function Card({ data }: any) {
               <ModalBody className="flex gap-4 text-default dark:text-white py-8">
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex flex-col gap-4">
-                    <a
-                      href={data.url}
-                      target="blank"
-                      className="font-bold flex items-center gap-2"
-                    >
-                      <span>{data.name}</span>
-                      <MdOpenInNew />
-                    </a>
-                    <p>{data.description}</p>
-                    <p>
-                      <a
+                    <div className="flex items-start justify-between gap-4">
+                      <h1 className="font-bold">{data.name}</h1>
+                      <Link
                         href={data.url}
                         target="blank"
-                        className="font-bold flex items-center gap-2"
+                        isBlock
+                        showAnchorIcon
                       >
-                        <span>Go to website</span> <MdOpenInNew />
-                      </a>
-                    </p>
+                        <span className="hidden sm:flex">Link</span>
+                      </Link>
+                    </div>
+                    <p>{data.description}</p>
                   </div>
                   {/* <div>Ads</div> */}
                 </div>
