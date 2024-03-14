@@ -37,12 +37,16 @@ export default function Header() {
         />
         <button>Go</button>
       </form> */}
-        <Button startContent={<MdSearch />} variant="light" size="sm">
-          Search
+        <Button
+          startContent={<MdSearch />}
+          variant="flat"
+          size="sm"
+          className="min-w-8"
+        >
+          <span className="hidden sm:flex">Search</span>
         </Button>
-        <nav className="flex items-center">
-          {/* <span>{`Browse${categoryList && ":"}`}</span> */}
-          {categoryFeatList && (
+        <nav className="flex items-center  whitespace-nowrap overflow-auto">
+          {/* {categoryFeatList && (
             <ul className="hidden sm:flex">{categoryFeatList}</ul>
           )}
           <Button
@@ -52,7 +56,8 @@ export default function Header() {
             onClick={() => setCategoryListOpen(!categoryListOpen)}
           >
             Categories
-          </Button>
+          </Button> */}
+          <ul className="flex gap-4 h-auto">{categoryList}</ul>
         </nav>
       </header>
       {categoryListOpen && (

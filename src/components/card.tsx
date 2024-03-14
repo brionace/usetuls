@@ -12,12 +12,13 @@ import {
   ModalFooter,
   useDisclosure,
   Link,
+  Avatar,
 } from "@nextui-org/react";
 import { MdArrowRightAlt, MdOpenInNew } from "react-icons/md";
 
 export default function Card({ data }: any) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [backdrop, setBackdrop] = useState("blur");
+  const [backdrop, setBackdrop] = useState("opaque");
   const base64regex =
     /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
   const image = base64regex.test(data.icon)
@@ -29,7 +30,7 @@ export default function Card({ data }: any) {
         className="overflow-visible px-4 bg-transparent rounded-none p-0 shadow-none"
         shadow="sm"
       >
-        <CardHeader className="flex-col items-center rounded-xl bg-slate-100">
+        <CardHeader className="flex-col items-center rounded-xl bg-default dark:bg-default">
           <Image
             src={image}
             alt={data.name}
@@ -37,7 +38,7 @@ export default function Card({ data }: any) {
             className="object-cover h-[140px]"
           />
         </CardHeader>
-        <CardBody className="font-bold flex flex-row justify-between py-4 text-default dark:text-white">
+        <CardBody className="font-bold flex flex-col sm:flex-row gap-4 sm:justify-between py-4 text-default dark:text-white">
           <Link
             href={`#${data.id}`}
             onClick={(e) => {
@@ -56,39 +57,22 @@ export default function Card({ data }: any) {
         backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
         isOpen={isOpen}
         onClose={onClose}
-        size="4xl"
-        // placement="bottom"
+        placement="top"
       >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex items-center justify-center rounded m-8 bg-slate-300">
-                <Image
-                  src={data.icon}
-                  alt={data.name}
-                  width="100%"
-                  className="object-cover h-[140px]"
-                />
+              <ModalHeader className="flex items-center justify-center rounded bg-default gap-4 dark:bg-default">
+                <div className="flex gap-4 items-center">
+                  <Avatar isBordered src={data.icon} />
+                  <h1 className="font-bold">{data.name}</h1>
+                </div>
+                <Link href={data.url} target="blank" isBlock showAnchorIcon>
+                  <span className="hidden sm:flex">Link</span>
+                </Link>
               </ModalHeader>
               <ModalBody className="flex gap-4 text-default dark:text-white py-8">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-start justify-between gap-4">
-                      <h1 className="font-bold">{data.name}</h1>
-                      <Link
-                        href={data.url}
-                        target="blank"
-                        isBlock
-                        showAnchorIcon
-                      >
-                        <span className="hidden sm:flex">Link</span>
-                      </Link>
-                    </div>
-                    <p>{data.description}</p>
-                  </div>
-                  {/* <div>Ads</div> */}
-                </div>
-                {/* <div>More</div> */}
+                <p>{data.description}</p>
               </ModalBody>
             </>
           )}

@@ -16,5 +16,113 @@
     "name": "Engineering",
     "image": "engineering.jpg",
     "description": "Engineering is the application of mathematics, science, economics, and social and practical knowledge to invent, innovate, design, build, maintain, research, and improve structures, machines, tools, systems, components, materials, processes, solutions, and organizations."
+  },
+  {
+    "id": "utilities",
+    "name": "Utilities",
+    "image": "utilities.jpg",
+    "description": ""
+  },
+  {
+    "id": "learning",
+    "name": "Learning",
+    "image": "learning.jpg",
+    "description": ""
+  },
+  {
+    "id": "health",
+    "name": "Health",
+    "image": "health.jpg",
+    "description": ""
+  },
+  {
+    "id": "finance",
+    "name": "Finance",
+    "image": "finance.jpg",
+    "description": ""
+  },
+  {
+    "id": "entertainment",
+    "name": "Entertainment",
+    "image": "entertainment.jpg",
+    "description": ""
+  },
+  {
+    "id": "communication",
+    "name": "Communication",
+    "image": "communication.jpg",
+    "description": ""
+  },
+  {
+    "id": "transportation",
+    "name": "Transportation",
+    "image": "transportation.jpg",
+    "description": ""
+  },
+  {
+    "id": "food",
+    "name": "Food",
+    "image": "food.jpg",
+    "description": ""
+  },
+  {
+    "id": "housing",
+    "name": "Housing",
+    "image": "housing.jpg",
+    "description": ""
+  },
+  {
+    "id": "government",
+    "name": "Government",
+    "image": "government.jpg",
+    "description": ""
+  },
+  {
+    "id": "energy",
+    "name": "Energy",
+    "image": "energy.jpg",
+    "description": ""
+  },
+  {
+    "id": "environment",
+    "name": "Environment",
+    "image": "environment.jpg",
+    "description": ""
+  },
+  {
+    "id": "agriculture",
+    "name": "Agriculture",
+    "image": "agriculture.jpg",
+    "description": ""
+  },
+  {
+    "id": "manufacturing",
+    "name": "Manufacturing",
+    "image": "manufacturing.jpg",
+    "description": ""
+  },
+  {
+    "id": "science",
+    "name": "Science",
+    "image": "science.jpg",
+    "description": ""
+  },
+  {
+    "id": "technology",
+    "name": "Technology",
+    "image": "technology.jpg",
+    "description": ""
+  },
+  {
+    "id": "sports",
+    "name": "Sports",
+    "image": "sports.jpg",
+    "description": ""
+  },
+  {
+    "id": "tourism",
+    "name": "Tourism",
+    "image": "tourism.jpg",
+    "description": ""
   }
 ]
