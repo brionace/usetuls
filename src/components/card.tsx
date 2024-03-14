@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  Link,
 } from "@nextui-org/react";
 import { MdArrowRightAlt, MdOpenInNew } from "react-icons/md";
 
@@ -28,7 +29,7 @@ export default function Card({ data }: any) {
         className="overflow-visible px-4 bg-transparent rounded-none p-0 shadow-none"
         shadow="sm"
       >
-        <CardHeader className="flex-col items-center rounded-xl bg-white">
+        <CardHeader className="flex-col items-center rounded-xl bg-slate-100">
           <Image
             src={image}
             alt={data.name}
@@ -36,18 +37,19 @@ export default function Card({ data }: any) {
             className="object-cover h-[140px]"
           />
         </CardHeader>
-        <CardBody className="py-4 text-default dark:text-white">
-          <a
+        <CardBody className="font-bold flex flex-row justify-between py-4 text-default dark:text-white">
+          <Link
             href={`#${data.id}`}
-            className="font-bold flex items-center justify-between w-full"
             onClick={(e) => {
               e.preventDefault();
               onOpen();
             }}
           >
-            <span>{data.name}</span>
-            <MdArrowRightAlt />
-          </a>
+            {data.name}
+          </Link>
+          <Link href={data.url} target="_blank">
+            <MdOpenInNew />
+          </Link>
         </CardBody>
       </NextCard>
       <Modal
@@ -60,7 +62,7 @@ export default function Card({ data }: any) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex items-center justify-center">
+              <ModalHeader className="flex items-center justify-center rounded m-8 bg-slate-300">
                 <Image
                   src={data.icon}
                   alt={data.name}
