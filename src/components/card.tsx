@@ -48,16 +48,16 @@ export default function Card({ data }: any) {
           >
             {data.name}
           </Link>
-          <Link href={data.url} target="_blank">
+          {/* <Link href={data.url} target="_blank">
             <MdOpenInNew />
-          </Link>
+          </Link> */}
         </CardBody>
       </NextCard>
       <Modal
         backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
         isOpen={isOpen}
         onClose={onClose}
-        placement="top"
+        placement="center"
       >
         <ModalContent>
           {(onClose) => (

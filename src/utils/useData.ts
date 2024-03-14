@@ -2,7 +2,10 @@ import { createClient } from "@/utils/supabase/server";
 
 export default async function useData({ slug }: { slug?: string }) {
   const supabase = createClient();
-  let query = supabase.from("tools").select(`id, name, icon, description, url`);
+  let query = supabase
+    .from("tools")
+    .select(`id, name, icon, description, url`)
+    .eq("is_published", true);
 
   if (slug) {
     query = query.contains("tags", [slug]);

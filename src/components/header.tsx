@@ -57,12 +57,12 @@ export default function Header() {
           >
             Categories
           </Button> */}
-          <ul className="flex gap-4 h-auto">{categoryList}</ul>
+          <ul className="flex h-auto">{categoryList}</ul>
         </nav>
       </header>
       {categoryListOpen && (
         <nav className="flex justify-center">
-          <ul className="flex gap-4 h-auto whitespace-nowrap overflow-auto">
+          <ul className="flex h-auto whitespace-nowrap overflow-auto">
             {categoryList}
           </ul>
         </nav>

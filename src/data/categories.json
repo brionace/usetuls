@@ -54,75 +54,9 @@
     "description": ""
   },
   {
-    "id": "transportation",
-    "name": "Transportation",
-    "image": "transportation.jpg",
-    "description": ""
-  },
-  {
-    "id": "food",
-    "name": "Food",
-    "image": "food.jpg",
-    "description": ""
-  },
-  {
-    "id": "housing",
-    "name": "Housing",
-    "image": "housing.jpg",
-    "description": ""
-  },
-  {
-    "id": "government",
-    "name": "Government",
-    "image": "government.jpg",
-    "description": ""
-  },
-  {
-    "id": "energy",
-    "name": "Energy",
-    "image": "energy.jpg",
-    "description": ""
-  },
-  {
-    "id": "environment",
-    "name": "Environment",
-    "image": "environment.jpg",
-    "description": ""
-  },
-  {
-    "id": "agriculture",
-    "name": "Agriculture",
-    "image": "agriculture.jpg",
-    "description": ""
-  },
-  {
-    "id": "manufacturing",
-    "name": "Manufacturing",
-    "image": "manufacturing.jpg",
-    "description": ""
-  },
-  {
-    "id": "science",
-    "name": "Science",
-    "image": "science.jpg",
-    "description": ""
-  },
-  {
-    "id": "technology",
-    "name": "Technology",
-    "image": "technology.jpg",
-    "description": ""
-  },
-  {
-    "id": "sports",
-    "name": "Sports",
-    "image": "sports.jpg",
-    "description": ""
-  },
-  {
-    "id": "tourism",
-    "name": "Tourism",
-    "image": "tourism.jpg",
+    "id": "travel",
+    "name": "Travel",
+    "image": "travel.jpg",
     "description": ""
   }
 ]
