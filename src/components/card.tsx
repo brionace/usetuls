@@ -21,9 +21,9 @@ export default function Card({ data }: any) {
   const [backdrop, setBackdrop] = useState("opaque");
   const base64regex =
     /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-  const image = base64regex.test(data.icon)
-    ? `data:image/png;base64,${data.icon}`
-    : data.icon;
+  const image = base64regex.test(data.favicon)
+    ? `data:image/png;base64,${data.favicon}`
+    : data.favicon;
   return (
     <>
       <NextCard
@@ -33,7 +33,7 @@ export default function Card({ data }: any) {
         <CardHeader className="flex-col items-center rounded-xl bg-default dark:bg-default">
           <Image
             src={image}
-            alt={data.name}
+            alt={data.title}
             width="100%"
             className="object-cover h-[140px]"
           />
@@ -46,7 +46,7 @@ export default function Card({ data }: any) {
               onOpen();
             }}
           >
-            {data.name}
+            {data.title}
           </Link>
           {/* <Link href={data.url} target="_blank">
             <MdOpenInNew />
@@ -64,8 +64,8 @@ export default function Card({ data }: any) {
             <>
               <ModalHeader className="flex items-center justify-center rounded bg-default gap-4 dark:bg-default">
                 <div className="flex gap-4 items-center">
-                  <Avatar isBordered src={data.icon} />
-                  <h1 className="font-bold">{data.name}</h1>
+                  <Avatar isBordered src={data.favicon} />
+                  <h1 className="font-bold">{data.title}</h1>
                 </div>
                 <Link href={data.url} target="blank" isBlock showAnchorIcon>
                   <span className="hidden sm:flex">Link</span>
