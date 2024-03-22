@@ -1,5 +1,6 @@
 import AddTools from "./components/add-tools";
 import List from "./components/list";
+import Tags from "./components/tags";
 
 export default function Admin() {
   return (

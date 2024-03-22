@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Link, Button } from "@nextui-org/react";
-import categories from "@/data/categories.json";
 import { MdMoreHoriz, MdSearch, MdMenu } from "react-icons/md";
 
-export default function Header() {
+export default function Header({ categories }: any) {
   const [categoryListOpen, setCategoryListOpen] = React.useState(false);
+  console.log(categories);
 
   const categoryFeatList = categories.map((category) => (
     <li key={category.name}>

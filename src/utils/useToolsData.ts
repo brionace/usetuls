@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function useData({
+export default async function useToolsData({
   slug,
   editing,
 }: {
@@ -10,7 +10,7 @@ export default async function useData({
   const supabase = createClient();
   let query = supabase
     .from("tools")
-    .select(`id, title, favicon, description, url`);
+    .select(`id, title, favicon, description, url, category_id, is_published`);
 
   if (slug) {
     query = query.contains("tags", [slug]);

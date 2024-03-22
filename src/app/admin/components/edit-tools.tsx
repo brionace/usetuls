@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   Modal,
@@ -8,9 +7,86 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-export default function EditTools({ data }: { data: any }) {
+export default function EditTools({
+  data,
+  categories,
+  tags,
+  tagged,
+}: {
+  data: any;
+  categories?: any;
+  tags?: any;
+  tagged?: any;
+}) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = useState("opaque");
+  const [inputContent, setInputContent] = useState({
+    id: data.id,
+    favicon: data.favicon,
+    title: data.title,
+    url: data.url,
+    description: data.description,
+    category_id: data.category_id,
+    is_published: data.is_published,
+  });
+  const [selectedTags, setSelectedTags] = useState<number[]>(tagged);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Extract and upload image if url is remote url
+    const response = await fetch("/admin/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ inputContent, selectedTags }),
+    });
+    const data = await response.json();
+  };
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (event.target.type === "radio") {
+      setInputContent({
+        ...inputContent,
+        ["category_id"]: event.target.value,
+      });
+      return;
+    }
+
+    // This should appear before the next condition as its a type:checkbox
+    if (event.target.id === "is_published") {
+      setInputContent({
+        ...inputContent,
+        ["is_published"]: !inputContent.is_published,
+      });
+      return;
+    }
+
+    if (event.target.type === "checkbox") {
+      updateSelectedTags(Number(event.target.value));
+      return;
+    }
+
+    setInputContent({
+      ...inputContent,
+      [event.target.id]: event.target.value,
+    });
+  };
+
+  function updateSelectedTags(newItem: number) {
+    // Check if the item already exists in the array
+    const itemExists = selectedTags.some((item) => item === newItem);
+
+    if (itemExists) {
+      // If the item exists, create a new array without the item
+      setSelectedTags(selectedTags.filter((item) => item !== newItem));
+    } else {
+      // If the item doesn't exist, add it to the array
+      setSelectedTags(selectedTags.concat(newItem));
+    }
+  }
 
   return (
     <>
@@ -19,6 +95,7 @@ export default function EditTools({ data }: { data: any }) {
         onClick={() => {
           onOpen();
         }}
+        className="w-40"
       >
         <img src={data.favicon} alt="" />
         <p>{data.title}</p>
@@ -34,48 +111,110 @@ export default function EditTools({ data }: { data: any }) {
             {(onClose) => (
               <>
                 <ModalBody>
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <img src={data.favicon} alt="" />
-                    <p>
+                    <label>
+                      Favicon
+                      <br />
                       <input
                         type="text"
                         id="favicon"
                         placeholder="Favicon"
-                        value={data.favicon}
+                        value={inputContent.favicon}
+                        onChange={handleChange}
+                        className="w-full"
                       />
-                    </p>
-                    <p>
+                    </label>
+                    <label>
+                      Title
+                      <br />
                       <input
                         type="text"
                         id="title"
                         placeholder="Title"
-                        value={data.title}
+                        value={inputContent.title}
+                        onChange={handleChange}
+                        className="w-full"
                       />
-                    </p>
-                    <p>
+                    </label>
+                    <label>
+                      Url
+                      <br />
                       <input
                         type="text"
                         id="url"
                         placeholder="Url"
-                        value={data.url}
+                        value={inputContent.url}
+                        onChange={handleChange}
+                        className="w-full"
                       />
-                    </p>
-                    <p>
+                    </label>
+                    <label>
+                      Description
+                      <br />
                       <textarea
                         id="description"
                         placeholder="Description"
-                        defaultValue={data.description}
+                        value={inputContent.description}
+                        onChange={handleChange}
+                        className="w-full"
                       ></textarea>
-                    </p>
+                    </label>
                     <div className="flex gap-4">
                       <div>
-                        <h2>Tags</h2>
+                        <p>Categories</p>
+                        {categories?.map((category: any) => {
+                          const id = `cat-${category.id}`;
+                          return (
+                            <div key={id}>
+                              <input
+                                type="radio"
+                                id={id}
+                                name="categories"
+                                value={category.id}
+                                checked={
+                                  category.id ===
+                                  Number(inputContent.category_id)
+                                }
+                                onChange={handleChange}
+                              />
+                              <label htmlFor={id}>{category.name}</label>
+                            </div>
+                          );
+                        })}
                       </div>
                       <div>
-                        <h2>Categories</h2>
+                        <p>Tags</p>
+                        {tags?.map((tag: any) => {
+                          const id = `tag-${tag.id}`;
+                          return (
+                            <div key={id}>
+                              <input
+                                type="checkbox"
+                                id={id}
+                                name={id}
+                                value={tag.id}
+                                checked={selectedTags.includes(tag.id)}
+                                onChange={handleChange}
+                              />
+                              <label htmlFor={id}>{tag.name}</label>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                    <button type="submit">Submit</button>
+                    <div className="flex justify-end gap-4">
+                      <div className="flex gap-1">
+                        <input
+                          type="checkbox"
+                          id="is_published"
+                          checked={inputContent.is_published}
+                          onChange={handleChange}
+                        />
+                        <label htmlFor="is_published">PUBLISHED</label>
+                      </div>
+                      <button>Submit</button>
+                    </div>
                   </form>
                 </ModalBody>
               </>

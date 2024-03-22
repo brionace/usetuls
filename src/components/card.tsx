@@ -4,6 +4,7 @@ import {
   Card as NextCard,
   CardHeader,
   CardBody,
+  CardFooter,
   Image,
   Modal,
   ModalContent,
@@ -19,38 +20,53 @@ import { MdArrowRightAlt, MdOpenInNew } from "react-icons/md";
 export default function Card({ data }: any) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = useState("opaque");
-  const base64regex =
-    /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-  const image = base64regex.test(data.favicon)
-    ? `data:image/png;base64,${data.favicon}`
-    : data.favicon;
+  // const base64regex =
+  //   /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+  // const image = base64regex.test(data.favicon)
+  //   ? `data:image/png;base64,${data.favicon}`
+  //   : data.favicon;
+  function truncateString(str: string, length = 100, ending = "...") {
+    if (str.length > length) {
+      return str.slice(0, length - ending.length) + ending;
+    }
+    return str;
+  }
+
   return (
     <>
-      <NextCard
-        className="overflow-visible px-4 bg-transparent rounded-none p-0 shadow-none"
-        shadow="sm"
-      >
-        <CardHeader className="flex-col items-center rounded-xl bg-default dark:bg-default">
+      <NextCard className="w-50" shadow="sm">
+        <CardHeader className="flex flex-col md:flex-row gap-3">
           <Image
-            src={image}
+            src={`https://ohegcmgrhiqyylpwpxoh.supabase.co/storage/v1/object/public/images/favicons/${data.favicon}`}
             alt={data.title}
             width="100%"
-            className="object-cover h-[140px]"
+            className="object-cover w-10"
           />
+          <div className="flex flex-col gap-1">
+            <h4 className="font-bold">{data.title}</h4>
+            <div className="flex gap-3 [&>*]:bg-default">
+              <Link
+                href={data.url}
+                isExternal
+                className="flex items-center justify-center w-[30px] h-[30px] rounded-full"
+              >
+                <MdOpenInNew />
+              </Link>
+              <Link
+                href={`#${data.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onOpen();
+                }}
+                className="flex items-center justify-center w-[30px] h-[30px] rounded-full"
+              >
+                <MdArrowRightAlt />
+              </Link>
+            </div>
+          </div>
         </CardHeader>
-        <CardBody className="font-bold flex flex-col sm:flex-row gap-4 sm:justify-between py-4 text-default dark:text-white">
-          <Link
-            href={`#${data.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              onOpen();
-            }}
-          >
-            {data.title}
-          </Link>
-          {/* <Link href={data.url} target="_blank">
-            <MdOpenInNew />
-          </Link> */}
+        <CardBody className="text-sm">
+          <p>{truncateString(data.description)}</p>
         </CardBody>
       </NextCard>
       <Modal
