@@ -14,6 +14,7 @@ import {
   useDisclosure,
   Link,
   Avatar,
+  Button,
 } from "@nextui-org/react";
 import { MdArrowRightAlt, MdOpenInNew } from "react-icons/md";
 
@@ -44,23 +45,34 @@ export default function Card({ data }: any) {
               className="object-cover w-10"
             />
             <div className="flex gap-2 [&>*]:bg-default">
-              <Link
+              <Button
+                as={Link}
                 href={data.url}
+                color="default"
+                variant="light"
+                size="sm"
                 isExternal
-                className="flex items-center justify-center w-[30px] h-[30px] rounded-full"
+                isIconOnly
+                className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
               >
                 <MdOpenInNew />
-              </Link>
-              <Link
+              </Button>
+              <Button
+                as={Link}
                 href={`#${data.id}`}
+                color="default"
+                variant="light"
+                size="sm"
+                isExternal
+                isIconOnly
+                className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
                 onClick={(e) => {
                   e.preventDefault();
                   onOpen();
                 }}
-                className="flex items-center justify-center w-[30px] h-[30px] rounded-full"
               >
                 <MdArrowRightAlt />
-              </Link>
+              </Button>
             </div>
           </div>
           <p className="text-sm font-bold">{data.title}</p>
