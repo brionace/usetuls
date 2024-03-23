@@ -35,7 +35,7 @@ export default function Card({ data }: any) {
 
   return (
     <>
-      <NextCard className="w-50" shadow="sm">
+      <NextCard className="w-full py-3" shadow="sm">
         <CardHeader className="flex flex-col gap-3 items-start">
           <div className="w-full flex items-center justify-between gap-3">
             <Image
@@ -75,9 +75,9 @@ export default function Card({ data }: any) {
               </Button>
             </div>
           </div>
-          <p className="text-sm font-bold">{data.title}</p>
+          <h4 className="text-sm font-medium text-balance">{data.title}</h4>
         </CardHeader>
-        <CardBody className="hidden sm:flex text-sm">
+        <CardBody className="hidden sm:flex text-sm text-balance">
           <p>{truncateString(data.description)}</p>
         </CardBody>
       </NextCard>
