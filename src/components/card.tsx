@@ -25,7 +25,7 @@ export default function Card({ data }: any) {
   // const image = base64regex.test(data.favicon)
   //   ? `data:image/png;base64,${data.favicon}`
   //   : data.favicon;
-  function truncateString(str: string, length = 100, ending = "...") {
+  function truncateString(str: string, length = 80, ending = "...") {
     if (str.length > length) {
       return str.slice(0, length - ending.length) + ending;
     }
@@ -35,16 +35,15 @@ export default function Card({ data }: any) {
   return (
     <>
       <NextCard className="w-50" shadow="sm">
-        <CardHeader className="flex flex-col md:flex-row gap-3">
-          <Image
-            src={`https://ohegcmgrhiqyylpwpxoh.supabase.co/storage/v1/object/public/images/favicons/${data.favicon}`}
-            alt={data.title}
-            width="100%"
-            className="object-cover w-10"
-          />
-          <div className="flex flex-col gap-1">
-            <h4 className="font-bold">{data.title}</h4>
-            <div className="flex gap-3 [&>*]:bg-default">
+        <CardHeader className="flex flex-col gap-3 justify-start">
+          <div className="flex items-center gap-3">
+            <Image
+              src={`https://ohegcmgrhiqyylpwpxoh.supabase.co/storage/v1/object/public/images/favicons/${data.favicon}`}
+              alt={data.title}
+              width="100%"
+              className="object-cover w-10"
+            />
+            <div className="flex gap-2 [&>*]:bg-default">
               <Link
                 href={data.url}
                 isExternal
@@ -64,6 +63,7 @@ export default function Card({ data }: any) {
               </Link>
             </div>
           </div>
+          <p className="text-sm font-bold">{data.title}</p>
         </CardHeader>
         <CardBody className="text-sm">
           <p>{truncateString(data.description)}</p>
