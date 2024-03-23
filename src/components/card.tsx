@@ -38,7 +38,7 @@ export default function Card({ data }: any) {
         <CardHeader className="flex flex-col gap-3 justify-start">
           <div className="flex items-center gap-3">
             <Image
-              src={`https://ohegcmgrhiqyylpwpxoh.supabase.co/storage/v1/object/public/images/favicons/${data.favicon}`}
+              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`}
               alt={data.title}
               width="100%"
               className="object-cover w-10"
