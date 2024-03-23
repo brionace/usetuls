@@ -8,7 +8,7 @@ type Banner = {
 
 export default function Banner({ content, direction }: Banner) {
   return (
-    <div className={`max-w-[700px] p-4 ${direction}`}>
+    <div className={`max-w-[700px] ${direction} py-6`}>
       <h1 className="font-bold text-large">{content?.name}</h1>
       {content?.description ? <p>{content.description}</p> : null}
     </div>

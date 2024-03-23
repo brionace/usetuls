@@ -1,10 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 
 export default async function useToolsData({
-  slug,
+  categoryId,
   editing,
 }: {
-  slug?: string;
+  categoryId?: number;
   editing?: boolean;
 }) {
   const supabase = createClient();
@@ -12,8 +12,8 @@ export default async function useToolsData({
     .from("tools")
     .select(`id, title, favicon, description, url, category_id, is_published`);
 
-  if (slug) {
-    query = query.contains("tags", [slug]);
+  if (categoryId) {
+    query = query.eq("category_id", categoryId);
   }
 
   if (editing) {

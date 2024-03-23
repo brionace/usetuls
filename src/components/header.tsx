@@ -41,7 +41,7 @@ export default function Header({ categories }: any) {
         justify="center"
         className="whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide"
       >
-        <MdChevronLeft onClick={scrollLeft} size="sm" />
+        {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
         <NavbarItem className="w-full">
           <ul className="flex items-start gap-4">
             {categories?.map((category: any) => (
@@ -58,7 +58,7 @@ export default function Header({ categories }: any) {
             ))}
           </ul>
         </NavbarItem>
-        <MdChevronRight onClick={scrollRight} size="sm" />
+        {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
