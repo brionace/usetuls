@@ -35,7 +35,7 @@ export default function Card({ data }: any) {
   return (
     <>
       <NextCard className="w-50" shadow="sm">
-        <CardHeader className="flex flex-col gap-3 justify-start">
+        <CardHeader className="flex flex-col gap-3 items-start">
           <div className="flex items-center gap-3">
             <Image
               src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`}
@@ -65,7 +65,7 @@ export default function Card({ data }: any) {
           </div>
           <p className="text-sm font-bold">{data.title}</p>
         </CardHeader>
-        <CardBody className="text-sm">
+        <CardBody className="hidden sm:flex text-sm">
           <p>{truncateString(data.description)}</p>
         </CardBody>
       </NextCard>
