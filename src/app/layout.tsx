@@ -6,9 +6,9 @@ import UIProvider from "./ui-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Usetuls - Useful web tools",
+  title: "Usetuls - Digital Tools & Online Utilities",
   description:
-    "A hub of powerfully useful and effective digital tools and online utilities for developers, designers, finance experts, project and product managers to make quality projects easily and quickly.",
+    "Handy digital tools & online utilities to get things done smarter and simplify your life & work.",
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark text-foreground bg-background">
+    <html lang="en">
       <body className={inter.className}>
         <UIProvider>{children}</UIProvider>
       </body>

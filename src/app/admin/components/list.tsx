@@ -1,14 +1,14 @@
-import useToolsData from "@/utils/useToolsData";
-import useCategoriesData from "@/utils/useCategoriesData";
-import useTagsData from "@/utils/useTagsData";
-import useTaggedData from "@/utils/useTaggedData";
+import getToolsData from "@/utils/getToolsData";
+import getCategoriesData from "@/utils/getCategoriesData";
+import getTagsData from "@/utils/getTagsData";
+import getTaggedData from "@/utils/getTaggedData";
 import EditTools from "./edit-tools";
 
 export default async function List() {
-  const data = await useToolsData({ editing: true });
-  const categories = await useCategoriesData();
-  const tags = await useTagsData();
-  const tagged = await useTaggedData();
+  const data = await getToolsData({ editing: true });
+  const categories = await getCategoriesData();
+  const tags = await getTagsData();
+  const tagged = await getTaggedData();
 
   return (
     <div className="flex flex-wrap gap-4">

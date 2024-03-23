@@ -87,10 +87,10 @@ export default function Card({ data }: any) {
         onClose={onClose}
         placement="center"
       >
-        <ModalContent>
+        <ModalContent className="pb-3">
           {(onClose) => (
             <>
-              <ModalHeader className="flex items-center justify-center rounded bg-default gap-4 dark:bg-default">
+              <ModalHeader className="flex items-center justify-center rounded">
                 <div className="flex gap-4 items-center">
                   <Avatar isBordered src={data.favicon} />
                   <h1 className="font-bold">{data.title}</h1>
@@ -99,7 +99,7 @@ export default function Card({ data }: any) {
                   <span className="hidden sm:flex">Link</span>
                 </Link>
               </ModalHeader>
-              <ModalBody className="flex gap-4 text-default dark:text-white py-8">
+              <ModalBody>
                 <p>{data.description}</p>
               </ModalBody>
             </>

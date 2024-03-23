@@ -2,8 +2,9 @@ import React from "react";
 import List from "@/components/list";
 import Header from "@/components/header";
 import Banner from "@/components/banner";
-import useCategoriesData from "@/utils/useCategoriesData";
-import useTagsData from "@/utils/useTagsData";
+import getCategoriesData from "@/utils/getCategoriesData";
+import getTagsData from "@/utils/getTagsData";
+import Footer from "@/components/footer";
 
 const content = {
   name: "Useful Web-Based Tools",
@@ -12,18 +13,19 @@ const content = {
 };
 
 export default async function Home() {
-  const categories = await useCategoriesData();
-  const tags = await useTagsData();
+  const categories = await getCategoriesData({});
+  const tags = await getTagsData();
 
   return (
     <>
       <Header categories={categories} />
-      <main className="max-w-7xl mx-auto">
+      <main className="max-w-7xl mx-auto min-h-screen">
         <div className="[&>*]:!mx-auto">
           <Banner content={content} direction="text-center" />
         </div>
         <List />
       </main>
+      <Footer />
     </>
   );
 }

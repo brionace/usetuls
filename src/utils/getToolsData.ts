@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function useToolsData({
+export default async function getToolsData({
   categoryId,
   editing,
 }: {

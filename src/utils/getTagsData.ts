@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function useTagsData(isPublished?: boolean) {
+export default async function getTagsData(isPublished?: boolean) {
   const supabase = createClient();
   let query = supabase.from("tags").select(`id, name, description`);
 

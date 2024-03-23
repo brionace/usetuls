@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function useTaggedData(toolsId?: number) {
+export default async function getTaggedData(toolsId?: number) {
   const supabase = createClient();
   let query = supabase.from("tagged").select(`tools_id, tag_id`);
 

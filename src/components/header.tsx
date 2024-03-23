@@ -31,11 +31,12 @@ export default function Header({ categories }: any) {
     }
   };
   return (
-    <Navbar maxWidth="full" className="sticky top-0 border-b border-slate-500">
+    <Navbar maxWidth="full" className="sticky top-0 border-b border-slate-100">
       <NavbarBrand>
         <Link href="/" size="sm">
-          <span className="font-bold text-inherit">Usetuls</span>
+          U
         </Link>
+        <span className="font-bold text-inherit">{`Usetuls`}</span>
       </NavbarBrand>
       <NavbarContent
         justify="center"
@@ -48,7 +49,7 @@ export default function Header({ categories }: any) {
               <li key={category.name}>
                 <Button
                   as={Link}
-                  href={`/c/${category.id}`}
+                  href={`/c/${category.slug}`}
                   variant="flat"
                   size="sm"
                 >
