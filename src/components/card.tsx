@@ -36,50 +36,48 @@ export default function Card({ data }: any) {
   return (
     <>
       <NextCard className="w-full py-3" shadow="sm">
-        <CardHeader className="flex flex-col gap-3 items-start">
-          <div className="w-full flex items-center justify-between gap-3">
-            <Image
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`}
-              alt={data.title}
-              width="100%"
-              className="object-cover w-10"
-            />
-            <div className="flex gap-2 [&>*]:bg-default">
-              <Button
-                as={Link}
-                href={data.url}
-                color="default"
-                variant="light"
-                size="sm"
-                isExternal
-                isIconOnly
-                className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
-              >
-                <MdOpenInNew />
-              </Button>
-              <Button
-                as={Link}
-                href={`#${data.id}`}
-                color="default"
-                variant="light"
-                size="sm"
-                isExternal
-                isIconOnly
-                className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onOpen();
-                }}
-              >
-                <MdArrowRightAlt />
-              </Button>
-            </div>
-          </div>
+        <CardHeader className="w-full flex gap-3">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`}
+            alt={data.title}
+            width="100%"
+            className="object-cover w-10 h-10"
+          />
           <h4 className="text-sm font-medium text-balance">{data.title}</h4>
         </CardHeader>
         <CardBody className="hidden sm:flex text-sm text-balance">
           <p>{truncateString(data.description)}</p>
         </CardBody>
+        <CardFooter className="flex gap-2 [&>*]:bg-default">
+          <Button
+            as={Link}
+            href={data.url}
+            color="default"
+            variant="light"
+            size="sm"
+            isExternal
+            isIconOnly
+            className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+          >
+            <MdOpenInNew />
+          </Button>
+          <Button
+            as={Link}
+            href={`#${data.id}`}
+            color="default"
+            variant="light"
+            size="sm"
+            isExternal
+            isIconOnly
+            className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            onClick={(e) => {
+              e.preventDefault();
+              onOpen();
+            }}
+          >
+            <MdArrowRightAlt />
+          </Button>
+        </CardFooter>
       </NextCard>
       <Modal
         backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
