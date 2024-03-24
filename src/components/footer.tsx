@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { MdArrowRightAlt } from "react-icons/md";
 
 export default function Footer() {
   return (
@@ -7,15 +8,24 @@ export default function Footer() {
       <p>
         <span className="hidden md:inline">Made with</span> ❤️{" "}
         <span className="hidden md:inline">by</span>{" "}
-        <Link href="https://brianory.me" target="_blank">
+        <Link
+          href="https://brianory.me"
+          target="_blank"
+          className="underline underline-offset-4"
+        >
           Brian
         </Link>
       </p>
       <span>/</span>
-      <p className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-        <Link href="https://www.buymeacoffee.com/brianoryem" target="_blank">
+      <p className="flex gap-1 items-center">
+        <Link
+          href="https://www.buymeacoffee.com/brianoryem"
+          target="_blank"
+          className="bg-gradient-to-r from-purple-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"
+        >
           Buy me a coffee
         </Link>
+        <MdArrowRightAlt size="20" />
       </p>
     </footer>
   );
