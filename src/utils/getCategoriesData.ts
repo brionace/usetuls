@@ -16,7 +16,7 @@ export default async function getCategoriesData({
   const supabase = createClient();
   let query = supabase
     .from("categories")
-    .select(`id, name, description, slug${hasTools ? `, tools(*)` : ""}`)
+    .select(`id, name, description, slug${hasTools ? `, tools(*)` : ``}`)
     .eq("is_published", isPublished);
 
   if (id !== undefined) {
