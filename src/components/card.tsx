@@ -69,7 +69,7 @@ export default function Card({ data }: any) {
         <CardBody className="hidden sm:flex text-sm text-balance">
           <p>{truncateString(data.description)}</p>
         </CardBody>
-        <CardFooter className="flex gap-2 justify-center [&>*]:bg-default">
+        <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default">
           <Button
             as={Link}
             href={data.url}

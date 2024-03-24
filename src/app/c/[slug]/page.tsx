@@ -30,10 +30,10 @@ export async function generateMetadata(
 
 export default async function Categories({ params }: Props) {
   const { slug } = params;
-  const categories = await getCategoriesData({});
+  const categories = await getCategoriesData({ hasTools: true });
 
   const category = categories?.filter(
-    (category: { slug: string }) => category.slug === slug
+    (category: any) => category.slug === slug
   )[0];
 
   return (
