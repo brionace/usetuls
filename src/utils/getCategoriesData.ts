@@ -16,7 +16,9 @@ export default async function getCategoriesData({
   const supabase = createClient();
   let query = supabase
     .from("categories")
-    .select(`id, name, description, slug${hasTools ? `, tools(*)` : ``}`)
+    .select(
+      `id, name, description, slug${hasTools ? `, tools(category_id)` : ``}`
+    )
     .eq("is_published", isPublished);
 
   if (id !== undefined) {
@@ -35,7 +37,7 @@ export default async function getCategoriesData({
 
   if (hasTools) {
     const categoriesWithTools = data.filter(
-      (category) => category.tools.length > 0
+      (category: any) => category.tools.length > 0
     );
     return categoriesWithTools;
   }

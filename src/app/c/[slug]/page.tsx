@@ -16,7 +16,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { slug } = params;
-  const categories = await getCategoriesData({ slug });
+  const categories: any = await getCategoriesData({ slug });
   const category = categories[0];
 
   return {
@@ -32,7 +32,7 @@ export default async function Categories({ params }: Props) {
   const { slug } = params;
   const categories = await getCategoriesData({ hasTools: true });
 
-  const category = categories?.filter(
+  const category: any = categories?.filter(
     (category: any) => category.slug === slug
   )[0];
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardBody } from "@nextui-org/react";
 
 type Banner = {
-  content?: { id?: string; name: string; description?: string };
+  content?: any;
   direction?: "text-center" | "text-right";
 };
 
