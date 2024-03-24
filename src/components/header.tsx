@@ -63,11 +63,11 @@ export default function Header({ categories }: any) {
         {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
+        {/* <NavbarItem>
           <Button>
             <MdMoreVert />
           </Button>
-        </NavbarItem>
+        </NavbarItem> */}
         <NavbarItem>
           <Button>
             <MdSearch />

@@ -16,7 +16,7 @@ import {
   Avatar,
   Button,
 } from "@nextui-org/react";
-import { MdArrowRightAlt, MdOpenInNew } from "react-icons/md";
+import { MdArrowRightAlt, MdOpenInNew, MdFavorite } from "react-icons/md";
 
 export default function Card({ data }: any) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -48,7 +48,7 @@ export default function Card({ data }: any) {
         <CardBody className="hidden sm:flex text-sm text-balance">
           <p>{truncateString(data.description)}</p>
         </CardBody>
-        <CardFooter className="flex gap-2 [&>*]:bg-default">
+        <CardFooter className="flex gap-2 justify-center [&>*]:bg-default">
           <Button
             as={Link}
             href={data.url}
@@ -60,6 +60,18 @@ export default function Card({ data }: any) {
             className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
           >
             <MdOpenInNew />
+          </Button>
+          <Button
+            color="default"
+            variant="light"
+            size="sm"
+            isIconOnly
+            className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <MdFavorite />
           </Button>
           <Button
             as={Link}
