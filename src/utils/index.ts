@@ -20,4 +20,12 @@ const checkEnvironment = () => {
 const base_url = checkEnvironment();
 
 export const usetulsTitleDivider = " - ";
+
 export const usetulsTitleSuffix = "Usetuls";
+
+/**
+ * @param {string} url
+ */
+export function isSVGFormatImage(url: string) {
+  return url.endsWith(".svg");
+}

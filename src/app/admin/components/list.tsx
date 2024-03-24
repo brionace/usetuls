@@ -6,7 +6,7 @@ import EditTools from "./edit-tools";
 
 export default async function List() {
   const data = await getToolsData({ editing: true });
-  const categories = await getCategoriesData({ isPublished: false });
+  const categories = await getCategoriesData({});
   const tags = await getTagsData();
   const tagged = await getTaggedData();
 

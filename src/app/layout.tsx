@@ -6,7 +6,7 @@ import UIProvider from "./ui-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Usetuls - Digital Tools & Online Utilities",
+  title: "Usetuls - Find digital Tools & Utilities",
   description:
     "Handy digital tools & online utilities to get things done smarter and simplify your life & work.",
 };

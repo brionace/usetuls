@@ -16,16 +16,18 @@ import {
   Avatar,
   Button,
 } from "@nextui-org/react";
-import { MdArrowRightAlt, MdOpenInNew, MdFavorite } from "react-icons/md";
+import {
+  MdArrowRightAlt,
+  MdOpenInNew,
+  MdFavorite,
+  MdMoreVert,
+} from "react-icons/md";
+import { isSVGFormatImage } from "@/utils";
 
 export default function Card({ data }: any) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = useState("opaque");
-  // const base64regex =
-  //   /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-  // const image = base64regex.test(data.favicon)
-  //   ? `data:image/png;base64,${data.favicon}`
-  //   : data.favicon;
+
   function truncateString(str: string, length = 80, ending = "...") {
     if (str.length > length) {
       return str.slice(0, length - ending.length) + ending;
@@ -33,12 +35,31 @@ export default function Card({ data }: any) {
     return str;
   }
 
+  const imgUrl = `${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`;
+  const SVGImage = () => {
+    if (!isSVGFormatImage(imgUrl)) {
+      return null;
+    }
+    return imgUrl;
+  };
+
   return (
     <>
       <NextCard className="w-full py-3" shadow="sm">
-        <CardHeader className="w-full flex gap-3">
+        <CardHeader className="w-full flex gap-2 items-center">
+          {/* {isSVGFormatImage(imgUrl) ? (
+            <SVGImage />
+          ) : (
+            <Image
+              src={imgUrl}
+              alt={data.title}
+              width="100%"
+              fill
+              className="object-cover w-10 h-10"
+            />
+          )} */}
           <Image
-            src={`${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`}
+            src={imgUrl}
             alt={data.title}
             width="100%"
             className="object-cover w-10 h-10"
@@ -87,7 +108,7 @@ export default function Card({ data }: any) {
               onOpen();
             }}
           >
-            <MdArrowRightAlt />
+            <MdMoreVert />
           </Button>
         </CardFooter>
       </NextCard>
