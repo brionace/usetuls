@@ -15,6 +15,7 @@ import {
   MdMenu,
   MdChevronLeft,
   MdChevronRight,
+  MdMoreVert,
 } from "react-icons/md";
 
 export default function Header({ categories }: any) {
@@ -62,6 +63,11 @@ export default function Header({ categories }: any) {
         {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
       </NavbarContent>
       <NavbarContent justify="end">
+        <NavbarItem>
+          <Button>
+            <MdMoreVert />
+          </Button>
+        </NavbarItem>
         <NavbarItem>
           <Button>
             <MdSearch />
