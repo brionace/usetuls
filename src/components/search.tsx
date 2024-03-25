@@ -69,6 +69,7 @@ export default function Search({
       onOpenChange={onOpenChange}
       placement="top"
       scrollBehavior="inside"
+      className="m-4"
       motionProps={{
         variants: {
           enter: {
@@ -108,23 +109,25 @@ export default function Search({
               </form>
             </ModalHeader>
             <ModalBody>
-              <ul className="flex flex-col gap-2 pb-10">
-                {searchResults?.map((result: any, index) => {
-                  //   let title = result.title;
-                  //   if (result.title) {
-                  //     title = result.name;
-                  //   }
-                  return (
-                    <li key={index}>
-                      {result.title ? (
-                        <Link href={`/tools/${result.id}`}>{result.title}</Link>
-                      ) : (
-                        <Link href={`/c/${result.slug}`}>{result.name}</Link>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
+              {searchResults.length ? (
+                <ul className="flex flex-col gap-2 pb-10">
+                  {searchResults?.map((result: any, index) => {
+                    //   let title = result.title;
+                    //   if (result.title) {
+                    //     title = result.name;
+                    //   }
+                    return (
+                      <li key={index}>
+                        {result.title ? (
+                          <Link href={``}>{result.title}</Link>
+                        ) : (
+                          <Link href={`/c/${result.slug}`}>{result.name}</Link>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : null}
             </ModalBody>
           </>
         )}
