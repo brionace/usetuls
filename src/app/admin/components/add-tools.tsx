@@ -1,4 +1,5 @@
 "use client";
+
 import { isValidUrl } from "@/utils";
 import { useState, type FormEvent, useEffect } from "react";
 
@@ -18,14 +19,17 @@ export default function AddTools() {
 
     const fetchData = async () => {
       try {
-        const fetchResponse = await fetch("/admin/api/", {
+        const fetchResponse = await fetch("/admin/api/add-tools", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ urls }),
         });
+
+        // const res = await fetchResponse.json();
         console.log("Response:", fetchResponse);
+
         localStorage.removeItem("urls");
       } catch (error) {
         console.error("Error:", error);

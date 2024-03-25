@@ -7,9 +7,16 @@ import fs from "fs";
 import path from "path";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { urls, inputContent, selectedTags } = await req.json();
-  const { id, favicon, title, description, url, category_id, is_published } =
-    inputContent;
+  const { inputContent, selectedTags } = await req.json();
+  const {
+    id,
+    favicon,
+    title,
+    description,
+    url,
+    category_id,
+    is_published,
+  }: any = inputContent;
   const supabase = createClient();
   let idExt = favicon;
 
@@ -41,35 +48,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
         //   error: 'Duplicate',
         //   message: 'The resource already exists'
         // }
-      }
-    });
-  }
-
-  if (urls) {
-    const parsedUrls = JSON.parse(urls);
-
-    parsedUrls?.forEach(async (url: string) => {
-      const html = await (await fetch(url)).text(); // html as text
-      // const doc = new DOMParser().parseFromString(html, "text/html");
-      const $ = cheerio.load(html);
-      const title = $("title").text();
-      const description = $("meta[name='description']").attr("content");
-      const favicon =
-        $("meta[property='og:image']").attr("content") ||
-        $("link[rel='icon']").attr("href");
-      const icon = isValidUrl(favicon as string) ? favicon : url + favicon;
-
-      const { error } = await supabase.from("tools").insert({
-        title,
-        description,
-        favicon: icon,
-        url,
-        is_published: false,
-      });
-
-      if (error) {
-        console.error(error);
-        // throw Error(error.message);
       }
     });
   }

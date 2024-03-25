@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Usetuls - Find digital Tools & Utilities",
   description:
-    "Handy digital tools & online utilities to get things done smarter and simplify your life & work.",
+    "Discover digital Tools & online Utilities to get things done smarter, quicker and simplify your life & work.",
 };
 
 export default function RootLayout({
