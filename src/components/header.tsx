@@ -17,6 +17,8 @@ import {
   MdChevronLeft,
   MdChevronRight,
   MdMoreVert,
+  MdAdd,
+  MdPerson,
 } from "react-icons/md";
 
 export default function Header({ categories }: any) {
@@ -35,7 +37,7 @@ export default function Header({ categories }: any) {
   return (
     <div className="sticky top-0 border-b border-slate-100 z-50 bg-white">
       <Navbar maxWidth="full">
-        <NavbarBrand className="flex gap-1">
+        <NavbarBrand className="flex gap-1 text-sm">
           <Link href="/">
             <Image
               src="/logo.png"
@@ -59,6 +61,7 @@ export default function Header({ categories }: any) {
                     href={`/c/${category.slug}`}
                     variant="flat"
                     size="sm"
+                    className="text-smaller"
                   >
                     {category.name}
                   </Button>
@@ -69,11 +72,6 @@ export default function Header({ categories }: any) {
           {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
         </NavbarContent>
         <NavbarContent justify="end">
-          {/* <NavbarItem>
-          <Button>
-            <MdMoreVert />
-          </Button>
-        </NavbarItem> */}
           <NavbarItem>
             <Button
               variant="light"
@@ -83,11 +81,29 @@ export default function Header({ categories }: any) {
               <MdSearch /> <span className="hidden sm:inline">Search</span>
             </Button>
           </NavbarItem>
+          <NavbarItem>
+            <Button
+              variant="light"
+              size="sm"
+              className="rounded-full min-w-fit"
+            >
+              <MdAdd />
+            </Button>
+          </NavbarItem>
+          <NavbarItem>
+            <Button
+              variant="light"
+              size="sm"
+              className="rounded-full min-w-fit"
+            >
+              <MdPerson />
+            </Button>
+          </NavbarItem>
         </NavbarContent>
       </Navbar>
       <nav className="md:hidden w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
         {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-        <ul className="flex items-start gap-4">
+        <ul className="flex gap-3 [&>li:last-child]:pr-6">
           {categories?.map((category: any) => (
             <li key={category.name}>
               <Button
@@ -95,6 +111,7 @@ export default function Header({ categories }: any) {
                 href={`/c/${category.slug}`}
                 variant="flat"
                 size="sm"
+                className="text-smaller"
               >
                 {category.name}
               </Button>
