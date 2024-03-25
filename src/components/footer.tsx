@@ -11,7 +11,7 @@ export default function Footer() {
         <Link
           href="https://brianory.me"
           target="_blank"
-          className="underline underline-offset-4"
+          // className="underline underline-offset-4"
         >
           Brian
         </Link>

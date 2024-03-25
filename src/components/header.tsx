@@ -85,26 +85,24 @@ export default function Header({ categories }: any) {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <div className="md:hidden w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
+      <nav className="md:hidden w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
         {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-        <div className="w-full">
-          <ul className="flex items-start gap-4">
-            {categories?.map((category: any) => (
-              <li key={category.name}>
-                <Button
-                  as={Link}
-                  href={`/c/${category.slug}`}
-                  variant="flat"
-                  size="sm"
-                >
-                  {category.name}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="flex items-start gap-4">
+          {categories?.map((category: any) => (
+            <li key={category.name}>
+              <Button
+                as={Link}
+                href={`/c/${category.slug}`}
+                variant="flat"
+                size="sm"
+              >
+                {category.name}
+              </Button>
+            </li>
+          ))}
+        </ul>
         {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
-      </div>
+      </nav>
     </div>
   );
 }
