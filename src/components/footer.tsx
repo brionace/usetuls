@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { MdArrowRightAlt } from "react-icons/md";
@@ -21,11 +23,28 @@ export default function Footer() {
         <Link
           href="https://www.buymeacoffee.com/brianoryem"
           target="_blank"
+          rel="nofollow"
           className="bg-gradient-to-r from-purple-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"
         >
           Buy me a coffee
         </Link>
         <MdArrowRightAlt size="20" />
+        {/* <button
+          onClick={async () => {
+            try {
+              await navigator.share({
+                title: "Find Useful Web Tools",
+                text: "Check out this website for useful digital tools & utilities",
+                url: "https://usetuls.com",
+              });
+              console.log("Shared successfully");
+            } catch (err) {
+              console.error("Error sharing: ", err?.message);
+            }
+          }}
+        >
+          sd
+        </button> */}
       </p>
     </footer>
   );
