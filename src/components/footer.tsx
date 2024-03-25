@@ -5,6 +5,8 @@ import React from "react";
 import { MdArrowRightAlt } from "react-icons/md";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="flex gap-2 py-6 mt-8 px-6 justify-center text-sm text-slate-500 border-t border-slate-100">
       <p>
@@ -17,6 +19,7 @@ export default function Footer() {
         >
           Brian
         </Link>
+        <span className="text-gray-100">{currentYear}</span>
       </p>
       <span>/</span>
       <p className="flex gap-1 items-center">

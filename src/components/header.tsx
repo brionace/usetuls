@@ -20,8 +20,10 @@ import {
   MdAdd,
   MdBookmarks,
 } from "react-icons/md";
+import Search from "./search";
 
 export default function Header({ categories }: any) {
+  const [showSearch, setShowSearch] = React.useState(false);
   const scrollLeft = () => {
     const el = document.querySelector(".scroll");
     if (el) {
@@ -36,13 +38,14 @@ export default function Header({ categories }: any) {
   };
   return (
     <div className="sticky top-0 border-b border-slate-100 z-50 bg-white">
+      <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} />
       <Navbar maxWidth="full">
-        <NavbarBrand className="flex gap-1 text-sm">
-          <Link href="/">
+        <NavbarBrand className="flex gap-1 text-sm w-auto">
+          <Link href="/" className="w-6 h-6">
             <Image
               src="/logo.png"
               alt="Usetuls logo"
-              className="object-fill w-6 h-6 rounded-none"
+              className="w-6 h-6 rounded-none"
             />
           </Link>
           <span>Usetuls</span>
@@ -77,6 +80,7 @@ export default function Header({ categories }: any) {
               variant="light"
               size="sm"
               className="rounded-full min-w-fit"
+              onPress={() => setShowSearch(!showSearch)}
             >
               <MdSearch /> <span className="hidden sm:inline">Search</span>
             </Button>
@@ -101,6 +105,7 @@ export default function Header({ categories }: any) {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
+
       <nav className="md:hidden w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
         {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
         <ul className="flex gap-3 [&>li:last-child]:pr-6">

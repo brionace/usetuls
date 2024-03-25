@@ -5,6 +5,7 @@ type Props = {
   id?: number;
   slug?: string;
   hasTools?: boolean;
+  searchTerm?: string;
 };
 
 export default async function getCategoriesData({
@@ -12,6 +13,7 @@ export default async function getCategoriesData({
   id,
   slug,
   hasTools,
+  searchTerm,
 }: Props) {
   const supabase = createClient();
   let query = supabase
@@ -27,6 +29,13 @@ export default async function getCategoriesData({
 
   if (slug) {
     query = query.eq("slug", slug);
+  }
+
+  if (searchTerm) {
+    // query = query.or(
+    //   `name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`
+    // );
+    query = query.textSearch("name", searchTerm);
   }
 
   const { data, error } = await query;

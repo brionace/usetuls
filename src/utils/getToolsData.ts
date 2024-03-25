@@ -3,9 +3,11 @@ import { createClient } from "@/utils/supabase/server";
 export default async function getToolsData({
   categoryId,
   editing,
+  searchTerm,
 }: {
   categoryId?: number;
   editing?: boolean;
+  searchTerm?: string;
 }) {
   const supabase = createClient();
   let query = supabase
@@ -20,6 +22,12 @@ export default async function getToolsData({
     query = query.eq("is_published", false);
   } else {
     query = query.eq("is_published", true);
+  }
+
+  if (searchTerm) {
+    query = query.or(
+      `title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`
+    );
   }
 
   const { data, error } = await query;
