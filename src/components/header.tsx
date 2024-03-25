@@ -18,7 +18,7 @@ import {
   MdChevronRight,
   MdMoreVert,
   MdAdd,
-  MdPerson,
+  MdBookmarks,
 } from "react-icons/md";
 
 export default function Header({ categories }: any) {
@@ -96,7 +96,7 @@ export default function Header({ categories }: any) {
               size="sm"
               className="rounded-full min-w-fit"
             >
-              <MdPerson />
+              <MdBookmarks />
             </Button>
           </NavbarItem>
         </NavbarContent>

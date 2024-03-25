@@ -21,6 +21,7 @@ import {
   MdOpenInNew,
   MdFavorite,
   MdMoreVert,
+  MdBookmark,
 } from "react-icons/md";
 import { isSVGFormatImage } from "@/utils";
 
@@ -92,7 +93,7 @@ export default function Card({ data }: any) {
               e.preventDefault();
             }}
           >
-            <MdFavorite />
+            <MdBookmark />
           </Button>
           <Button
             as={Link}
