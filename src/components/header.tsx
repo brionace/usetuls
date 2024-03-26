@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useContext } from "react";
 import {
   Link,
@@ -22,24 +21,31 @@ import {
 } from "react-icons/md";
 import Search from "./search";
 import { DataContext } from "@/app/data-provider";
+import AddUrl from "@/components/add-url";
+import Bookmarks from "./bookmarks";
 
 export default function Header({ categories }: any) {
   const { dispatch } = useContext(DataContext);
+
   const scrollLeft = () => {
     const el = document.querySelector(".scroll");
     if (el) {
       el.scrollLeft -= 100;
     }
   };
+
   const scrollRight = () => {
     const el = document.querySelector(".scroll");
     if (el) {
       el.scrollLeft += 100;
     }
   };
+
   return (
     <div className="sticky top-0 border-b border-slate-100 z-50 bg-white">
       <Search />
+      <AddUrl />
+      <Bookmarks />
       {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
       <Navbar maxWidth="full">
         <NavbarBrand className="flex gap-1 text-sm w-auto">
@@ -92,7 +98,7 @@ export default function Header({ categories }: any) {
               variant="light"
               size="sm"
               className="rounded-full min-w-fit"
-              onPress={() => dispatch({ type: "SHOW_ADDTOOLS" })}
+              onPress={() => dispatch({ type: "SHOW_ADDURL" })}
             >
               <MdAdd />
             </Button>
@@ -102,6 +108,7 @@ export default function Header({ categories }: any) {
               variant="light"
               size="sm"
               className="rounded-full min-w-fit"
+              onPress={() => dispatch({ type: "SHOW_BOOKMARKS" })}
             >
               <MdBookmarks />
             </Button>

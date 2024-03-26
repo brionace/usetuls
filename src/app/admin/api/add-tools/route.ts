@@ -20,8 +20,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const title = $("title").text();
       const description = $("meta[name='description']").attr("content");
       const favicon =
-        $("meta[property='og:image']").attr("content") ||
-        $("link[rel='icon']").attr("href");
+        $("link[rel='icon']").attr("href") ||
+        $("meta[property='og:image']").attr("content");
       const icon = isValidUrl(favicon as string) ? favicon : url + favicon;
 
       const { error } = await supabase.from("tools").insert({

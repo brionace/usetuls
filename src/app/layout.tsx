@@ -5,7 +5,7 @@ import UIProvider from "./ui-provider";
 import GoogleAnalytics from "@/components/googleAnalytics";
 import { DataProvider } from "./data-provider";
 
-const inter = Poppins({
+const fonts = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={fonts.className}>
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}

@@ -19,8 +19,10 @@ export default function Search() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { state, dispatch } = useContext(DataContext);
-  const { showSearch } = state;
+  const {
+    state: { showSearch },
+    dispatch,
+  } = useContext(DataContext);
 
   useEffect(() => {
     onOpen();
@@ -93,6 +95,9 @@ export default function Search() {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1 pr-10">
+              Search
+            </ModalHeader>
+            <ModalBody className="mb-8">
               <form className="w-full">
                 <Input
                   autoFocus
@@ -107,8 +112,6 @@ export default function Search() {
                   }
                 />
               </form>
-            </ModalHeader>
-            <ModalBody>
               {searchResults.length ? (
                 <ul className="flex flex-col gap-2 pb-10">
                   {searchResults?.map((result: any, index) => {

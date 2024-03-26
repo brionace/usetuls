@@ -1,15 +1,28 @@
 "use client";
-
 import React, { createContext, useReducer } from "react";
 
-type Type = "SHOW_SEARCH" | "HIDE_SEARCH" | "SHOW_ADDTOOLS" | "HIDE_ADDTOOLS";
+type Type =
+  | "SHOW_SEARCH"
+  | "HIDE_SEARCH"
+  | "SHOW_ADDURL"
+  | "HIDE_ADDURL"
+  | "SHOW_SPINNER"
+  | "HIDE_SPINNER"
+  | "SHOW_BOOKMARKS"
+  | "HIDE_BOOKMARKS";
 
 type State = {
   showSearch: boolean;
+  showAddUrl: boolean;
+  showSpinner: boolean;
+  showBookmarks: boolean;
 };
 
 const initialState = {
   showSearch: false,
+  showAddUrl: false,
+  showSpinner: false,
+  showBookmarks: false,
 };
 
 const reducer = (state: State, action: { type: Type; payload: any }) => {
@@ -18,10 +31,18 @@ const reducer = (state: State, action: { type: Type; payload: any }) => {
       return { ...state, showSearch: true };
     case "HIDE_SEARCH":
       return { ...state, showSearch: false };
-    case "SHOW_ADDTOOLS":
-      return { ...state, showAddTools: true };
-    case "HIDE_ADDTOOLS":
-      return { ...state, showAddTools: false };
+    case "SHOW_ADDURL":
+      return { ...state, showAddUrl: true };
+    case "HIDE_ADDURL":
+      return { ...state, showAddUrl: false };
+    case "SHOW_SPINNER":
+      return { ...state, showSpinner: true };
+    case "HIDE_SPINNER":
+      return { ...state, showSpinner: false };
+    case "SHOW_BOOKMARKS":
+      return { ...state, showBookmarks: true };
+    case "HIDE_BOOKMARKS":
+      return { ...state, showBookmarks: false };
 
     // case "DELETE_TODO":
     //   return {
