@@ -92,6 +92,7 @@ export default function Header({ categories }: any) {
               variant="light"
               size="sm"
               className="rounded-full min-w-fit"
+              onPress={() => dispatch({ type: "SHOW_ADDTOOLS" })}
             >
               <MdAdd />
             </Button>

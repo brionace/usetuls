@@ -46,8 +46,8 @@ export default function Card({ data }: any) {
 
   return (
     <>
-      <NextCard className="w-full py-3" shadow="sm">
-        <CardHeader className="w-full flex gap-2 items-center">
+      <NextCard className="w-full pb-3" shadow="sm">
+        <CardHeader className="w-full flex gap-2 items-center justify-between flex-row-reverse bg-slate-50">
           {/* {isSVGFormatImage(imgUrl) ? (
             <SVGImage />
           ) : (
@@ -59,15 +59,17 @@ export default function Card({ data }: any) {
               className="object-cover w-10 h-10"
             />
           )} */}
-          <Image
-            src={imgUrl}
-            alt={data.title}
-            width="100%"
-            className="object-cover w-10 h-10"
-          />
-          <h4 className="text-sm font-medium text-balance">{data.title}</h4>
+          <div className="w-7 h-7">
+            <Image
+              src={imgUrl}
+              alt={data.title}
+              width="100%"
+              className="object-cover w-7 h-7"
+            />
+          </div>
+          <h4 className="text-sm font-medium">{data.title}</h4>
         </CardHeader>
-        <CardBody className="hidden sm:flex text-sm text-balance">
+        <CardBody className="hidden sm:flex text-xs bg-slate-50">
           <p>{truncateString(data.description)}</p>
         </CardBody>
         <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default">

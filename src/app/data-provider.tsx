@@ -2,7 +2,7 @@
 
 import React, { createContext, useReducer } from "react";
 
-type Type = "SHOW_SEARCH" | "HIDE_SEARCH";
+type Type = "SHOW_SEARCH" | "HIDE_SEARCH" | "SHOW_ADDTOOLS" | "HIDE_ADDTOOLS";
 
 type State = {
   showSearch: boolean;
@@ -18,6 +18,10 @@ const reducer = (state: State, action: { type: Type; payload: any }) => {
       return { ...state, showSearch: true };
     case "HIDE_SEARCH":
       return { ...state, showSearch: false };
+    case "SHOW_ADDTOOLS":
+      return { ...state, showAddTools: true };
+    case "HIDE_ADDTOOLS":
+      return { ...state, showAddTools: false };
 
     // case "DELETE_TODO":
     //   return {
