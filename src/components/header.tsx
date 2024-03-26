@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import {
   Link,
   Button,
@@ -21,9 +21,10 @@ import {
   MdBookmarks,
 } from "react-icons/md";
 import Search from "./search";
+import { DataContext } from "@/app/data-provider";
 
 export default function Header({ categories }: any) {
-  const [showSearch, setShowSearch] = React.useState(false);
+  const { dispatch } = useContext(DataContext);
   const scrollLeft = () => {
     const el = document.querySelector(".scroll");
     if (el) {
@@ -38,7 +39,8 @@ export default function Header({ categories }: any) {
   };
   return (
     <div className="sticky top-0 border-b border-slate-100 z-50 bg-white">
-      <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} />
+      <Search />
+      {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
       <Navbar maxWidth="full">
         <NavbarBrand className="flex gap-1 text-sm w-auto">
           <Link href="/" className="w-6 h-6">
@@ -80,7 +82,7 @@ export default function Header({ categories }: any) {
               variant="light"
               size="sm"
               className="rounded-full min-w-fit"
-              onPress={() => setShowSearch(!showSearch)}
+              onPress={() => dispatch({ type: "SHOW_SEARCH" })}
             >
               <MdSearch /> <span className="hidden sm:inline">Search</span>
             </Button>

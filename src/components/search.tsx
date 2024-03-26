@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import {
   Modal,
@@ -13,26 +13,24 @@ import {
   Input,
   Link,
 } from "@nextui-org/react";
+import { DataContext } from "@/app/data-provider";
 
-export default function Search({
-  showSearch,
-  hideSearch,
-}: {
-  showSearch?: boolean;
-  hideSearch?: () => void;
-}) {
+export default function Search() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const { state, dispatch } = useContext(DataContext);
+  const { showSearch } = state;
 
   useEffect(() => {
     onOpen();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSearch]);
 
   useEffect(() => {
-    hideSearch && hideSearch();
+    if (!isOpen) {
+      dispatch({ type: "HIDE_SEARCH" });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
@@ -95,16 +93,18 @@ export default function Search({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1 pr-10">
-              <form className="flex gap-3 items-center rounded-full bg-slate-300 py-1 px-2 w-full">
-                <MdSearch />
-                <input
+              <form className="w-full">
+                <Input
                   autoFocus
-                  type="search"
+                  isClearable
                   autoComplete="off"
                   spellCheck="false"
                   placeholder="Find tools"
                   className="bg-transparent w-full focus:outline-none text-smaller"
                   onChange={(e) => setSearch(e.target.value)}
+                  startContent={
+                    <MdSearch className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
+                  }
                 />
               </form>
             </ModalHeader>

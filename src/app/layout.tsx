@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import UIProvider from "./ui-provider";
 import GoogleAnalytics from "@/components/googleAnalytics";
+import { DataProvider } from "./data-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Usetuls - Find digital Tools & Utilities",
@@ -23,7 +27,9 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics ga_id={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
-        <UIProvider>{children}</UIProvider>
+        <UIProvider>
+          <DataProvider>{children}</DataProvider>
+        </UIProvider>
       </body>
     </html>
   );
