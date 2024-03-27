@@ -120,7 +120,9 @@ export default function AddUrl() {
     setUrl(""); // Clear the content
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+  function handleChange(
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
     setUrl(event.target.value);
   }
 
@@ -240,7 +242,7 @@ export default function AddUrl() {
                     placeholder="Enter url"
                     className="bg-transparent w-full focus:outline-none text-smaller"
                     type="url"
-                    onChange={(e) => setUrl(e.target.value)}
+                    onChange={(e) => handleChange(e)}
                     defaultValue={url}
                     errorMessage={error["url"]}
                   />
@@ -252,7 +254,11 @@ export default function AddUrl() {
               ) : null}
 
               {step == 2 ? (
-                <form id="add-url-form" className="flex flex-col gap-3">
+                <form
+                  id="add-url-form"
+                  className="flex flex-col gap-3"
+                  onSubmit={(e) => handleSubmit(e)}
+                >
                   <div className="flex gap-3 items-center">
                     <img
                       src={favicon}
@@ -289,7 +295,7 @@ export default function AddUrl() {
                   />
                   <div>
                     <p className="text-foreground-500 mb-2">Select tags</p>
-                    {tags.map((tag) => (
+                    {tags.map((tag: any) => (
                       <div key={tag.id}>
                         <Checkbox value={tag.id} className="mb-1" required>
                           {tag.name}
