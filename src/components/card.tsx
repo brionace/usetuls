@@ -60,14 +60,13 @@ export default function Card({ data }: any) {
             />
           )} */}
           <Avatar
-            isBordered
             src={imgUrl}
-            radius="sm"
-            size="sm"
+            radius="md"
+            size="md"
             color="default"
             showFallback
             name={data.title.slice(0, 1)}
-            className="min-w-8 bg-transparent p-1"
+            className="bg-transparent p-2 shadow-md"
           />
           <h4 className="text-xs font-medium ml-3">{data.title}</h4>
         </CardHeader>
