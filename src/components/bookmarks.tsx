@@ -37,6 +37,8 @@ export default function Bookmarks() {
       onOpenChange={onOpenChange}
       scrollBehavior="outside"
       size="full"
+      placement="top"
+      className="m-0"
       motionProps={{
         variants: {
           enter: {
