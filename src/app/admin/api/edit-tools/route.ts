@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import * as cheerio from "cheerio";
 import { isValidUrl } from "@/utils";
 import fetch from "node-fetch";
 import fs from "fs";

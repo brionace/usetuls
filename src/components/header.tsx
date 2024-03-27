@@ -25,7 +25,10 @@ import AddUrl from "@/components/add-url";
 import Bookmarks from "./bookmarks";
 
 export default function Header({ categories }: any) {
-  const { dispatch } = useContext(DataContext);
+  const {
+    state: { showAddUrl, showBookmarks, showSearch },
+    dispatch,
+  } = useContext(DataContext);
 
   const scrollLeft = () => {
     const el = document.querySelector(".scroll");

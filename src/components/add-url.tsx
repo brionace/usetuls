@@ -11,6 +11,12 @@ import {
   Button,
   Textarea,
   Spinner,
+  Select,
+  SelectItem,
+  Checkbox,
+  Radio,
+  RadioGroup,
+  ModalFooter,
 } from "@nextui-org/react";
 import { useState, type FormEvent, useEffect, useContext } from "react";
 import { MdChevronLeft } from "react-icons/md";
@@ -31,6 +37,10 @@ export default function AddUrl() {
   } = useContext(DataContext);
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [suggestedTag, setSuggestedTag] = useState("");
+
+  // TODO: Check performance issues when running this component
 
   useEffect(() => {
     onOpen();
@@ -45,49 +55,50 @@ export default function AddUrl() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
+  // useEffect(() => {
+  //   if (url !== "") {
+  //     return;
+  //   }
+
+  //   const urls = localStorage.getItem("urls");
+
+  //   if (!urls) {
+  //     return;
+  //   }
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const fetchResponse = await fetch("/admin/api/add-tools", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ urls }),
+  //       });
+
+  //       // const res = await fetchResponse.json();
+  //       console.log("Response:", fetchResponse);
+
+  //       localStorage.removeItem("urls");
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [url]);
+
   useEffect(() => {
-    if (url !== "") {
-      return;
-    }
-
-    const urls = localStorage.getItem("urls");
-
-    if (!urls) {
-      return;
-    }
-
     const fetchData = async () => {
       try {
-        const fetchResponse = await fetch("/admin/api/add-tools", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ urls }),
-        });
-
-        // const res = await fetchResponse.json();
-        console.log("Response:", fetchResponse);
-
-        localStorage.removeItem("urls");
-      } catch (error) {
-        console.error("Error:", error);
+        await fetchTags();
+      } catch (err) {
+        console.error(err);
       }
     };
 
     fetchData();
   }, [url]);
-
-  async function fetchCategories() {
-    try {
-      const response = await fetch("/api/categories");
-      const { data } = await response.json();
-      // Process the data here
-      setCategories(data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
 
   async function fetchTags() {
     try {
@@ -157,7 +168,7 @@ export default function AddUrl() {
                   }}
                 />
               )}
-              Suggest a new tool
+              Suggest a new web tool
             </ModalHeader>
             <ModalBody className="mb-8">
               {step === 1 ? (
@@ -176,41 +187,19 @@ export default function AddUrl() {
                     setError({ ...error, url: "" });
                     dispatch({ type: "SHOW_SPINNER" });
 
-                    // const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-                    // const rawhtml = await fetch(proxyUrl + url, {
-                    //   mode: "no-cors",
-                    // })
-                    //   .then((res) => {
-                    //     console.log("Response:", res);
-                    //     return res.json();
-                    //   })
-                    //   .catch((error) => {
-                    //     console.error("Error:", error);
-                    //   })
-                    //   .finally(() => {
-                    //     // dispatch({ type: "HIDE_SPINNER" });
-                    //     // setStep(2);
-                    //   });
-                    // const html = rawhtml.text();
-                    const html = await (
-                      await fetch(url, { mode: "no-cors" })
-                    ).text(); // html as text
-                    // const doc = new DOMParser().parseFromString(html, "text/html");
-                    const $ = cheerio.load(html);
-                    const title = $("title").text();
-                    const description = $("meta[name='description']").attr(
-                      "content"
-                    );
-                    const favicon =
-                      $("link[rel='icon']").attr("href") ||
-                      $("meta[property='og:image']").attr("content");
-                    const icon = isValidUrl(favicon as string)
-                      ? favicon
-                      : url + favicon;
+                    const response = await fetch("/api/url", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({ url }),
+                    });
+                    const { title, description, favicon } =
+                      await response.json();
 
                     setTitle(title);
                     setDescription(description || "");
-                    setFavicon(icon || "");
+                    setFavicon(favicon || "");
 
                     // const cats = await fetchCategories();
                     // const tags = await fetchTags();
@@ -252,6 +241,7 @@ export default function AddUrl() {
                     className="bg-transparent w-full focus:outline-none text-smaller"
                     type="url"
                     onChange={(e) => setUrl(e.target.value)}
+                    defaultValue={url}
                     errorMessage={error["url"]}
                   />
                   <Button type="submit" disabled={showSpinner}>
@@ -262,28 +252,33 @@ export default function AddUrl() {
               ) : null}
 
               {step == 2 ? (
-                <form className="flex flex-col gap-3">
-                  <div>
+                <form id="add-url-form" className="flex flex-col gap-3">
+                  <div className="flex gap-3 items-center">
                     <img
                       src={favicon}
                       alt="favicon"
                       className="w-8 h-8 rounded-md"
                     />
-                    <Textarea
-                      label="Favicon Url"
-                      defaultValue={favicon}
-                      onChange={(e) => setFavicon(e.target.value)}
-                    />
+
+                    <div className="flex gap-2">
+                      <Input
+                        isReadOnly
+                        label="Favicon Url"
+                        defaultValue={favicon}
+                        onChange={(e) => setFavicon(e.target.value)}
+                      />
+                      <Input
+                        isReadOnly
+                        type="url"
+                        label="Website Url"
+                        // variant="bordered"
+                        defaultValue={url}
+                      />
+                    </div>
                   </div>
-                  <Input
-                    isReadOnly
-                    type="url"
-                    label="Url"
-                    // variant="bordered"
-                    defaultValue={url}
-                  />
+
                   <Textarea
-                    label="Site name"
+                    label="Name e.g Google Docs"
                     defaultValue={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
@@ -292,17 +287,39 @@ export default function AddUrl() {
                     defaultValue={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
-                  <Button
-                    onClick={() => {
-                      console.log("Submit form");
-                    }}
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
+                  <div>
+                    <p className="text-foreground-500 mb-2">Select tags</p>
+                    {tags.map((tag) => (
+                      <div key={tag.id}>
+                        <Checkbox value={tag.id} className="mb-1" required>
+                          {tag.name}
+                        </Checkbox>
+                      </div>
+                    ))}
+                    <Input
+                      label="Add new tag"
+                      value={suggestedTag}
+                      onChange={(e) => {
+                        setSuggestedTag(e.target.value);
+                      }}
+                    />
+                  </div>
                 </form>
               ) : null}
             </ModalBody>
+            {step == 2 ? (
+              <ModalFooter>
+                <Button
+                  onClick={() => {
+                    console.log("Submit form");
+                  }}
+                  type="submit"
+                  form="add-url-form"
+                >
+                  Submit
+                </Button>
+              </ModalFooter>
+            ) : null}
           </>
         )}
       </ModalContent>

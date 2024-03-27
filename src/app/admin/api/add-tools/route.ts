@@ -3,8 +3,6 @@ import { createClient } from "@/utils/supabase/server";
 import * as cheerio from "cheerio";
 import { isValidUrl } from "@/utils";
 import fetch from "node-fetch";
-import fs from "fs";
-import path from "path";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const supabase = createClient();
