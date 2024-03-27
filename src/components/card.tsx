@@ -47,7 +47,7 @@ export default function Card({ data }: any) {
   return (
     <>
       <NextCard className="w-full pb-1" shadow="sm">
-        <CardHeader className="w-full flex gap-2 items-start justify-between flex-row-reverse border-b-1 border-slate-50">
+        <CardHeader className="w-full flex items-center border-b-1 border-slate-50">
           {/* {isSVGFormatImage(imgUrl) ? (
             <SVGImage />
           ) : (
@@ -59,17 +59,19 @@ export default function Card({ data }: any) {
               className="object-cover w-10 h-10"
             />
           )} */}
-          <div className="w-7 h-7">
-            <Image
-              src={imgUrl}
-              alt={data.title}
-              width="100%"
-              className="object-cover w-7 h-7"
-            />
-          </div>
-          <h4 className="text-sm font-medium">{data.title}</h4>
+          <Avatar
+            isBordered
+            src={imgUrl}
+            radius="sm"
+            size="sm"
+            color="default"
+            showFallback
+            name={data.title.slice(0, 1)}
+            className="min-w-8 bg-transparent p-1"
+          />
+          <h4 className="text-xs font-medium ml-3">{data.title}</h4>
         </CardHeader>
-        <CardBody className="hidden sm:flex text-sm border-b-1 border-slate-50">
+        <CardBody className="hidden sm:flex text-xs border-b-1 border-slate-50 text-gray-600 tracking-wide font-light">
           <p>{truncateString(data.description)}</p>
         </CardBody>
         <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default">
