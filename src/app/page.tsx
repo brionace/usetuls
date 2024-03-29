@@ -9,7 +9,7 @@ import Footer from "@/components/footer";
 const content = {
   name: "Find useful digital Tools & Utilities",
   description:
-    "Discover digital Tools & online Utilities to get things done smarter, quicker and simplify your life & work.",
+    "Discover web Tools & online Utilities help you get things done smarter and quicker",
 };
 
 export default async function Home() {

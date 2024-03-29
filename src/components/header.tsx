@@ -63,10 +63,10 @@ export default function Header({ categories }: any) {
         </NavbarBrand>
         <NavbarContent
           justify="center"
-          className="relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide hidden md:flex"
+          // className="relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide hidden md:flex"
         >
           {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-          <NavbarItem className="w-full">
+          {/* <NavbarItem className="w-full">
             <ul className="flex items-start gap-4">
               {categories?.map((category: any) => (
                 <li key={category.name}>
@@ -82,20 +82,21 @@ export default function Header({ categories }: any) {
                 </li>
               ))}
             </ul>
-          </NavbarItem>
+          </NavbarItem> */}
           {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
-        </NavbarContent>
-        <NavbarContent justify="end">
           <NavbarItem>
             <Button
               variant="light"
               size="sm"
-              className="rounded-full min-w-fit"
+              className="rounded-full min-w-fit bg-white px-4 pr-5"
               onPress={() => dispatch({ type: "SHOW_SEARCH" })}
             >
-              <MdSearch /> <span className="hidden sm:inline">Search</span>
+              <MdSearch />{" "}
+              <span className="hidden sm:inline">Search for a web tool</span>
             </Button>
           </NavbarItem>
+        </NavbarContent>
+        <NavbarContent justify="end">
           <NavbarItem>
             <Button
               variant="light"
@@ -119,7 +120,7 @@ export default function Header({ categories }: any) {
         </NavbarContent>
       </Navbar>
 
-      <nav className="md:hidden w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
+      <nav className="w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
         {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
         <ul className="flex gap-3 [&>li:last-child]:pr-6">
           {categories?.map((category: any) => (
