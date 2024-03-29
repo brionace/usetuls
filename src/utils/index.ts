@@ -29,3 +29,7 @@ export const usetulsTitleSuffix = "Usetuls";
 export function isSVGFormatImage(url: string) {
   return url.endsWith(".svg");
 }
+
+export const isValidImage = (url: string) => {
+  return url.match(/\.(jpeg|jpg|gif|png|ico|svg)$/) != null;
+};

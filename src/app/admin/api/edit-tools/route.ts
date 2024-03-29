@@ -77,7 +77,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     selectedTags?.forEach(async (tagId: number) => {
       const { error } = await supabase.from("tagged").insert({
         tools_id: id,
-        tag_id: tagId,
+        tags_id: tagId,
       });
 
       if (error) {

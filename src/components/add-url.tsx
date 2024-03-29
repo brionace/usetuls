@@ -1,6 +1,6 @@
 "use client";
 
-import { isValidUrl } from "@/utils";
+import { isValidImage, isValidUrl } from "@/utils";
 import {
   Modal,
   ModalContent,
@@ -18,10 +18,16 @@ import {
   RadioGroup,
   ModalFooter,
 } from "@nextui-org/react";
-import { useState, type FormEvent, useEffect, useContext } from "react";
+import { useState, type FormEvent, useEffect, useContext, use } from "react";
 import { MdChevronLeft } from "react-icons/md";
 import { DataContext } from "@/app/data-provider";
-import * as cheerio from "cheerio";
+
+type ErrorType = {
+  url?: string;
+  description?: string;
+  title?: string;
+  favicon?: string;
+};
 
 export default function AddUrl() {
   const [url, setUrl] = useState("");
@@ -29,16 +35,16 @@ export default function AddUrl() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [favicon, setFavicon] = useState("");
-  const [error, setError] = useState({ url: "" });
+  const [error, setError] = useState<ErrorType>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     state: { showAddUrl, showSpinner },
     dispatch,
   } = useContext(DataContext);
-  const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const [suggestedTag, setSuggestedTag] = useState("");
+  const [success, setSuccess] = useState<Record<string, string>>({});
 
   // TODO: Check performance issues when running this component
 
@@ -100,6 +106,21 @@ export default function AddUrl() {
     fetchData();
   }, [url]);
 
+  useEffect(() => {
+    if (!success) {
+      dispatch({ type: "HIDE_SPINNER" });
+      return;
+    }
+
+    setFavicon("");
+    setTitle("");
+    setDescription("");
+    setUrl("");
+    setSelectedTags([]);
+    setSuggestedTag("");
+    dispatch({ type: "HIDE_SPINNER" });
+  }, [success]);
+
   async function fetchTags() {
     try {
       const response = await fetch("/api/tags");
@@ -113,17 +134,88 @@ export default function AddUrl() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const cleaneadContent = url.split(",");
-    const validUrls = cleaneadContent.filter((url) => isValidUrl(url));
 
-    localStorage.setItem("urls", JSON.stringify(validUrls));
-    setUrl(""); // Clear the content
-  }
+    dispatch({ type: "SHOW_SPINNER" });
 
-  function handleChange(
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) {
-    setUrl(event.target.value);
+    let hasError = false;
+    const isRequiredMessage = "Field is required";
+    const isInvalidMessage = "Field is invalid";
+
+    if (!title) {
+      setError({ ...error, title: isRequiredMessage });
+      hasError = true;
+    } else if (typeof title === "string") {
+      setError({ ...error, title: isInvalidMessage });
+      hasError = true;
+    } else {
+      setError({ ...error, title: "" });
+      hasError = false;
+    }
+
+    if (!description) {
+      setError({ ...error, description: isRequiredMessage });
+      hasError = true;
+    } else if (typeof description === "string") {
+      setError({ ...error, description: isInvalidMessage });
+      hasError = true;
+    } else {
+      setError({ ...error, description: "" });
+      hasError = false;
+    }
+
+    if (!favicon) {
+      setError({ ...error, favicon: isRequiredMessage });
+      hasError = true;
+    } else if (!isValidImage(favicon)) {
+      setError({ ...error, favicon: isInvalidMessage });
+      hasError = true;
+    } else {
+      setError({ ...error, favicon: "" });
+      hasError = false;
+    }
+
+    if (!url) {
+      setError({ ...error, url: isRequiredMessage });
+      hasError = true;
+    } else if (!isValidUrl(url)) {
+      setError({ ...error, url: isInvalidMessage });
+      hasError = true;
+    } else {
+      setError({ ...error, url: "" });
+      hasError = false;
+    }
+
+    if (hasError) {
+      dispatch({ type: "HIDE_SPINNER" });
+      return;
+    }
+
+    const insertToDB = async () => {
+      try {
+        const fetchResponse = await fetch("/api/add-tools", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            favicon,
+            url,
+            selectedTags,
+            suggestedTag,
+          }),
+        });
+
+        const res = await fetchResponse.json();
+
+        setSuccess(res);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    insertToDB();
   }
 
   if (!showAddUrl) {
@@ -167,6 +259,7 @@ export default function AddUrl() {
                   onClick={() => {
                     const s = step > 1 ? step - 1 : 1;
                     setStep(s);
+                    setSuccess({});
                   }}
                 />
               )}
@@ -186,7 +279,7 @@ export default function AddUrl() {
                       return;
                     }
 
-                    setError({ ...error, url: "" });
+                    setError({});
                     dispatch({ type: "SHOW_SPINNER" });
 
                     const response = await fetch("/api/url", {
@@ -242,9 +335,9 @@ export default function AddUrl() {
                     placeholder="Enter url"
                     className="bg-transparent w-full focus:outline-none text-smaller"
                     type="url"
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => setUrl(e.target.value)}
                     defaultValue={url}
-                    errorMessage={error["url"]}
+                    errorMessage={error?.url}
                   />
                   <Button type="submit" disabled={showSpinner}>
                     {showSpinner ? <Spinner size="sm" /> : null}
@@ -265,12 +358,11 @@ export default function AddUrl() {
                       alt="favicon"
                       className="w-8 h-8 rounded-md"
                     />
-
                     <div className="flex gap-2">
                       <Input
-                        isReadOnly
                         label="Favicon Url"
                         defaultValue={favicon}
+                        errorMessage={error?.favicon}
                         onChange={(e) => setFavicon(e.target.value)}
                       />
                       <Input
@@ -279,6 +371,7 @@ export default function AddUrl() {
                         label="Website Url"
                         // variant="bordered"
                         defaultValue={url}
+                        errorMessage={error?.url}
                       />
                     </div>
                   </div>
@@ -286,22 +379,48 @@ export default function AddUrl() {
                   <Textarea
                     label="Name e.g Google Docs"
                     defaultValue={title}
+                    errorMessage={error?.title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <Textarea
                     label="Description"
                     defaultValue={description}
+                    errorMessage={error?.description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
-                  <div>
-                    <p className="text-foreground-500 mb-2">Select tags</p>
-                    {tags.map((tag: any) => (
-                      <div key={tag.id}>
-                        <Checkbox value={tag.id} className="mb-1" required>
-                          {tag.name}
-                        </Checkbox>
-                      </div>
-                    ))}
+                  <div className="flex gap-3">
+                    <div>
+                      <p className="text-foreground-500 mb-2">Select tags</p>
+                      {tags.map((tag: any) => (
+                        <div key={tag.id}>
+                          <Checkbox
+                            required
+                            value={tag.id}
+                            className="mb-1"
+                            onChange={(e) =>
+                              setSelectedTags((prevTags) => {
+                                if (e.target.checked) {
+                                  // If the checkbox is being checked, add the value to the array
+                                  return [
+                                    ...new Set([
+                                      ...prevTags,
+                                      Number(e.target.value),
+                                    ]),
+                                  ];
+                                } else {
+                                  // If the checkbox is being unchecked, remove the value from the array
+                                  return prevTags.filter(
+                                    (tag) => tag !== Number(e.target.value)
+                                  );
+                                }
+                              })
+                            }
+                          >
+                            {tag.name}
+                          </Checkbox>
+                        </div>
+                      ))}
+                    </div>
                     <Input
                       label="Add new tag"
                       value={suggestedTag}
@@ -314,16 +433,22 @@ export default function AddUrl() {
               ) : null}
             </ModalBody>
             {step == 2 ? (
-              <ModalFooter>
-                <Button
-                  onClick={() => {
-                    console.log("Submit form");
-                  }}
-                  type="submit"
-                  form="add-url-form"
-                >
-                  Submit
-                </Button>
+              <ModalFooter className="flex gap-3">
+                {success.type === "success" ? (
+                  <>
+                    <p className="text-sm text-success">{success.message}</p>
+                    <Button onClick={() => onOpen()}>Close</Button>
+                  </>
+                ) : (
+                  <Button
+                    type="submit"
+                    form="add-url-form"
+                    disabled={showSpinner}
+                  >
+                    {showSpinner ? <Spinner size="sm" /> : null}
+                    Submit
+                  </Button>
+                )}
               </ModalFooter>
             ) : null}
           </>

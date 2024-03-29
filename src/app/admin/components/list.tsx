@@ -14,7 +14,7 @@ export default async function List() {
     <div className="flex flex-wrap gap-4">
       {data.map((d) => {
         const filteredTags = tagged.filter((t: any) => t.tools_id === d.id);
-        const mappedTags = filteredTags.map((t: any) => t.tag_id);
+        const mappedTags = filteredTags.map((t: any) => t.tags_id);
         return (
           <EditTools
             key={d.id}

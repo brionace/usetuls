@@ -12,6 +12,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const description = $("meta[name='description']").attr("content")?.trim();
   const favicon =
     $("link[rel='icon']").attr("href") ||
+    $("link[rel='shortcut icon']").attr("href") ||
     $("meta[property='og:image']").attr("content");
   const icon = isValidUrl(favicon as string) ? favicon : url + favicon;
   const faviconTrimmed = icon.trim();

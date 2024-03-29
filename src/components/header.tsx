@@ -45,12 +45,12 @@ export default function Header({ categories }: any) {
   };
 
   return (
-    <div className="sticky top-0 border-b border-slate-100 z-50 bg-white">
+    <div className="sticky top-0 border-b border-slate-100 z-50 bg-slate-100 shadow-small">
       <Search />
       <AddUrl />
       <Bookmarks />
       {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
-      <Navbar maxWidth="full">
+      <Navbar maxWidth="full" className="bg-inherit">
         <NavbarBrand className="flex gap-1 text-sm w-auto">
           <Link href="/" className="w-6 h-6">
             <Image
