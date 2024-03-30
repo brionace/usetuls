@@ -88,7 +88,7 @@ export default function Header({ categories }: any) {
             <Button
               variant="light"
               size="sm"
-              className="rounded-full min-w-fit bg-white px-4 pr-5"
+              className="rounded-full min-w-fit bg-slate-200 px-4 pr-5"
               onPress={() => dispatch({ type: "SHOW_SEARCH" })}
             >
               <MdSearch />{" "}
@@ -120,9 +120,9 @@ export default function Header({ categories }: any) {
         </NavbarContent>
       </Navbar>
 
-      <nav className="w-full px-6 pb-4 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide justify-center">
+      <nav className="w-full px-6 pb-2 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide">
         {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-        <ul className="flex gap-3 [&>li:last-child]:pr-6">
+        <ul className="flex gap-3 [&>li:last-child]:pr-6 md:justify-center">
           {categories?.map((category: any) => (
             <li key={category.name}>
               <Button
