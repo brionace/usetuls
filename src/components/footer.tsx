@@ -9,7 +9,7 @@ export default function Footer() {
 
   return (
     <footer className="py-6 mt-8 px-6 text-sm text-slate-500 border-t border-slate-100">
-      <div className="flex gap-2 justify-center">
+      <div className="flex gap-2 items-center justify-center text-sm">
         <p>
           <span className="hidden md:inline">Made with</span> ❤️{" "}
           <span className="hidden md:inline">by</span>{" "}
@@ -17,23 +17,24 @@ export default function Footer() {
             isExternal
             href="https://brianory.me"
             underline="hover"
-            // className="underline underline-offset-4"
+            size="sm"
           >
             Brian
           </Link>
         </p>
-        <span>/</span>
+        <span className="text-gray-300">{currentYear}</span>
         <p className="flex gap-1 items-center">
           <Link
             isExternal
             href="https://www.buymeacoffee.com/brianoryem"
             rel="nofollow"
             underline="hover"
+            size="sm"
             className="bg-gradient-to-r from-purple-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"
           >
             Buy me a coffee
           </Link>
-          <MdArrowRightAlt size="20" />
+          <MdArrowRightAlt size="15" />
           {/* <button
           onClick={async () => {
             try {
@@ -51,9 +52,6 @@ export default function Footer() {
           sd
         </button> */}
         </p>
-      </div>
-      <div className="text-gray-300 text-center text-xs mt-2">
-        {currentYear}
       </div>
     </footer>
   );

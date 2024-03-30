@@ -7,9 +7,9 @@ import getTagsData from "@/utils/getTagsData";
 import Footer from "@/components/footer";
 
 const content = {
-  name: "Find useful digital Tools & Utilities",
+  name: "Discover useful digital tools",
   description:
-    "Discover web Tools & online Utilities help you get things done smarter and quicker",
+    "Find web tools that help you get things done smarter and quicker",
 };
 
 export default async function Home() {

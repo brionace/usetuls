@@ -11,9 +11,9 @@ const fonts = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Usetuls - Find digital Tools & Utilities",
+  title: "Discover useful digital tools",
   description:
-    "Discover web Tools & online Utilities help you get things done smarter and quicker",
+    "Find web tools that help you get things done smarter and quicker",
 };
 
 export default function RootLayout({
