@@ -21,7 +21,7 @@ export default async function getCategoriesData({
     .select(
       `id, name, description, slug${hasTools ? `, tools(category_id)` : ``}`
     )
-    .eq("is_published", isPublished ? isPublished : true);
+    .eq("is_published", isPublished !== undefined ? isPublished : true);
 
   if (id !== undefined) {
     query = query.eq("id", id);

@@ -13,7 +13,7 @@ export default async function getToolsData({
   let query = supabase
     .from("tools")
     .select(`id, title, favicon, description, url, category_id, is_published`)
-    .eq("is_published", isPublished ? isPublished : true);
+    .eq("is_published", isPublished !== undefined ? isPublished : true);
 
   if (categoryId) {
     query = query.eq("category_id", categoryId);
