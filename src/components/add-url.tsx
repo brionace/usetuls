@@ -143,7 +143,7 @@ export default function AddUrl() {
     const isRequiredMessage = "Field is required";
     const isInvalidMessage = "Field is invalid";
 
-    if (!title) {
+    if (title.length === 0) {
       setError({ ...error, title: isRequiredMessage });
       hasError = true;
     } else if (typeof title === "string") {
@@ -154,7 +154,7 @@ export default function AddUrl() {
       hasError = false;
     }
 
-    if (!description) {
+    if (description.length === 0) {
       setError({ ...error, description: isRequiredMessage });
       hasError = true;
     } else if (typeof description === "string") {
@@ -165,7 +165,7 @@ export default function AddUrl() {
       hasError = false;
     }
 
-    if (!favicon) {
+    if (favicon.length === 0) {
       setError({ ...error, favicon: isRequiredMessage });
       hasError = true;
     } else if (!isValidImage(favicon)) {
@@ -176,7 +176,7 @@ export default function AddUrl() {
       hasError = false;
     }
 
-    if (!url) {
+    if (url.length === 0) {
       setError({ ...error, url: isRequiredMessage });
       hasError = true;
     } else if (!isValidUrl(url)) {
@@ -187,9 +187,12 @@ export default function AddUrl() {
       hasError = false;
     }
 
-    if (!selectedTags.length || suggestedTag.length < 1) {
+    if (selectedTags.length === 0 && suggestedTag.length === 0) {
       setError({ ...error, tags: "Please select a tag or suggest one." });
       hasError = true;
+    } else {
+      setError({ ...error, tags: "" });
+      hasError = false;
     }
 
     if (hasError) {
@@ -396,9 +399,9 @@ export default function AddUrl() {
                     errorMessage={error?.description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
-                  <div className="flex gap-3">
-                    <div>
-                      <p className="text-foreground-500 mb-2">Select tags</p>
+                  <div>
+                    <p className="text-foreground-500 mb-2">Select tags</p>
+                    <div className="flex gap-3 flex-wrap">
                       {tags.map((tag: any) => (
                         <div key={tag.id}>
                           <Checkbox
@@ -430,7 +433,7 @@ export default function AddUrl() {
                       ))}
                     </div>
                     <Input
-                      label="Add new tag"
+                      label="Suggest new tag"
                       value={suggestedTag}
                       onChange={(e) => {
                         setSuggestedTag(e.target.value);

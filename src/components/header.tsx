@@ -91,7 +91,7 @@ export default function Header({ categories }: any) {
             <Button
               variant="light"
               size="sm"
-              className="rounded-full min-w-fit bg-slate-200 px-4 pr-5"
+              className="rounded-full min-w-fit bg-slate-200 px-4 sm:pr-5"
               onPress={() => dispatch({ type: "SHOW_SEARCH" })}
             >
               <MdSearch />{" "}
