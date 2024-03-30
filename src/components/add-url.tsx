@@ -453,20 +453,19 @@ export default function AddUrl() {
                 ) : (
                   <>
                     <div className="w-full">
-                      {error ? (
-                        Object.entries(error).map(([key, value]) => (
-                          <p key={key} className="text-sm text-danger">
-                            {value}
-                          </p>
-                        ))
-                      ) : (
-                        <Input
-                          type="email"
-                          label="Enter your email (optional)"
-                          size="sm"
-                          onChange={(e) => setUserEmail(e.target.value)}
-                        />
-                      )}
+                      {error
+                        ? Object.entries(error).map(([key, value]) => (
+                            <p key={key} className="text-sm text-danger">
+                              {value}
+                            </p>
+                          ))
+                        : null}
+                      <Input
+                        type="email"
+                        label="Enter your email (optional)"
+                        size="sm"
+                        onChange={(e) => setUserEmail(e.target.value)}
+                      />
 
                       {/* <Input
                       type="text"

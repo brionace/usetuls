@@ -21,7 +21,7 @@ export default async function getCategoriesData({
     .select(
       `id, name, description, slug${hasTools ? `, tools(category_id)` : ``}`
     )
-    .eq("is_published", isPublished);
+    .eq("is_published", isPublished ? isPublished : true);
 
   if (id !== undefined) {
     query = query.eq("id", id);
@@ -35,7 +35,8 @@ export default async function getCategoriesData({
     // query = query.or(
     //   `name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`
     // );
-    query = query.textSearch("name", searchTerm);
+    // query = query.textSearch("name", searchTerm);
+    query = query.or(`name.ilike.%${searchTerm}%`);
   }
 
   const { data, error } = await query;

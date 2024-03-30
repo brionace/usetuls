@@ -2,26 +2,21 @@ import { createClient } from "@/utils/supabase/server";
 
 export default async function getToolsData({
   categoryId,
-  editing,
+  isPublished,
   searchTerm,
 }: {
   categoryId?: number;
-  editing?: boolean;
+  isPublished?: boolean;
   searchTerm?: string;
 }) {
   const supabase = createClient();
   let query = supabase
     .from("tools")
-    .select(`id, title, favicon, description, url, category_id, is_published`);
+    .select(`id, title, favicon, description, url, category_id, is_published`)
+    .eq("is_published", isPublished ? isPublished : true);
 
   if (categoryId) {
     query = query.eq("category_id", categoryId);
-  }
-
-  if (editing) {
-    query = query.eq("is_published", false);
-  } else {
-    query = query.eq("is_published", true);
   }
 
   if (searchTerm) {
