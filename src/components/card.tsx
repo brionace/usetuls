@@ -30,8 +30,8 @@ export default function Card({ data }: any) {
   const [backdrop, setBackdrop] = useState("opaque");
 
   function truncateString(str: string, length = 80, ending = "...") {
-    if (str.length > length) {
-      return str.slice(0, length - ending.length) + ending;
+    if (str?.length > length) {
+      return str?.slice(0, length - ending.length) + ending;
     }
     return str;
   }

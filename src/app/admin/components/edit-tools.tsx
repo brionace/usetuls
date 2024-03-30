@@ -25,10 +25,11 @@ export default function EditTools({
     url: data.url,
     description: data.description,
     tags: data.tags,
-    is_published: data.is_published,
+    is_published: data.is_published || true,
   });
   const tagsAsIntegers = data.tags?.map((tag: string) => parseInt(tag, 10));
-  const [selectedTags, setSelectedTags] = useState<number[]>(tagsAsIntegers);
+  console.log({ tagsAsIntegers });
+  const [selectedTags, setSelectedTags] = useState<number[]>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,10 +56,10 @@ export default function EditTools({
       return;
     }
 
-    if (event.target.type === "checkbox") {
-      updateSelectedTags(Number(event.target.value));
-      return;
-    }
+    // if (event.target.type === "checkbox") {
+    //   updateSelectedTags(Number(event.target.value));
+    //   return;
+    // }
 
     setInputContent({
       ...inputContent,
@@ -67,17 +68,24 @@ export default function EditTools({
   };
 
   function updateSelectedTags(newItem: number) {
+    if (!selectedTags) {
+      setSelectedTags([newItem]);
+      return;
+    }
+
     // Check if the item already exists in the array
-    const itemExists = selectedTags.some((item) => item === newItem);
+    const itemExists = selectedTags?.some((item) => item === newItem);
 
     if (itemExists) {
       // If the item exists, create a new array without the item
-      setSelectedTags(selectedTags.filter((item) => item !== newItem));
+      setSelectedTags(selectedTags?.filter((item) => item !== newItem));
     } else {
       // If the item doesn't exist, add it to the array
-      setSelectedTags(selectedTags.concat(newItem));
+      setSelectedTags(selectedTags?.concat(newItem));
     }
   }
+
+  console.log(selectedTags);
 
   return (
     <>
@@ -163,7 +171,7 @@ export default function EditTools({
                               name={id}
                               value={tag.id}
                               checked={selectedTags?.includes(tag.id)}
-                              onChange={handleChange}
+                              onChange={() => updateSelectedTags(tag.id)}
                             />
                             <label htmlFor={id}>{tag.name}</label>
                           </div>

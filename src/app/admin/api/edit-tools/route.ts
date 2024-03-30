@@ -57,7 +57,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       title,
       description,
       url,
-      category_id,
       favicon: idExt,
       is_published,
     })
@@ -67,23 +66,28 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.error(error);
   }
 
+  console.log(selectedTags);
   if (selectedTags) {
-    const { error } = await supabase.from("tagged").delete().eq("tools_id", id);
+    const { data: updatedData, error: updateError } = await supabase
+      .from("tools")
+      .update({ tags: selectedTags })
+      .eq("id", id);
+    // const { error } = await supabase.from("tagged").delete().eq("tools_id", id);
 
-    if (error) {
-      console.error(error);
-    }
+    // if (error) {
+    //   console.error(error);
+    // }
 
-    selectedTags?.forEach(async (tagId: number) => {
-      const { error } = await supabase.from("tagged").insert({
-        tools_id: id,
-        tags_id: tagId,
-      });
+    // selectedTags?.forEach(async (tagId: number) => {
+    //   const { error } = await supabase.from("tagged").insert({
+    //     tools_id: id,
+    //     tags_id: tagId,
+    //   });
 
-      if (error) {
-        console.error(error);
-      }
-    });
+    //   if (error) {
+    //     console.error(error);
+    //   }
+    // });
   }
 
   return NextResponse.json({ message: "success" });
