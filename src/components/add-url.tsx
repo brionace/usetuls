@@ -47,6 +47,7 @@ export default function AddUrl() {
   const [suggestedTag, setSuggestedTag] = useState("");
   const [success, setSuccess] = useState<Record<string, string>>({});
   const [userEmail, setUserEmail] = useState("");
+  console.log({ url });
 
   // TODO: Check performance issues when running this component
 
@@ -286,7 +287,7 @@ export default function AddUrl() {
                     // const url = formData.get("url") as string;
 
                     if (!isValidUrl(url)) {
-                      setError({ url: "Url maybe invalid" });
+                      setError({ url: "Please check the url format" });
                       return;
                     }
 

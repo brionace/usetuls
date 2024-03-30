@@ -68,7 +68,7 @@ export default function Bookmarks() {
             <ModalHeader className="flex gap-1 pr-10">
               <Link href="/" className="w-6 h-6">
                 <Image
-                  src="/logo.png"
+                  src="/logo.svg"
                   alt="Usetuls logo"
                   className="w-6 h-6 rounded-none"
                 />

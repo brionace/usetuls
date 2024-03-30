@@ -8,6 +8,7 @@ export const isValidUrl = (urlString: string) => {
   return url.protocol === "https:";
 };
 
+
 const checkEnvironment = () => {
   let base_url =
     process.env.NODE_ENV === "development"

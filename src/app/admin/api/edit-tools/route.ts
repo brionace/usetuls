@@ -66,7 +66,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     console.error(error);
   }
 
-  console.log(selectedTags);
   if (selectedTags) {
     const { data: updatedData, error: updateError } = await supabase
       .from("tools")

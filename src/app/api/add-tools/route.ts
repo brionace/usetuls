@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   // Insert suggested web tool
   const { data, error } = await supabase.rpc("insert_suggested_tools", {
-    url,
+    url: url,
     title,
     favicon,
     description,

@@ -57,7 +57,7 @@ export default function Header({ categories }: any) {
         <NavbarBrand className="flex gap-1 text-sm w-auto">
           <Link href="/" className="w-6 h-6">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="Usetuls logo"
               className="w-6 h-6 rounded-none"
             />
@@ -137,7 +137,7 @@ export default function Header({ categories }: any) {
       {showNav ? (
         <nav className="w-full px-6 pb-2 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide border-t border-separate pt-2">
           {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-          <ul className="flex gap-3 [&>li:last-child]:pr-6 md:justify-center">
+          <ul className="flex gap-3 [&>li:last-child]:pr-6 md:[&>li:last-child]:pr-0 md:justify-center">
             {categories?.map((category: any) => (
               <li key={category.name}>
                 <Button
