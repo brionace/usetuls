@@ -66,7 +66,7 @@ export default function Card({ data }: any) {
             color="default"
             showFallback
             name={data.title.slice(0, 1)}
-            className="bg-transparent p-2 shadow-md"
+            className="p-2 bg-blend-normal bg-gradient-to-br from-[#f9f9f9] to-[#f1f1f1]"
           />
           <h4 className="text-xs font-medium ml-3">{data.title}</h4>
         </CardHeader>
