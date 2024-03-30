@@ -19,6 +19,7 @@ import {
   MdAdd,
   MdBookmarks,
   MdExpandMore,
+  MdExpandLess,
 } from "react-icons/md";
 import Search from "./search";
 import { DataContext } from "@/app/data-provider";
@@ -61,7 +62,7 @@ export default function Header({ categories }: any) {
               className="w-6 h-6 rounded-none"
             />
           </Link>
-          <span>Usetuls</span>
+          <span className="hidden md:inline">Usetuls</span>
         </NavbarBrand>
         <NavbarContent
           justify="center"
@@ -105,7 +106,7 @@ export default function Header({ categories }: any) {
               onPress={() => setShowNav(!showNav)}
             >
               <span className="hidden sm:inline">Browse</span>
-              <MdExpandMore />
+              {!showNav ? <MdExpandMore /> : <MdExpandLess />}
             </Button>
           </NavbarItem>
         </NavbarContent>

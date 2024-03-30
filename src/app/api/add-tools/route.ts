@@ -1,15 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import * as cheerio from "cheerio";
-import { isValidUrl } from "@/utils";
+import { isValidEmail, isValidUrl } from "@/utils";
 import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const supabase = createClient();
-  const { title, url, description, favicon, selectedTags, suggestedTag } =
-    await req.json();
+  const {
+    title,
+    url,
+    description,
+    favicon,
+    selectedTags,
+    suggestedTag,
+    userEmail,
+  } = await req.json();
 
   // Insert suggested web tool
   const { data, error } = await supabase.rpc("insert_suggested_tools", {
@@ -35,21 +42,48 @@ export async function POST(req: NextRequest, res: NextResponse) {
     throw Error(updateError.message);
   }
 
+  const toolsId = data.tools_id;
+
   // Insert suggested tag
   if (typeof suggestedTag === "string" && suggestedTag.length > 0) {
+    const slug = suggestedTag.trim().replace(/\s/g, "-").toLowerCase();
     const { data: dataSuggestedTag, error: errorSuggestedTag } =
       await supabase.rpc("insert_suggested_tag", {
         name: suggestedTag,
-        slug: suggestedTag.trim().replace(/\s/g, "-").toLowerCase(),
+        slug: slug,
       });
     if (errorSuggestedTag) {
       console.error({ errorSuggestedTag });
       throw Error(errorSuggestedTag.message);
     }
-    console.log("INSERT SUGGESTED TAG", {
-      dataSuggestedTag,
-      errorSuggestedTag,
-    });
+
+    // Update tools with the suggested tag
+    const { data: dataNewTag } = await supabase
+      .from("tags")
+      .select("id")
+      .eq("slug", slug)
+      .single();
+    const { data: dataTools } = await supabase
+      .from("tools")
+      .select("tags")
+      .eq("id", toolsId)
+      .single();
+    const { data: dataToolsTag, error: errorToolsTag } = await supabase
+      .from("tools")
+      .update({ tags: [...dataTools?.tags, dataNewTag?.id] })
+      .eq("id", toolsId);
+  }
+
+  // Insert suggester
+  if (isValidEmail(userEmail)) {
+    const { error: errorSuggester } = await supabase
+      .from("suggester")
+      .insert({ email: userEmail, suggestion_id: toolsId });
+
+    if (errorSuggester) {
+      console.error({ errorSuggester });
+      throw Error(errorSuggester.message);
+    }
   }
 
   // Insert favicon

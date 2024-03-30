@@ -45,6 +45,7 @@ export default function AddUrl() {
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const [suggestedTag, setSuggestedTag] = useState("");
   const [success, setSuccess] = useState<Record<string, string>>({});
+  const [userEmail, setUserEmail] = useState("");
 
   // TODO: Check performance issues when running this component
 
@@ -204,6 +205,7 @@ export default function AddUrl() {
             url,
             selectedTags,
             suggestedTag,
+            userEmail,
           }),
         });
 
@@ -440,14 +442,38 @@ export default function AddUrl() {
                     <Button onClick={() => onOpen()}>Close</Button>
                   </>
                 ) : (
-                  <Button
-                    type="submit"
-                    form="add-url-form"
-                    disabled={showSpinner}
-                  >
-                    {showSpinner ? <Spinner size="sm" /> : null}
-                    Submit
-                  </Button>
+                  <>
+                    <div className="w-full">
+                      <Input
+                        type="email"
+                        label="Enter your email (optional)"
+                        size="sm"
+                        onChange={(e) => setUserEmail(e.target.value)}
+                      />
+
+                      {/* <Input
+                      type="text"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        const reader = new FileReader();
+
+                        reader.onload = () => {
+                          setFavicon(reader.result as string);
+                        };
+
+                        reader.readAsDataURL(file);
+                      }} /> */}
+                    </div>
+                    <Button
+                      type="submit"
+                      form="add-url-form"
+                      disabled={showSpinner}
+                    >
+                      {showSpinner ? <Spinner size="sm" /> : null}
+                      Submit
+                    </Button>
+                  </>
                 )}
               </ModalFooter>
             ) : null}

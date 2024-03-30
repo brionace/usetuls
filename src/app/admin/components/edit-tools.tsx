@@ -9,9 +9,7 @@ import {
 
 export default function EditTools({
   data,
-  categories,
   tags,
-  tagged,
 }: {
   data: any;
   categories?: any;
@@ -26,10 +24,11 @@ export default function EditTools({
     title: data.title,
     url: data.url,
     description: data.description,
-    category_id: data.category_id,
+    tags: data.tags,
     is_published: data.is_published,
   });
-  const [selectedTags, setSelectedTags] = useState<number[]>(tagged);
+  const tagsAsIntegers = data.tags?.map((tag: string) => parseInt(tag, 10));
+  const [selectedTags, setSelectedTags] = useState<number[]>(tagsAsIntegers);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,14 +46,6 @@ export default function EditTools({
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (event.target.type === "radio") {
-      setInputContent({
-        ...inputContent,
-        ["category_id"]: event.target.value,
-      });
-      return;
-    }
-
     // This should appear before the next condition as its a type:checkbox
     if (event.target.id === "is_published") {
       setInputContent({
@@ -105,7 +96,7 @@ export default function EditTools({
           backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
           isOpen={isOpen}
           onClose={onClose}
-          placement="center"
+          placement="top"
         >
           <ModalContent>
             {(onClose) => (
@@ -160,48 +151,24 @@ export default function EditTools({
                         className="w-full"
                       ></textarea>
                     </label>
-                    <div className="flex gap-4">
-                      <div>
-                        <p>Categories</p>
-                        {categories?.map((category: any) => {
-                          const id = `cat-${category.id}`;
-                          return (
-                            <div key={id}>
-                              <input
-                                type="radio"
-                                id={id}
-                                name="categories"
-                                value={category.id}
-                                checked={
-                                  category.id ===
-                                  Number(inputContent.category_id)
-                                }
-                                onChange={handleChange}
-                              />
-                              <label htmlFor={id}>{category.name}</label>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div>
-                        <p>Tags</p>
-                        {tags?.map((tag: any) => {
-                          const id = `tag-${tag.id}`;
-                          return (
-                            <div key={id}>
-                              <input
-                                type="checkbox"
-                                id={id}
-                                name={id}
-                                value={tag.id}
-                                checked={selectedTags.includes(tag.id)}
-                                onChange={handleChange}
-                              />
-                              <label htmlFor={id}>{tag.name}</label>
-                            </div>
-                          );
-                        })}
-                      </div>
+                    <div className="flex flex-col gap-4">
+                      <p>Tags</p>
+                      {tags?.map((tag: any) => {
+                        const id = `tag-${tag.id}`;
+                        return (
+                          <div key={id}>
+                            <input
+                              type="checkbox"
+                              id={id}
+                              name={id}
+                              value={tag.id}
+                              checked={selectedTags?.includes(tag.id)}
+                              onChange={handleChange}
+                            />
+                            <label htmlFor={id}>{tag.name}</label>
+                          </div>
+                        );
+                      })}
                     </div>
                     <div className="flex justify-end gap-4">
                       <div className="flex gap-1">

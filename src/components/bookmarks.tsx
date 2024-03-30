@@ -5,7 +5,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
+  Image,
 } from "@nextui-org/react";
+import Link from "next/link";
 import React, { useContext, useEffect } from "react";
 
 export default function Bookmarks() {
@@ -63,8 +65,15 @@ export default function Bookmarks() {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 pr-10">
-              Bookmarks
+            <ModalHeader className="flex gap-1 pr-10">
+              <Link href="/" className="w-6 h-6">
+                <Image
+                  src="/logo.png"
+                  alt="Usetuls logo"
+                  className="w-6 h-6 rounded-none"
+                />
+              </Link>
+              {/* <span className="hidden md:inline">Usetuls</span> */}
             </ModalHeader>
             <ModalBody className="mb-8">
               <div className="flex flex-col gap-4 place-self-center text-center">

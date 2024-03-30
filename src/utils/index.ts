@@ -33,3 +33,8 @@ export function isSVGFormatImage(url: string) {
 export const isValidImage = (url: string) => {
   return url.match(/\.(jpeg|jpg|gif|png|ico|svg)$/) != null;
 };
+
+export const isValidEmail = (email: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
