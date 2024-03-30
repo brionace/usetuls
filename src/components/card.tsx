@@ -120,7 +120,7 @@ export default function Card({ data }: any) {
         backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
         isOpen={isOpen}
         onClose={onClose}
-        placement="center"
+        placement="top"
       >
         <ModalContent className="pb-3">
           {(onClose) => (

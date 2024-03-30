@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Link,
   Button,
@@ -18,6 +18,7 @@ import {
   MdMoreVert,
   MdAdd,
   MdBookmarks,
+  MdExpandMore,
 } from "react-icons/md";
 import Search from "./search";
 import { DataContext } from "@/app/data-provider";
@@ -25,6 +26,7 @@ import AddUrl from "@/components/add-url";
 import Bookmarks from "./bookmarks";
 
 export default function Header({ categories }: any) {
+  const [showNav, setShowNav] = useState(false);
   const {
     state: { showAddUrl, showBookmarks, showSearch },
     dispatch,
@@ -95,6 +97,17 @@ export default function Header({ categories }: any) {
               <span className="hidden sm:inline">Search for a web tool</span>
             </Button>
           </NavbarItem>
+          <NavbarItem>
+            <Button
+              variant="light"
+              size="sm"
+              className="flex rounded-full min-w-fit"
+              onPress={() => setShowNav(!showNav)}
+            >
+              <span className="hidden sm:inline">Browse</span>
+              <MdExpandMore />
+            </Button>
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
@@ -120,25 +133,27 @@ export default function Header({ categories }: any) {
         </NavbarContent>
       </Navbar>
 
-      <nav className="w-full px-6 pb-2 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide">
-        {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-        <ul className="flex gap-3 [&>li:last-child]:pr-6 md:justify-center">
-          {categories?.map((category: any) => (
-            <li key={category.name}>
-              <Button
-                as={Link}
-                href={`/c/${category.slug}`}
-                variant="flat"
-                size="sm"
-                className="text-smaller"
-              >
-                {category.name}
-              </Button>
-            </li>
-          ))}
-        </ul>
-        {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
-      </nav>
+      {showNav ? (
+        <nav className="w-full px-6 pb-2 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide border-t border-separate pt-3">
+          {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
+          <ul className="flex gap-3 [&>li:last-child]:pr-6 md:justify-center">
+            {categories?.map((category: any) => (
+              <li key={category.name}>
+                <Button
+                  as={Link}
+                  href={`/c/${category.slug}`}
+                  variant="flat"
+                  size="sm"
+                  className="text-smaller"
+                >
+                  {category.name}
+                </Button>
+              </li>
+            ))}
+          </ul>
+          {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
+        </nav>
+      ) : null}
     </div>
   );
 }
