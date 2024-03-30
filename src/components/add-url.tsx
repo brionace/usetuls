@@ -27,6 +27,7 @@ type ErrorType = {
   description?: string;
   title?: string;
   favicon?: string;
+  tags?: string;
 };
 
 export default function AddUrl() {
@@ -184,6 +185,11 @@ export default function AddUrl() {
     } else {
       setError({ ...error, url: "" });
       hasError = false;
+    }
+
+    if (!selectedTags.length || suggestedTag.length < 1) {
+      setError({ ...error, tags: "Please select a tag or suggest one." });
+      hasError = true;
     }
 
     if (hasError) {
@@ -444,12 +450,20 @@ export default function AddUrl() {
                 ) : (
                   <>
                     <div className="w-full">
-                      <Input
-                        type="email"
-                        label="Enter your email (optional)"
-                        size="sm"
-                        onChange={(e) => setUserEmail(e.target.value)}
-                      />
+                      {error ? (
+                        Object.entries(error).map(([key, value]) => (
+                          <p key={key} className="text-sm text-danger">
+                            {value}
+                          </p>
+                        ))
+                      ) : (
+                        <Input
+                          type="email"
+                          label="Enter your email (optional)"
+                          size="sm"
+                          onChange={(e) => setUserEmail(e.target.value)}
+                        />
+                      )}
 
                       {/* <Input
                       type="text"

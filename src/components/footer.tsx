@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@nextui-org/react";
 import React from "react";
 import { MdArrowRightAlt } from "react-icons/md";
 
@@ -14,8 +14,9 @@ export default function Footer() {
           <span className="hidden md:inline">Made with</span> ❤️{" "}
           <span className="hidden md:inline">by</span>{" "}
           <Link
+            isExternal
             href="https://brianory.me"
-            target="_blank"
+            underline="hover"
             // className="underline underline-offset-4"
           >
             Brian
@@ -24,9 +25,10 @@ export default function Footer() {
         <span>/</span>
         <p className="flex gap-1 items-center">
           <Link
+            isExternal
             href="https://www.buymeacoffee.com/brianoryem"
-            target="_blank"
             rel="nofollow"
+            underline="hover"
             className="bg-gradient-to-r from-purple-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"
           >
             Buy me a coffee
