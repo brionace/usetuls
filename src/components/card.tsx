@@ -29,7 +29,7 @@ export default function Card({ data }: any) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = useState("opaque");
 
-  function truncateString(str: string, length = 80, ending = "...") {
+  function truncateString(str: string, length = 45, ending = "...") {
     if (str?.length > length) {
       return str?.slice(0, length - ending.length) + ending;
     }
@@ -47,7 +47,7 @@ export default function Card({ data }: any) {
   return (
     <>
       <NextCard className="w-full pb-1" shadow="sm">
-        <CardHeader className="w-full flex items-center border-b-1 border-slate-50">
+        <CardHeader className="w-full flex items-center">
           {/* {isSVGFormatImage(imgUrl) ? (
             <SVGImage />
           ) : (
@@ -70,7 +70,7 @@ export default function Card({ data }: any) {
           />
           <h4 className="text-xs font-medium ml-3">{data.title}</h4>
         </CardHeader>
-        <CardBody className="hidden sm:flex text-xs border-b-1 border-slate-50 text-gray-600 tracking-wide font-light">
+        <CardBody className="text-xs border-b-1 border-slate-50 text-gray-600 tracking-wide font-light">
           <p>{truncateString(data.description)}</p>
         </CardBody>
         <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default">
