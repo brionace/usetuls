@@ -18,7 +18,8 @@ import { DataContext } from "@/app/data-provider";
 export default function Search() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResultsTools, setSearchResultsTools] = useState([]);
+  const [searchResultsTags, setSearchResultsTags] = useState([]);
   const {
     state: { showSearch },
     dispatch,
@@ -42,7 +43,8 @@ export default function Search() {
       return;
     }
 
-    setSearchResults([]);
+    setSearchResultsTools([]);
+    setSearchResultsTags([]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
@@ -56,7 +58,8 @@ export default function Search() {
       body: JSON.stringify({ term: search }),
     });
     const { data } = await response.json();
-    setSearchResults(data);
+    setSearchResultsTools(data.tools);
+    setSearchResultsTags(data.tags);
   };
 
   if (!showSearch) {
@@ -112,25 +115,46 @@ export default function Search() {
                   }
                 />
               </form>
-              {searchResults.length ? (
-                <ul className="flex flex-col gap-2 pb-10">
-                  {searchResults?.map((result: any, index) => {
-                    //   let title = result.title;
-                    //   if (result.title) {
-                    //     title = result.name;
-                    //   }
-                    return (
-                      <li key={index}>
-                        {result.title ? (
-                          <Link href={``}>{result.title}</Link>
-                        ) : (
-                          <Link href={`/c/${result.slug}`}>{result.name}</Link>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : null}
+              <div className="flex gap-1 justify-between">
+                {searchResultsTools.length ? (
+                  <div>
+                    <h3 className="my-3">Tools</h3>
+                    <ul className="flex flex-col gap-2 pb-10">
+                      {searchResultsTools?.map((result: any, index) => {
+                        //   let title = result.title;
+                        //   if (result.title) {
+                        //     title = result.name;
+                        //   }
+                        return (
+                          <li key={index}>
+                            <Button>{result.title}</Button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ) : null}
+                {searchResultsTags.length ? (
+                  <div>
+                    <h3 className="my-3">Tags</h3>
+                    <ul className="flex flex-col gap-2 pb-10">
+                      {searchResultsTags?.map((result: any, index) => {
+                        //   let title = result.title;
+                        //   if (result.title) {
+                        //     title = result.name;
+                        //   }
+                        return (
+                          <li key={index}>
+                            <Link href={`/c/${result.slug}`}>
+                              {result.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
             </ModalBody>
           </>
         )}
