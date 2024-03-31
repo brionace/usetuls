@@ -6,6 +6,7 @@ import getCategoriesData from "@/utils/getCategoriesData";
 import Footer from "@/components/footer";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { usetulsTitleSuffix, usetulsTitleDivider } from "@/utils";
+import Tool from "@/components/tool";
 
 type Props = {
   params: { slug: string };
@@ -43,6 +44,7 @@ export default async function Categories({ params }: Props) {
         <Banner content={category} />
         <List categoryId={category.id} />
       </main>
+      <Tool />
       <Footer />
     </>
   );

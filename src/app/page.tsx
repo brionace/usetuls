@@ -15,7 +15,6 @@ const content = {
 
 export default async function Home() {
   const categories = await getCategoriesData({ hasTools: true });
-  const tags = await getTagsData({});
 
   return (
     <>
