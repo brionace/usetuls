@@ -47,7 +47,6 @@ export default function AddUrl() {
   const [suggestedTag, setSuggestedTag] = useState("");
   const [success, setSuccess] = useState<Record<string, string>>({});
   const [userEmail, setUserEmail] = useState("");
-  console.log({ url });
 
   // TODO: Check performance issues when running this component
 

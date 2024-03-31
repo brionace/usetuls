@@ -9,13 +9,16 @@ type Type =
   | "SHOW_SPINNER"
   | "HIDE_SPINNER"
   | "SHOW_BOOKMARKS"
-  | "HIDE_BOOKMARKS";
+  | "HIDE_BOOKMARKS"
+  | "SHOW_TOOL"
+  | "HIDE_TOOL";
 
 type State = {
   showSearch: boolean;
   showAddUrl: boolean;
   showSpinner: boolean;
   showBookmarks: boolean;
+  showTool: number | null;
 };
 
 const initialState = {
@@ -23,6 +26,7 @@ const initialState = {
   showAddUrl: false,
   showSpinner: false,
   showBookmarks: false,
+  showTool: null,
 };
 
 const reducer = (state: State, action: { type: Type; payload: any }) => {
@@ -43,6 +47,10 @@ const reducer = (state: State, action: { type: Type; payload: any }) => {
       return { ...state, showBookmarks: true };
     case "HIDE_BOOKMARKS":
       return { ...state, showBookmarks: false };
+    case "SHOW_TOOL":
+      return { ...state, showTool: action.payload };
+    case "HIDE_TOOL":
+      return { ...state, showTool: null };
 
     // case "DELETE_TODO":
     //   return {

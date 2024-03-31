@@ -5,6 +5,7 @@ import Banner from "@/components/banner";
 import getCategoriesData from "@/utils/getCategoriesData";
 import getTagsData from "@/utils/getTagsData";
 import Footer from "@/components/footer";
+import Tool from "@/components/tool";
 
 const content = {
   name: "Discover useful digital tools",
@@ -25,6 +26,7 @@ export default async function Home() {
         </div>
         <List />
       </main>
+      <Tool />
       <Footer />
     </>
   );

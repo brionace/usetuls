@@ -4,15 +4,17 @@ export default async function getToolsData({
   categoryId,
   isPublished,
   searchTerm,
+  id,
 }: {
   categoryId?: number;
   isPublished?: boolean;
   searchTerm?: string;
+  id?: number;
 }) {
   const supabase = createClient();
   let query = supabase
     .from("tools")
-    .select(`id, title, favicon, description, url, category_id, is_published`)
+    .select(`id, title, favicon, description, url`)
     .eq("is_published", isPublished !== undefined ? isPublished : true);
 
   if (categoryId) {
@@ -23,6 +25,10 @@ export default async function getToolsData({
     query = query.or(
       `title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`
     );
+  }
+
+  if (id) {
+    query = query.eq("id", id);
   }
 
   const { data, error } = await query;

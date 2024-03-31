@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import {
   Modal,
@@ -21,7 +21,7 @@ export default function Search() {
   const [searchResultsTools, setSearchResultsTools] = useState([]);
   const [searchResultsTags, setSearchResultsTags] = useState([]);
   const {
-    state: { showSearch },
+    state: { showSearch, showTool },
     dispatch,
   } = useContext(DataContext);
 
@@ -49,17 +49,29 @@ export default function Search() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
+  useEffect(() => {
+    if (showTool !== null) {
+      dispatch({
+        type: "HIDE_SEARCH",
+      });
+    }
+  }, [showTool]);
+
   const handleFetchSearchResults = async () => {
-    const response = await fetch("/api/search", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ term: search }),
-    });
-    const { data } = await response.json();
-    setSearchResultsTools(data.tools);
-    setSearchResultsTags(data.tags);
+    try {
+      const response = await fetch("/api/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ term: search }),
+      });
+      const { data } = await response.json();
+      setSearchResultsTools(data.tools);
+      setSearchResultsTags(data.tags);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (!showSearch) {
@@ -127,7 +139,16 @@ export default function Search() {
                         //   }
                         return (
                           <li key={index}>
-                            <Button>{result.title}</Button>
+                            <Button
+                              onClick={() => {
+                                dispatch({
+                                  type: "SHOW_TOOL",
+                                  payload: result.id,
+                                });
+                              }}
+                            >
+                              {result.title}
+                            </Button>
                           </li>
                         );
                       })}
