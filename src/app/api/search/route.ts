@@ -10,6 +10,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   // const results = [...toolsResults, ...categoriesResults];
 
   return NextResponse.json({
-    data: { tools: [...toolsResults], tags: [...categoriesResults] },
+    data: { tools: [...(toolsResults as any)], tags: [...categoriesResults] },
   });
 }

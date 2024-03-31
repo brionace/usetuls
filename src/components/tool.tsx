@@ -30,7 +30,6 @@ type ToolProps = {
 
 export default function Tool() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [backdrop, setBackdrop] = useState("opaque");
   const [toolData, setToolData] = useState<ToolProps | null>(null);
   const {
     state: { showTool },
@@ -79,7 +78,7 @@ export default function Tool() {
 
   return (
     <Modal
-      backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
+      backdrop="opaque"
       isOpen={isOpen}
       onClose={onClose}
       placement="top"

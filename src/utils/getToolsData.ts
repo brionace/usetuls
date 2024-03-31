@@ -22,9 +22,24 @@ export default async function getToolsData({
   }
 
   if (searchTerm) {
-    query = query.or(
-      `title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`
-    );
+    // query = query.or(
+    //   `title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`
+    // );
+    // query = query.or(`title.ilike.%${searchTerm}%`);
+    const { data: tagData, error: tagError } = await supabase
+      .from("tags")
+      .select("id")
+      .ilike("name", `%${searchTerm}%`);
+
+    if (tagError) {
+      console.error(tagError);
+      return;
+    }
+
+    const tagId = `{"${tagData[0].id}"}`;
+    console.log(tagId);
+
+    query = query.or(`title.ilike.%${searchTerm}%, tags.cs.${tagId}`);
   }
 
   if (id) {

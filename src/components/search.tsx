@@ -120,6 +120,7 @@ export default function Search() {
                   autoComplete="off"
                   spellCheck="false"
                   placeholder="Type to search"
+                  defaultValue={search}
                   className="bg-transparent w-full focus:outline-none text-smaller"
                   onChange={(e) => setSearch(e.target.value)}
                   startContent={
@@ -127,8 +128,8 @@ export default function Search() {
                   }
                 />
               </form>
-              <div className="flex gap-1 justify-between">
-                {searchResultsTools.length ? (
+              <div className="flex gap-1 justify-around">
+                {search && searchResultsTools.length > 0 ? (
                   <div>
                     <h3 className="my-3">Tools</h3>
                     <ul className="flex flex-col gap-2 pb-10">
@@ -155,7 +156,7 @@ export default function Search() {
                     </ul>
                   </div>
                 ) : null}
-                {searchResultsTags.length ? (
+                {search && searchResultsTags.length > 0 ? (
                   <div>
                     <h3 className="my-3">Tags</h3>
                     <ul className="flex flex-col gap-2 pb-10">
@@ -166,9 +167,9 @@ export default function Search() {
                         //   }
                         return (
                           <li key={index}>
-                            <Link href={`/c/${result.slug}`}>
+                            <Button as="a" href={`/c/${result.slug}`}>
                               {result.name}
-                            </Link>
+                            </Button>
                           </li>
                         );
                       })}

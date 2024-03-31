@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { usetulsTitleSuffix, usetulsTitleDivider } from "@/utils";
 import Tool from "@/components/tool";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { slug: string };
@@ -37,12 +38,16 @@ export default async function Categories({ params }: Props) {
     (category: any) => category.slug === slug
   )[0];
 
+  if (!category) {
+    return notFound();
+  }
+
   return (
     <>
       <Header categories={categories} />
       <main className="max-w-7xl mx-auto min-h-screen">
         <Banner content={category} />
-        <List categoryId={category.id} />
+        <List categoryId={category?.id} />
       </main>
       <Tool />
       <Footer />
