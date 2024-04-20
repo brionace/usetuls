@@ -5,7 +5,7 @@ export default async function getTagsData({
 }: {
   isPublished?: boolean;
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
   let query = supabase
     .from("tags")
     .select(`id, name, slug`)

@@ -110,7 +110,7 @@ export default function Search() {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1 pr-10">
-              Find a web tool
+              Search
             </ModalHeader>
             <ModalBody className="mb-8">
               <form className="w-full">
@@ -119,13 +119,11 @@ export default function Search() {
                   isClearable
                   autoComplete="off"
                   spellCheck="false"
-                  placeholder="Type to search"
+                  placeholder="Find a web tool"
                   defaultValue={search}
-                  className="bg-transparent w-full focus:outline-none text-smaller"
+                  // className="bg-transparent focus:outline-none text-smaller"
                   onChange={(e) => setSearch(e.target.value)}
-                  startContent={
-                    <MdSearch className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
-                  }
+                  startContent={<MdSearch />}
                 />
               </form>
               <div className="flex gap-1 justify-around">

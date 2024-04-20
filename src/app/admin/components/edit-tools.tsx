@@ -27,8 +27,7 @@ export default function EditTools({
     tags: data.tags,
     is_published: data.is_published || true,
   });
-  const tagsAsIntegers = data.tags?.map((tag: string) => parseInt(tag, 10));
-  console.log({ tagsAsIntegers });
+  // const tagsAsIntegers = data.tags?.map((tag: string) => parseInt(tag, 10));
   const [selectedTags, setSelectedTags] = useState<number[]>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -84,8 +83,6 @@ export default function EditTools({
       setSelectedTags(selectedTags?.concat(newItem));
     }
   }
-
-  console.log(selectedTags);
 
   return (
     <>

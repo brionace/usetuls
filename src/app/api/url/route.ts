@@ -29,13 +29,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           },
           body: JSON.stringify({
             input: `[INST] <<SYS>>
 					You are a web crawler. You are given a websites meta data. Classify it based on the following categories: ${(
             await getTagsData({})
-          ).map((tag) => tag.name)}\n\n
+          ).map((tag: { name: any }) => tag.name)}\n\n
 
           You must follow these rules:\n
           - If you are unable to determine a category, return an empty array. For example: []\n

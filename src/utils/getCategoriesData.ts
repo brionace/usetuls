@@ -15,7 +15,7 @@ export default async function getCategoriesData({
   hasTools,
   searchTerm,
 }: Props) {
-  const supabase = createClient();
+  const supabase = await createClient();
   let query = supabase
     .from("categories")
     .select(

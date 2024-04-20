@@ -5,7 +5,7 @@ import { isValidUrl } from "@/utils";
 import fetch from "node-fetch";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { urls } = await req.json();
 
   if (urls) {

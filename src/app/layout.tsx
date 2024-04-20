@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import UIProvider from "./ui-provider";
 import GoogleAnalytics from "@/components/googleAnalytics";
 import { DataProvider } from "./data-provider";
 
-const fonts = Poppins({
+const fonts = Ubuntu({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "700"],
 });
 
 export const metadata: Metadata = {

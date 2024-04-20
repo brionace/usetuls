@@ -38,9 +38,9 @@ export default function Bookmarks() {
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       scrollBehavior="outside"
-      size="full"
+      size="lg"
       placement="top"
-      className="m-0"
+      className="m-4"
       motionProps={{
         variants: {
           enter: {
@@ -66,21 +66,20 @@ export default function Bookmarks() {
         {(onClose) => (
           <>
             <ModalHeader className="flex gap-1 pr-10">
-              <Link href="/" className="w-6 h-6">
+              {/* <Link href="/" className="w-6 h-6">
                 <Image
                   src="/logo.svg"
                   alt="Usetuls logo"
                   className="w-6 h-6 rounded-none"
                 />
-              </Link>
-              {/* <span className="hidden md:inline">Usetuls</span> */}
+              </Link> */}
+              <h2>Your Pinned Tools</h2>
             </ModalHeader>
             <ModalBody className="mb-8">
               <div className="flex flex-col gap-4 place-self-center text-center">
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-lg font-medium">Bookmarks</h2>
                   <p className="text-sm text-gray-500">
-                    You have no bookmarks yet.
+                    You have no pinned tools yet.
                   </p>
                 </div>
               </div>

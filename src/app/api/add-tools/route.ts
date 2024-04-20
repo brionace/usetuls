@@ -19,7 +19,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } = await req.json();
 
   // Insert suggested web tool
-  const { data, error } = await supabase.rpc("insert_suggested_tools", {
+  const { data, error } = await (await supabase).rpc("insert_suggested_tools", {
     url: url,
     title,
     favicon,
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   // Insert selected tags
-  const { data: updatedData, error: updateError } = await supabase
+  const { data: updatedData, error: updateError } = await (await supabase)
     .from("tools")
     .update({ tags: selectedTags })
     .eq("id", data.tools_id);
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   if (typeof suggestedTag === "string" && suggestedTag.length > 0) {
     const slug = suggestedTag.trim().replace(/\s/g, "-").toLowerCase();
     const { data: dataSuggestedTag, error: errorSuggestedTag } =
-      await supabase.rpc("insert_suggested_tag", {
+      await (await supabase).rpc("insert_suggested_tag", {
         name: suggestedTag,
         slug: slug,
       });
@@ -58,17 +58,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     // Update tools with the suggested tag
-    const { data: dataNewTag } = await supabase
+    const { data: dataNewTag } = await (await supabase)
       .from("tags")
       .select("id")
       .eq("slug", slug)
       .single();
-    const { data: dataTools } = await supabase
+    const { data: dataTools } = await (await supabase)
       .from("tools")
       .select("tags")
       .eq("id", toolsId)
       .single();
-    const { data: dataToolsTag, error: errorToolsTag } = await supabase
+    const { data: dataToolsTag, error: errorToolsTag } = await (await supabase)
       .from("tools")
       .update({ tags: [...dataTools?.tags, dataNewTag?.id] })
       .eq("id", toolsId);
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   // Insert suggester
   if (isValidEmail(userEmail)) {
-    const { error: errorSuggester } = await supabase
+    const { error: errorSuggester } = await (await supabase)
       .from("suggester")
       .insert({ email: userEmail, suggestion_id: toolsId });
 

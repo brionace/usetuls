@@ -11,7 +11,7 @@ export default async function getToolsData({
   searchTerm?: string;
   id?: number;
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
   let query = supabase
     .from("tools")
     .select(`id, title, favicon, description, url`)

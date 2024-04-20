@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, use, useEffect } from "react";
 import {
   Card as NextCard,
   CardHeader,
@@ -20,14 +20,34 @@ import {
   MdArrowRightAlt,
   MdOpenInNew,
   MdFavorite,
-  MdMoreVert,
+  MdOpenInFull,
   MdBookmark,
 } from "react-icons/md";
-import { isSVGFormatImage } from "@/utils";
+import { isImageLink, isSVGFormatImage, isValidUrl } from "@/utils";
 import { DataContext } from "@/app/data-provider";
+import { FastAverageColor } from "fast-average-color";
 
 export default function Card({ data }: any) {
   const { dispatch } = useContext(DataContext);
+  const container = useRef<HTMLDivElement>(null);
+  const fac = new FastAverageColor();
+
+  // useEffect(() => {
+  if (container.current) {
+    fac
+      .getColorAsync(container.current?.querySelector("img"))
+      .then((color) => {
+        if (container.current) {
+          container.current.style.backgroundColor = color.rgba;
+          container.current.style.color = color.isDark ? "#fff" : "#000";
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+  // }, []);
+
   function truncateString(str: string, length = 45, ending = "...") {
     if (str?.length > length) {
       return str?.slice(0, length - ending.length) + ending;
@@ -45,34 +65,41 @@ export default function Card({ data }: any) {
 
   return (
     <>
-      <NextCard className="w-full pb-1" shadow="sm">
-        <CardHeader className="w-full flex items-center">
-          {/* {isSVGFormatImage(imgUrl) ? (
-            <SVGImage />
-          ) : (
-            <Image
-              src={imgUrl}
-              alt={data.title}
-              width="100%"
-              fill
-              className="object-cover w-10 h-10"
-            />
-          )} */}
-          <Avatar
-            src={faviconUrl}
-            radius="md"
-            size="md"
-            color="default"
-            showFallback
-            name={data.title.slice(0, 1)}
-            className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
-          />
-          <h4 className="text-xs font-medium ml-3">{data.title}</h4>
+      <NextCard
+        ref={container}
+        className="w-full pb-1 text-xs text-gray-600 tracking-wide font-light"
+        shadow="md"
+      >
+        <CardHeader className="w-full flex items-end justify-between flex-row-reverse gap-3">
+          <div className="w-8 h-8">
+            {isImageLink(faviconUrl) ? (
+              // <Avatar
+              //   src={faviconUrl}
+              //   radius="lg"
+              //   size="sm"
+              //   className="bg-transparent"
+              //   crossOrigin="anonymous"
+              // />
+              <Image
+                src={faviconUrl}
+                crossOrigin="anonymous"
+                className="w-8 h-8 rounded-full"
+              />
+            ) : (
+              <Avatar
+                radius="lg"
+                showFallback
+                name={data.title.slice(0, 1)}
+                className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
+              />
+            )}
+          </div>
+          <h4 className="font-medium">{data.title}</h4>
         </CardHeader>
-        <CardBody className="text-xs border-b-1 border-slate-50 text-gray-600 tracking-wide font-light">
+        <CardBody>
           <p>{truncateString(data.description)}</p>
         </CardBody>
-        <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default">
+        <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default backdrop-blur-xl bg-white/10 rounded-t-xl">
           <Button
             as={Link}
             href={data.url}
@@ -81,28 +108,30 @@ export default function Card({ data }: any) {
             size="sm"
             isExternal
             isIconOnly
-            className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
           >
             <MdOpenInNew />
+            {/* <span>Link</span> */}
           </Button>
           <Button
             color="default"
             variant="light"
             size="sm"
             isIconOnly
-            className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
             onClick={(e) => {
               e.preventDefault();
             }}
           >
             <MdBookmark />
+            {/* <span>Save</span> */}
           </Button>
           <Button
             color="default"
             variant="light"
             size="sm"
             isIconOnly
-            className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
             onClick={() => {
               dispatch({
                 type: "SHOW_TOOL",
@@ -110,7 +139,8 @@ export default function Card({ data }: any) {
               });
             }}
           >
-            <MdMoreVert />
+            <MdOpenInFull />
+            {/* <span>View</span> */}
           </Button>
         </CardFooter>
       </NextCard>

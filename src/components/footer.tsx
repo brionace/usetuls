@@ -15,7 +15,7 @@ export default function Footer() {
           <span className="hidden md:inline">by</span>{" "}
           <Link
             isExternal
-            href="https://brianory.me"
+            href="https://brianory.me/"
             underline="hover"
             size="sm"
           >

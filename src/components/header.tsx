@@ -48,28 +48,29 @@ export default function Header({ categories }: any) {
   };
 
   return (
-    <div className="sticky top-0 border-b border-slate-100 z-50 bg-slate-100 shadow-small">
+    <>
       <Search />
       <AddUrl />
       <Bookmarks />
       {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
-      <Navbar maxWidth="full" className="bg-inherit">
-        <NavbarBrand className="flex gap-1 text-sm w-auto">
-          <Link href="/" className="w-6 h-6">
-            <Image
-              src="/logo.svg"
-              alt="Usetuls logo"
-              className="w-6 h-6 rounded-none"
-            />
-          </Link>
-          <span className="hidden md:inline">Usetuls</span>
-        </NavbarBrand>
-        <NavbarContent
-          justify="center"
-          // className="relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide hidden md:flex"
-        >
-          {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-          {/* <NavbarItem className="w-full">
+      <div className="sticky top-0 z-50 shadow-small">
+        <Navbar maxWidth="full" className="bg-inherit">
+          <NavbarBrand className="flex gap-1 text-sm w-auto">
+            <Link href="/" className="w-6 h-6">
+              <img
+                src="/logo.svg"
+                alt="Usetuls logo"
+                className="w-6 h-6 rounded-none"
+              />
+            </Link>
+            <span className="hidden md:inline">Usetuls</span>
+          </NavbarBrand>
+          <NavbarContent
+            justify="center"
+            // className="relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide hidden md:flex"
+          >
+            {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
+            {/* <NavbarItem className="w-full">
             <ul className="flex items-start gap-4">
               {categories?.map((category: any) => (
                 <li key={category.name}>
@@ -86,75 +87,80 @@ export default function Header({ categories }: any) {
               ))}
             </ul>
           </NavbarItem> */}
-          {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
-          <NavbarItem>
-            <Button
-              variant="light"
-              size="sm"
-              className="rounded-full min-w-fit bg-slate-200 px-4 sm:pr-5"
-              onPress={() => dispatch({ type: "SHOW_SEARCH" })}
-            >
-              <MdSearch />{" "}
-              <span className="hidden sm:inline">Search for a web tool</span>
-            </Button>
-          </NavbarItem>
-          <NavbarItem>
-            <Button
-              variant="light"
-              size="sm"
-              className="flex rounded-full min-w-fit"
-              onPress={() => setShowNav(!showNav)}
-            >
-              <span className="hidden sm:inline">Browse</span>
-              {!showNav ? <MdExpandMore /> : <MdExpandLess />}
-            </Button>
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarContent justify="end">
-          <NavbarItem>
-            <Button
-              variant="light"
-              size="sm"
-              className="rounded-full min-w-fit"
-              onPress={() => dispatch({ type: "SHOW_ADDURL" })}
-            >
-              <MdAdd />
-            </Button>
-          </NavbarItem>
-          <NavbarItem>
-            <Button
-              variant="light"
-              size="sm"
-              className="rounded-full min-w-fit"
-              onPress={() => dispatch({ type: "SHOW_BOOKMARKS" })}
-            >
-              <MdBookmarks />
-            </Button>
-          </NavbarItem>
-        </NavbarContent>
-      </Navbar>
+            {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
+            <NavbarItem className="flex gap-3 p-1 rounded-full bg-slate-200">
+              <Button
+                // variant="light"
+                size="sm"
+                className="min-w-fit bg-transparent py-0"
+                onPress={() => dispatch({ type: "SHOW_SEARCH" })}
+              >
+                <MdSearch />
+                <span className="hidden sm:inline">Search for a tool</span>
+              </Button>
+              <span className="w-0.5 bg-slate-300 my-1"></span>
+              <Button
+                // variant="light"
+                size="sm"
+                className="flex min-w-fit bg-transparent py-0"
+                onPress={() => setShowNav(!showNav)}
+              >
+                <span className="hidden sm:inline">Browse</span>
+                <MdMoreVert />
+                {/* {!showNav ? <MdExpandMore /> : <MdExpandLess />} */}
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+          <NavbarContent justify="end">
+            <NavbarItem>
+              <Button
+                // variant="light"
+                size="sm"
+                className="rounded-full min-w-fit"
+                onPress={() => dispatch({ type: "SHOW_ADDURL" })}
+              >
+                <span className="hidden sm:inline">Add</span>
+                <MdAdd />
+              </Button>
+            </NavbarItem>
+            <NavbarItem>
+              <Button
+                // variant="light"
+                size="sm"
+                className="rounded-full min-w-fit"
+                onPress={() => dispatch({ type: "SHOW_BOOKMARKS" })}
+              >
+                <span className="hidden sm:inline">Pin</span>
+                <MdBookmarks />
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+        </Navbar>
 
-      {showNav ? (
-        <nav className="w-full px-6 pb-2 relative whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide border-t border-separate pt-2">
-          {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
-          <ul className="flex gap-3 [&>li:last-child]:pr-6 md:[&>li:last-child]:pr-0 md:justify-center">
-            {categories?.map((category: any) => (
-              <li key={category.name}>
-                <Button
-                  as={Link}
-                  href={`/c/${category.slug}`}
-                  variant="flat"
-                  size="sm"
-                  className="text-smaller"
-                >
-                  {category.name}
-                </Button>
-              </li>
-            ))}
-          </ul>
-          {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
-        </nav>
-      ) : null}
-    </div>
+        {showNav ? (
+          <nav className="backdrop-blur-xl backdrop-saturate-150 bg-inherit">
+            <div className="flex justify-center whitespace-nowrap overflow-x-scroll scroll scroll-smooth scrollbar-hide border-t border-separate">
+              {/* <MdChevronLeft onClick={scrollLeft} size="sm" width={20} /> */}
+              <ul className="flex">
+                {categories?.map((category: any) => (
+                  <li key={category.name} className="m-3">
+                    <Button
+                      as={Link}
+                      href={`/c/${category.slug}`}
+                      variant="flat"
+                      size="sm"
+                      className="text-smaller"
+                    >
+                      {category.name}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+              {/* <MdChevronRight onClick={scrollRight} size="sm" /> */}
+            </div>
+          </nav>
+        ) : null}
+      </div>
+    </>
   );
 }

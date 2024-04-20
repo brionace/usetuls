@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { DataContext } from "@/app/data-provider";
 import { MdOpenInNew, MdBookmark } from "react-icons/md";
-import { isSVGFormatImage } from "@/utils";
+import { isImageLink, isSVGFormatImage } from "@/utils";
 
 type ToolProps = {
   id: number;
@@ -82,21 +82,31 @@ export default function Tool() {
       isOpen={isOpen}
       onClose={onClose}
       placement="top"
+      closeButton={false}
     >
       <ModalContent className="pb-3">
         {(onClose) => (
           <>
-            <ModalHeader className="flex items-center">
-              <Avatar
-                src={faviconUrl}
-                radius="md"
-                size="md"
-                color="default"
-                showFallback
-                name={title.slice(0, 1)}
-                className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
-              />
-              <h4 className="font-medium ml-3">{title}</h4>
+            <ModalHeader className="flex flex-row-reverse items-end justify-between">
+              <div className="w-12 h-12">
+                {isImageLink(faviconUrl) ? (
+                  <Avatar
+                    src={faviconUrl}
+                    radius="md"
+                    size="md"
+                    className="bg-transparent"
+                  />
+                ) : (
+                  <Avatar
+                    radius="md"
+                    size="md"
+                    showFallback
+                    name={title.slice(0, 1)}
+                    className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
+                  />
+                )}
+              </div>
+              <h4 className="font-medium">{title}</h4>
             </ModalHeader>
             <ModalBody>
               <p>{description}</p>

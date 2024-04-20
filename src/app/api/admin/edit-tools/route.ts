@@ -36,7 +36,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       if (err) throw err;
 
       const uint8Array = new Uint8Array(data.buffer);
-      const { error } = await supabase.storage
+      const { error } = await (await supabase).storage
         .from("images")
         .upload(`favicons/${idExt}`, uint8Array);
 
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
   }
 
-  const { error } = await supabase
+  const { error } = await (await supabase)
     .from("tools")
     .update({
       title,
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   if (selectedTags) {
-    const { data: updatedData, error: updateError } = await supabase
+    const { data: updatedData, error: updateError } = await (await supabase)
       .from("tools")
       .update({ tags: selectedTags })
       .eq("id", id);

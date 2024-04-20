@@ -286,7 +286,7 @@ export default function AddUrl() {
                     // const url = formData.get("url") as string;
 
                     if (!isValidUrl(url)) {
-                      setError({ url: "Please check the url format" });
+                      setError({ url: "Invalid url" });
                       return;
                     }
 

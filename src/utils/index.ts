@@ -8,6 +8,20 @@ export const isValidUrl = (urlString: string) => {
   return url.protocol === "https:";
 };
 
+export const isImageLink = (link: string) => {
+  const imageExtensions = [
+    ".jpeg",
+    ".jpg",
+    ".gif",
+    ".png",
+    ".ico",
+    ".svg",
+    ".webp",
+    ".ico",
+  ];
+  const fileExtension = link.substring(link.lastIndexOf("."));
+  return imageExtensions.includes(fileExtension);
+};
 
 const checkEnvironment = () => {
   let base_url =
