@@ -1,4 +1,5 @@
 import { DataContext } from "@/app/data-provider";
+import { modalSettings } from "@/utils";
 import {
   useDisclosure,
   Modal,
@@ -7,7 +8,6 @@ import {
   ModalBody,
   Image,
 } from "@nextui-org/react";
-import Link from "next/link";
 import React, { useContext, useEffect } from "react";
 
 export default function Bookmarks() {
@@ -20,7 +20,7 @@ export default function Bookmarks() {
   useEffect(() => {
     onOpen();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showBookmarks]);
+  }, [showBookmarks === true]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -41,26 +41,7 @@ export default function Bookmarks() {
       size="lg"
       placement="top"
       className="m-4"
-      motionProps={{
-        variants: {
-          enter: {
-            y: 0,
-            opacity: 1,
-            transition: {
-              duration: 0.3,
-              ease: "easeOut",
-            },
-          },
-          exit: {
-            y: -20,
-            opacity: 0,
-            transition: {
-              duration: 0.2,
-              ease: "easeIn",
-            },
-          },
-        },
-      }}
+      motionProps={modalSettings.motionProps}
     >
       <ModalContent>
         {(onClose) => (

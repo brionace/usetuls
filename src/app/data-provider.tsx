@@ -11,7 +11,9 @@ type Type =
   | "SHOW_BOOKMARKS"
   | "HIDE_BOOKMARKS"
   | "SHOW_TOOL"
-  | "HIDE_TOOL";
+  | "HIDE_TOOL"
+  | "SHOW_BROWSER"
+  | "HIDE_BROWSER";
 
 type State = {
   showSearch: boolean;
@@ -19,6 +21,7 @@ type State = {
   showSpinner: boolean;
   showBookmarks: boolean;
   showTool: number | null;
+  showBrowser: boolean;
 };
 
 const initialState = {
@@ -27,6 +30,7 @@ const initialState = {
   showSpinner: false,
   showBookmarks: false,
   showTool: null,
+  showBrowser: false,
 };
 
 const reducer = (state: State, action: { type: Type; payload: any }) => {
@@ -51,6 +55,10 @@ const reducer = (state: State, action: { type: Type; payload: any }) => {
       return { ...state, showTool: action.payload };
     case "HIDE_TOOL":
       return { ...state, showTool: null };
+    case "SHOW_BROWSER":
+      return { ...state, showBrowser: true };
+    case "HIDE_BROWSER":
+      return { ...state, showBrowser: false };
 
     // case "DELETE_TODO":
     //   return {

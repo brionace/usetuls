@@ -1,6 +1,6 @@
 "use client";
 
-import { isValidImage, isValidUrl } from "@/utils";
+import { isValidImage, isValidUrl, modalSettings } from "@/utils";
 import {
   Modal,
   ModalContent,
@@ -240,26 +240,7 @@ export default function AddUrl() {
       placement="top"
       scrollBehavior="inside"
       className="m-4"
-      motionProps={{
-        variants: {
-          enter: {
-            y: 0,
-            opacity: 1,
-            transition: {
-              duration: 0.3,
-              ease: "easeOut",
-            },
-          },
-          exit: {
-            y: -20,
-            opacity: 0,
-            transition: {
-              duration: 0.2,
-              ease: "easeIn",
-            },
-          },
-        },
-      }}
+      motionProps={modalSettings.motionProps}
     >
       <ModalContent>
         {(onClose) => (

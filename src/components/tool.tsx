@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { DataContext } from "@/app/data-provider";
 import { MdOpenInNew, MdBookmark } from "react-icons/md";
-import { isImageLink, isSVGFormatImage } from "@/utils";
+import { isImageLink, isSVGFormatImage, modalSettings } from "@/utils";
 
 type ToolProps = {
   id: number;
@@ -83,6 +83,8 @@ export default function Tool() {
       onClose={onClose}
       placement="top"
       closeButton={false}
+      className="m-4"
+      motionProps={modalSettings.motionProps}
     >
       <ModalContent className="pb-3">
         {(onClose) => (
