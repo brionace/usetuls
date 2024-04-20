@@ -1,5 +1,12 @@
 "use client";
-import React, { useContext, useState, useRef, use, useEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useRef,
+  use,
+  useEffect,
+  ReactNode,
+} from "react";
 import {
   Card as NextCard,
   CardHeader,
@@ -22,6 +29,7 @@ import {
   MdFavorite,
   MdOpenInFull,
   MdBookmark,
+  MdMore,
 } from "react-icons/md";
 import { isImageLink, isSVGFormatImage, isValidUrl } from "@/utils";
 import { DataContext } from "@/app/data-provider";
@@ -48,11 +56,29 @@ export default function Card({ data }: any) {
   }
   // }, []);
 
-  function truncateString(str: string, length = 45, ending = "...") {
+  function truncateString({
+    str,
+    length = 70,
+    ending = "...",
+    url,
+  }: {
+    str: string;
+    length?: number;
+    ending?: string | ReactNode;
+    url: string;
+  }) {
+    let stringToRender: string | ReactNode = str?.replace(/<[^>]*>?/gm, "");
     if (str?.length > length) {
-      return str?.slice(0, length - ending.length) + ending;
+      const end = `<a href="${url}">${ending}</a>`;
+      stringToRender = (
+        <span
+          dangerouslySetInnerHTML={{
+            __html: str?.slice(0, length - (ending as string).length) + end,
+          }}
+        />
+      );
     }
-    return str;
+    return stringToRender;
   }
 
   const faviconUrl = `${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`;
@@ -97,7 +123,12 @@ export default function Card({ data }: any) {
           <h4 className="font-medium">{data.title}</h4>
         </CardHeader>
         <CardBody>
-          <p>{truncateString(data.description)}</p>
+          <p>
+            {truncateString({
+              str: data.description,
+              url: data.url,
+            })}
+          </p>
         </CardBody>
         <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default backdrop-blur-xl bg-white/10 rounded-t-xl">
           <Button
