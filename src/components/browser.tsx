@@ -56,10 +56,10 @@ export default function Browser({ categories }: { categories: any }) {
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      scrollBehavior="outside"
       size="lg"
       placement="top"
       className="m-4"
+      scrollBehavior={modalSettings.scrollBehavior}
       motionProps={modalSettings.motionProps}
     >
       <ModalContent>

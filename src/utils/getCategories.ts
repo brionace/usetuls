@@ -8,7 +8,7 @@ type Props = {
   searchTerm?: string;
 };
 
-export default async function getCategoriesData({
+export default async function getCategories({
   isPublished = true,
   id,
   slug,

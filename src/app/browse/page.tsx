@@ -2,8 +2,8 @@ import React from "react";
 import List from "@/components/list";
 import Header from "@/components/header";
 import Banner from "@/components/banner";
-import getCategoriesData from "@/utils/getCategoriesData";
-import getTagsData from "@/utils/getTagsData";
+import getCategories from "@/utils/getCategories";
+import getTags from "@/utils/getTags";
 import Footer from "@/components/footer";
 import Tool from "@/components/tool";
 
@@ -14,7 +14,7 @@ const content = {
 };
 
 export default async function Browse() {
-  const categories = await getCategoriesData({ hasTools: true });
+  const categories = await getCategories({ hasTools: true });
 
   return (
     <>

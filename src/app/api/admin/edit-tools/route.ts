@@ -17,48 +17,76 @@ export async function POST(req: NextRequest, res: NextResponse) {
     is_published,
   }: any = inputContent;
   const supabase = createClient();
-  let idExt = favicon;
+  let faviconImage = favicon;
 
   if (isValidUrl(favicon)) {
     // const imageName = title.replace(/\s/g, "-").toLowerCase();
     const response = await fetch(favicon);
     const buffer = await response.arrayBuffer();
     const extension = path.extname(new URL(favicon).pathname);
-    idExt = id + extension;
+    faviconImage = id + extension;
     const tmp = "/tmp";
-    const tmpName = path.join(tmp, idExt);
 
-    fs.writeFile(tmpName, Buffer.from(buffer), () =>
-      console.log("finished downloading!")
-    );
+    if (!fs.existsSync(tmp)) {
+      fs.writeFileSync(tmp, "");
+      console.log("File is created successfully.");
+    } else {
+      console.log("File already exists.");
+    }
 
-    fs.readFile(tmpName, async (err, data) => {
+    const tmpName = path.join(tmp, faviconImage);
+
+    // fs.writeFile(tmpName, Buffer.from(buffer), () =>
+    //   console.log("finished downloading!")
+    // );
+
+    // fs.readFile(tmpName, async (err, data) => {
+    //   if (err) throw err;
+
+    //   const uint8Array = new Uint8Array(data.buffer);
+    //   const { error } = await (await supabase).storage
+    //     .from("images")
+    //     .upload(`favicons/${faviconImage}`, uint8Array);
+
+    //   if (error) {
+    //     console.error(error);
+    //     // {
+    //     //   statusCode: '409',
+    //     //   error: 'Duplicate',
+    //     //   message: 'The resource already exists'
+    //     // }
+    //   }
+    // });
+    fs.writeFile(tmpName, Buffer.from(buffer), (err) => {
       if (err) throw err;
+      console.log("finished downloading!");
 
-      const uint8Array = new Uint8Array(data.buffer);
-      const { error } = await (await supabase).storage
-        .from("images")
-        .upload(`favicons/${idExt}`, uint8Array);
+      fs.readFile(tmpName, async (err, data) => {
+        if (err) throw err;
 
-      if (error) {
-        console.error(error);
-        // {
-        //   statusCode: '409',
-        //   error: 'Duplicate',
-        //   message: 'The resource already exists'
-        // }
-      }
+        const uint8Array = new Uint8Array(data.buffer);
+        const { error } = await (await supabase).storage
+          .from("images")
+          .upload(`favicons/${faviconImage}`, uint8Array);
+
+        if (error) {
+          console.error(error);
+        }
+      });
     });
   }
 
-  const { error } = await (await supabase)
+  const { error } = await (
+    await supabase
+  )
     .from("tools")
     .update({
       title,
       description,
       url,
-      favicon: idExt,
+      favicon: faviconImage,
       is_published,
+      slug: title.trim().replace(/\s/g, "-").toLowerCase(),
     })
     .eq("id", id);
 

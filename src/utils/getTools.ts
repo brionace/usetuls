@@ -1,20 +1,22 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getToolsData({
+export default async function getTools({
   categoryId,
   isPublished,
   searchTerm,
   id,
+  slug,
 }: {
   categoryId?: number;
   isPublished?: boolean;
   searchTerm?: string;
-  id?: number;
+  id?: number | [number];
+  slug?: string;
 }) {
   const supabase = await createClient();
   let query = supabase
     .from("tools")
-    .select(`id, title, favicon, description, url`)
+    .select(`id, title, favicon, description, url, slug, tags`)
     .eq("is_published", isPublished !== undefined ? isPublished : true);
 
   if (categoryId) {
@@ -43,7 +45,17 @@ export default async function getToolsData({
   }
 
   if (id) {
-    query = query.eq("id", id);
+    if (typeof id === "number") {
+      query = query.eq("id", id);
+    }
+    if (Array.isArray(id)) {
+      query = query.in("id", id);
+    }
+  }
+
+  if (slug) {
+    // query = query.ilike("title", `%${name}%`);
+    query = query.eq("slug", slug);
   }
 
   const { data, error } = await query;

@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getTagsData({
+export default async function getTags({
   isPublished,
 }: {
   isPublished?: boolean;

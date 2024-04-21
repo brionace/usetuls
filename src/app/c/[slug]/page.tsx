@@ -2,7 +2,7 @@ import React from "react";
 import List from "@/components/list";
 import Header from "@/components/header";
 import Banner from "@/components/banner";
-import getCategoriesData from "@/utils/getCategoriesData";
+import getCategories from "@/utils/getCategories";
 import Footer from "@/components/footer";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { usetulsTitleSuffix, usetulsTitleDivider } from "@/utils";
@@ -18,7 +18,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { slug } = params;
-  const categories: any = await getCategoriesData({ slug });
+  const categories: any = await getCategories({ slug });
   const category = categories[0];
 
   return {
@@ -32,7 +32,7 @@ export async function generateMetadata(
 
 export default async function Categories({ params }: Props) {
   const { slug } = params;
-  const categories = await getCategoriesData({ hasTools: true });
+  const categories = await getCategories({ hasTools: true });
 
   const category: any = categories?.filter(
     (category: any) => category.slug === slug

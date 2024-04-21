@@ -19,6 +19,7 @@ import {
 import { DataContext } from "@/app/data-provider";
 import { MdOpenInNew, MdBookmark } from "react-icons/md";
 import { isImageLink, isSVGFormatImage, modalSettings } from "@/utils";
+import { Pin } from "@/components/user-action";
 
 type ToolProps = {
   id: number;
@@ -55,7 +56,7 @@ export default function Tool() {
 
   async function fetchToolData() {
     try {
-      const response = await fetch("/api/tool/?id=" + showTool);
+      const response = await fetch("/api/tools/?id=" + showTool);
       const { data } = await response.json();
 
       setToolData(data[0]);
@@ -126,18 +127,7 @@ export default function Tool() {
               >
                 <MdOpenInNew />
               </Button>
-              <Button
-                color="default"
-                variant="light"
-                size="sm"
-                isIconOnly
-                className="justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-              >
-                <MdBookmark />
-              </Button>
+              <Pin id={toolData.id} />
             </ModalFooter>
           </>
         )}

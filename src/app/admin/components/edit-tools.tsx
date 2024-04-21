@@ -33,7 +33,7 @@ export default function EditTools({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Extract and upload image if url is remote url
-    const response = await fetch("/admin/api/edit-tools", {
+    const response = await fetch("/api/admin/edit-tools", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

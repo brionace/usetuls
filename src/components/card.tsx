@@ -34,6 +34,7 @@ import {
 import { isImageLink, isSVGFormatImage, isValidUrl } from "@/utils";
 import { DataContext } from "@/app/data-provider";
 import { FastAverageColor } from "fast-average-color";
+import { Expand, Pin } from "@/components/user-action";
 
 export default function Card({ data }: any) {
   const { dispatch } = useContext(DataContext);
@@ -144,35 +145,8 @@ export default function Card({ data }: any) {
             <MdOpenInNew />
             {/* <span>Link</span> */}
           </Button>
-          <Button
-            color="default"
-            variant="light"
-            size="sm"
-            isIconOnly
-            className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <MdBookmark />
-            {/* <span>Save</span> */}
-          </Button>
-          <Button
-            color="default"
-            variant="light"
-            size="sm"
-            isIconOnly
-            className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
-            onClick={() => {
-              dispatch({
-                type: "SHOW_TOOL",
-                payload: data.id,
-              });
-            }}
-          >
-            <MdOpenInFull />
-            {/* <span>View</span> */}
-          </Button>
+          <Pin id={data.id} />
+          <Expand id={data.id} />
         </CardFooter>
       </NextCard>
     </>

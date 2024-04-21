@@ -28,6 +28,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         favicon: icon,
         url,
         is_published: false,
+        slug: title.trim().replace(/\s/g, "-").toLowerCase(),
       });
 
       if (error) {

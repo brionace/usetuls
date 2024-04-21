@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import * as cheerio from "cheerio";
 import fetch from "node-fetch";
 import { isValidUrl } from "@/utils";
-import getTagsData from "@/utils/getTagsData";
+import getTags from "@/utils/getTags";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const { url } = await req.json();
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
           body: JSON.stringify({
             input: `[INST] <<SYS>>
 					You are a web crawler. You are given a websites meta data. Classify it based on the following categories: ${(
-            await getTagsData({})
+            await getTags({})
           ).map((tag: { name: any }) => tag.name)}\n\n
 
           You must follow these rules:\n

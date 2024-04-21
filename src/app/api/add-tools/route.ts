@@ -19,11 +19,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } = await req.json();
 
   // Insert suggested web tool
-  const { data, error } = await (await supabase).rpc("insert_suggested_tools", {
+  const { data, error } = await(await supabase).rpc("insert_suggested_tools", {
     url: url,
     title,
     favicon,
     description,
+    slug: title.trim().replace(/\s/g, "-").toLowerCase(),
   });
 
   if (error) {

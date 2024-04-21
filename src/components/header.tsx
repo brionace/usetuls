@@ -25,7 +25,7 @@ import Search from "@/components/search";
 import { DataContext } from "@/app/data-provider";
 import AddUrl from "@/components/add-url";
 import Bookmarks from "@/components/bookmarks";
-import Browser from "@/components/browse";
+import Browser from "@/components/browser";
 
 export default function Header({ categories }: { categories: any }) {
   const { dispatch } = useContext(DataContext);
@@ -39,7 +39,7 @@ export default function Header({ categories }: { categories: any }) {
       {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
       <Navbar
         maxWidth="full"
-        className="sticky top-0 z-50 shadow-small bg-white"
+        className="sticky top-0 z-50 shadow-small bg-gray-100"
       >
         <NavbarBrand className="flex gap-1 text-sm w-auto">
           <Link href="/" className="w-6 h-6">

@@ -1,11 +1,9 @@
 import React from "react";
-import List from "@/components/list";
 import Header from "@/components/header";
-import Banner from "@/components/banner";
 import getCategories from "@/utils/getCategories";
-import getTags from "@/utils/getTags";
 import Footer from "@/components/footer";
-import Tool from "@/components/tool";
+import getTools from "@/utils/getTools";
+import { useRouter } from "next/router";
 
 const content = {
   name: "Discover useful digital tools",
@@ -13,19 +11,19 @@ const content = {
     "Find web tools that help you get things done smarter and quicker",
 };
 
-export default async function Home() {
+export default async function Webtool() {
+  // in nextjs how do i get the ir from the route?
+  const router = useRouter();
+  const { id } = router.query;
+  const idNumber = parseInt(id as string);
   const categories = await getCategories({ hasTools: true });
+  const tools = await getTools({ id: idNumber });
 
+  console.log({ tools });
   return (
     <>
       <Header categories={categories} />
-      <main className="max-w-7xl mx-auto min-h-screen">
-        <div className="[&>*]:!mx-auto">
-          <Banner content={content} direction="text-center" />
-        </div>
-        <List />
-      </main>
-      <Tool />
+      <main className="max-w-7xl mx-auto min-h-screen">The tool page</main>
       <Footer />
     </>
   );

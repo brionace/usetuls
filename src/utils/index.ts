@@ -54,7 +54,32 @@ export const isValidEmail = (email: string) => {
   return emailRegex.test(email);
 };
 
-export const modalSettings = {
+type ModalSettings = {
+  scrollBehavior: "inside" | "normal" | "outside" | undefined;
+  motionProps: {
+    variants: {
+      enter: {
+        y: number;
+        opacity: number;
+        transition: {
+          duration: number;
+          ease: string;
+        };
+      };
+      exit: {
+        y: number;
+        opacity: number;
+        transition: {
+          duration: number;
+          ease: string;
+        };
+      };
+    };
+  };
+};
+
+export const modalSettings: ModalSettings = {
+  scrollBehavior: "inside",
   motionProps: {
     variants: {
       enter: {
