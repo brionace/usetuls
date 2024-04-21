@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import getCategories from "@/utils/getCategories";
 import Footer from "@/components/footer";
 import getTools from "@/utils/getTools";
-import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next";
 
 const content = {
   name: "Discover useful digital tools",
@@ -11,15 +11,7 @@ const content = {
     "Find web tools that help you get things done smarter and quicker",
 };
 
-export default async function Webtool() {
-  // in nextjs how do i get the ir from the route?
-  const router = useRouter();
-  const { id } = router.query;
-  const idNumber = parseInt(id as string);
-  const categories = await getCategories({ hasTools: true });
-  const tools = await getTools({ id: idNumber });
-
-  console.log({ tools });
+export default async function Webtool({ categories, tools }: any) {
   return (
     <>
       <Header categories={categories} />
@@ -27,4 +19,25 @@ export default async function Webtool() {
       <Footer />
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (!context.params) {
+    // Handle the case where params is undefined
+    return {
+      notFound: true,
+    };
+  }
+
+  const { id } = context.params;
+  const idNumber = parseInt(id as string);
+  const categories = await getCategories({ hasTools: true });
+  const tools = await getTools({ id: idNumber });
+
+  return {
+    props: {
+      categories,
+      tools,
+    },
+  };
 }
