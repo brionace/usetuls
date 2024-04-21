@@ -90,7 +90,7 @@ export default function Tool() {
       <ModalContent className="pb-3">
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-row-reverse items-end justify-between">
+            <ModalHeader className="flex items-center gap-3">
               <div className="w-12 h-12">
                 {isImageLink(faviconUrl) ? (
                   <Avatar

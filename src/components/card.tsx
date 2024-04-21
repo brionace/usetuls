@@ -30,6 +30,7 @@ import {
   MdOpenInFull,
   MdBookmark,
   MdMore,
+  MdMoreVert,
 } from "react-icons/md";
 import { isImageLink, isSVGFormatImage, isValidUrl } from "@/utils";
 import { DataContext } from "@/app/data-provider";
@@ -37,6 +38,7 @@ import { FastAverageColor } from "fast-average-color";
 import { Expand, Pin } from "@/components/user-action";
 
 export default function Card({ data }: any) {
+  const [showFooter, setShowFooter] = useState(false);
   const { dispatch } = useContext(DataContext);
   const container = useRef<HTMLDivElement>(null);
   const fac = new FastAverageColor();
@@ -97,33 +99,46 @@ export default function Card({ data }: any) {
         className="w-full pb-1 text-xs text-gray-600 tracking-wide font-light"
         shadow="md"
       >
-        <CardHeader className="w-full flex items-end justify-between flex-row-reverse gap-3">
-          <div className="w-8 h-8">
-            {isImageLink(faviconUrl) ? (
-              // <Avatar
-              //   src={faviconUrl}
-              //   radius="lg"
-              //   size="sm"
-              //   className="bg-transparent"
-              //   crossOrigin="anonymous"
-              // />
-              <Image
-                src={faviconUrl}
-                crossOrigin="anonymous"
-                className="w-8 h-8 rounded-full"
-              />
-            ) : (
-              <Avatar
-                radius="lg"
-                showFallback
-                name={data.title.slice(0, 1)}
-                className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
-              />
-            )}
+        <CardHeader className="w-full flex items-center justify-between gap-3">
+          {/* justify-between flex-row-reverse */}
+          <div className="w-full flex items-center gap-3">
+            <div className="w-8 h-8">
+              {isImageLink(faviconUrl) ? (
+                // <Avatar
+                //   src={faviconUrl}
+                //   radius="lg"
+                //   size="sm"
+                //   className="bg-transparent"
+                //   crossOrigin="anonymous"
+                // />
+                <Image
+                  src={faviconUrl}
+                  crossOrigin="anonymous"
+                  className="w-8 h-8 rounded-full"
+                />
+              ) : (
+                <Avatar
+                  radius="lg"
+                  showFallback
+                  name={data.title.slice(0, 1)}
+                  className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
+                />
+              )}
+            </div>
+            <h4 className="font-medium">{data.title}</h4>
           </div>
-          <h4 className="font-medium">{data.title}</h4>
+          {/* <Button
+            color="default"
+            variant="light"
+            size="sm"
+            onPress={() => setShowFooter(!showFooter)}
+            className="!bg-transparent p-0 m-0"
+          >
+            <MdMoreVert />
+          </Button> */}
+          <Expand id={data.id} />
         </CardHeader>
-        <CardBody>
+        <CardBody className="hidden">
           <p>
             {truncateString({
               str: data.description,
@@ -131,23 +146,26 @@ export default function Card({ data }: any) {
             })}
           </p>
         </CardBody>
-        <CardFooter className="flex gap-2 justify-evenly [&>*]:bg-default backdrop-blur-xl bg-white/10 rounded-t-xl">
-          <Button
-            as={Link}
-            href={data.url}
-            color="default"
-            variant="light"
-            size="sm"
-            isExternal
-            isIconOnly
-            className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
-          >
-            <MdOpenInNew />
-            {/* <span>Link</span> */}
-          </Button>
-          <Pin id={data.id} />
-          <Expand id={data.id} />
-        </CardFooter>
+        {showFooter && (
+          <CardFooter className="flex gap-2 justify-evenly">
+            {/* [&>*]:bg-default backdrop-blur-xl bg-white/10 rounded-t-xl */}
+            <Button
+              as={Link}
+              href={data.url}
+              color="default"
+              variant="light"
+              size="sm"
+              isExternal
+              isIconOnly
+              className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            >
+              <MdOpenInNew />
+              {/* <span>Link</span> */}
+            </Button>
+            <Pin id={data.id} />
+            <Expand id={data.id} />
+          </CardFooter>
+        )}
       </NextCard>
     </>
   );
