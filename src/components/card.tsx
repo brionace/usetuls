@@ -101,7 +101,7 @@ export default function Card({ data }: any) {
       >
         <CardHeader className="w-full flex items-center justify-between gap-3">
           {/* justify-between flex-row-reverse */}
-          <div className="w-full flex items-center gap-3">
+          <div className="flex items-center gap-3 overflow-hidden">
             <div className="w-8 h-8">
               {isImageLink(faviconUrl) ? (
                 // <Avatar
@@ -125,7 +125,7 @@ export default function Card({ data }: any) {
                 />
               )}
             </div>
-            <h4 className="font-medium">{data.title}</h4>
+            <h4 className="font-medium truncate">{data.title}</h4>
           </div>
           {/* <Button
             color="default"
