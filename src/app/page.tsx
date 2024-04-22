@@ -1,9 +1,7 @@
-import React from "react";
 import List from "@/components/list";
 import Header from "@/components/header";
 import Banner from "@/components/banner";
 import getCategories from "@/utils/getCategories";
-import getTags from "@/utils/getTags";
 import Footer from "@/components/footer";
 import Tool from "@/components/tool";
 

@@ -90,7 +90,7 @@ export default function Bookmarks() {
               <div className="flex flex-col gap-4 place-self-center text-center">
                 <div className="flex flex-col gap-2">
                   {tools.length > 0 ? (
-                    tools?.map((tool) => <Card data={tool} />)
+                    tools?.map((tool, i) => <Card key={i} data={tool} />)
                   ) : (
                     <p className="text-sm text-gray-500">
                       You have no pinned tools yet.

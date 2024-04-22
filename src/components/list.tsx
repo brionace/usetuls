@@ -1,5 +1,5 @@
 import getTools from "@/utils/getTools";
-import Card from "./card";
+import Card from "@/components/card";
 
 export default async function List({ categoryId }: { categoryId?: number }) {
   const data = await getTools({ categoryId });

@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/react";
 import React, { useContext } from "react";
-import { MdBookmark, MdOpenInFull } from "react-icons/md";
+import { MdBookmark, MdMoreVert } from "react-icons/md";
 import { DataContext } from "@/app/data-provider";
 
 export function Pin({ id }: { id: number | string }) {
@@ -57,7 +57,7 @@ export function Expand({ id }: { id: number | string }) {
         });
       }}
     >
-      <MdOpenInFull />
+      <MdMoreVert />
       {/* <span>View</span> */}
     </Button>
   );

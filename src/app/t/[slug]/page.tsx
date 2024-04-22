@@ -3,7 +3,6 @@ import Header from "@/components/header";
 import getCategories from "@/utils/getCategories";
 import Footer from "@/components/footer";
 import getTools from "@/utils/getTools";
-import { GetServerSidePropsContext } from "next";
 
 const content = {
   name: "Discover useful digital tools",
@@ -11,7 +10,18 @@ const content = {
     "Find web tools that help you get things done smarter and quicker",
 };
 
-export default async function Webtool({ categories, tools }: any) {
+interface Props {
+  params: {
+    id: string;
+  };
+}
+
+export default async function Webtool({ params }: Props) {
+  const { id } = params;
+  const idNumber = parseInt(id);
+  const categories = await getCategories({ hasTools: true });
+  const tools = await getTools({ id: idNumber });
+
   return (
     <>
       <Header categories={categories} />
@@ -19,25 +29,4 @@ export default async function Webtool({ categories, tools }: any) {
       <Footer />
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    // Handle the case where params is undefined
-    return {
-      notFound: true,
-    };
-  }
-
-  const { id } = context.params;
-  const idNumber = parseInt(id as string);
-  const categories = await getCategories({ hasTools: true });
-  const tools = await getTools({ id: idNumber });
-
-  return {
-    props: {
-      categories,
-      tools,
-    },
-  };
 }
