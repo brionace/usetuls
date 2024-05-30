@@ -6,13 +6,13 @@ import { usePathname } from "next/navigation";
 
 type Banner = {
   content?: any;
-  direction?: "text-center" | "text-right";
+  style?: string;
 };
 
-export default function Banner({ content, direction }: Banner) {
+export default function Banner({ content, style }: Banner) {
   const pathname = usePathname();
   return (
-    <div className={`max-w-[700px] ${direction} py-6 px-4 text-balance`}>
+    <div className={`${style} text-balance`}>
       <h1
         className={`font-bold text-large ${
           pathname === "/"

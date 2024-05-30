@@ -1,6 +1,11 @@
 "use client";
 
-import { isValidImage, isValidUrl, modalSettings } from "@/utils";
+import {
+  isValidImage,
+  isValidUrl,
+  isWebpageAvailable,
+  modalSettings,
+} from "@/utils";
 import {
   Modal,
   ModalContent,
@@ -169,6 +174,9 @@ export default function AddUrl() {
       setError({ ...error, favicon: isRequiredMessage });
       hasError = true;
     } else if (!isValidImage(favicon)) {
+      setError({ ...error, favicon: isInvalidMessage });
+      hasError = true;
+    } else if (!isWebpageAvailable(favicon)) {
       setError({ ...error, favicon: isInvalidMessage });
       hasError = true;
     } else {

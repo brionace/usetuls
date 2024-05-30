@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@nextui-org/react";
 import React, { useContext } from "react";
 import { MdBookmark, MdMoreVert } from "react-icons/md";

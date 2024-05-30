@@ -3,15 +3,26 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
-  const results = await getTools({ id: id ? parseInt(id) : undefined });
+  const slug = searchParams.get("slug");
+
+  if (!slug) {
+    return NextResponse.json({ error: "Missing slug" });
+  }
+
+  const results = await getTools({ slug: slug });
 
   return NextResponse.json({ data: results });
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { id } = await req.json();
-  const results = await getTools({ id: id });
+  try {
+    const { tag, tags, pinned } = await req.json();
 
-  return NextResponse.json({ data: results });
+    const results = await getTools({ tag, tags, pinned });
+
+    return NextResponse.json({ data: results });
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({ error: "Invalid JSON in request body" });
+  }
 }

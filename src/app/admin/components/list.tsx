@@ -3,8 +3,8 @@ import getCategories from "@/utils/getCategories";
 import getTags from "@/utils/getTags";
 import EditTools from "./edit-tools";
 
-export default async function List() {
-  const data = await getTools({ isPublished: false });
+export default async function List({ isPublished }: { isPublished?: boolean }) {
+  const data = await getTools({ isPublished });
   const tags = await getTags({});
 
   return (

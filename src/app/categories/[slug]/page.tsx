@@ -2,11 +2,10 @@ import React from "react";
 import List from "@/components/list";
 import Header from "@/components/header";
 import Banner from "@/components/banner";
-import getCategories from "@/utils/getCategories";
 import Footer from "@/components/footer";
 import { Metadata, ResolvingMetadata } from "next/types";
 import { usetulsTitleSuffix, usetulsTitleDivider } from "@/utils";
-import Tool from "@/components/tool";
+import Tool from "@/components/tool/tool";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -30,9 +29,8 @@ export async function generateMetadata(
   };
 }
 
-export default async function Categories({ params }: Props) {
+export default async function Page({ params }: Props) {
   const { slug } = params;
-  const categories = await getCategories({ hasTools: true });
 
   const category: any = categories?.filter(
     (category: any) => category.slug === slug
@@ -44,12 +42,12 @@ export default async function Categories({ params }: Props) {
 
   return (
     <>
-      <Header categories={categories} />
+      <Header />
       <main className="max-w-7xl mx-auto min-h-screen">
         <Banner content={category} />
         <List categoryId={category?.id} />
       </main>
-      <Tool />
+      {/* <Tool /> */}
       <Footer />
     </>
   );

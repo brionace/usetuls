@@ -1,26 +1,43 @@
 import { createClient } from "@/utils/supabase/server";
 
 export default async function getTools({
-  categoryId,
   isPublished,
   searchTerm,
-  id,
   slug,
+  tag,
+  tags,
+  pinned,
+  limit,
 }: {
-  categoryId?: number;
   isPublished?: boolean;
   searchTerm?: string;
-  id?: number | [number];
   slug?: string;
+  tag?: number;
+  tags?: number[];
+  pinned?: string[];
+  limit?: number;
 }) {
   const supabase = await createClient();
   let query = supabase
     .from("tools")
     .select(`id, title, favicon, description, url, slug, tags`)
-    .eq("is_published", isPublished !== undefined ? isPublished : true);
+    .eq("is_published", isPublished ?? true)
+    .limit(limit || 20);
 
-  if (categoryId) {
-    query = query.eq("category_id", categoryId);
+  if (tag) {
+    query = query.contains("tags", [tag]);
+
+    if (tags?.length) {
+      query = query.overlaps("tags", tags);
+    }
+  }
+
+  if (tags?.length) {
+    // if contains all tags
+    // query = query.containedBy("tags", tags);
+    // if contains any of the tags
+    query = query.overlaps("tags", tags);
+    // query = query.filter("tags", "cs", `{${tags.join(",")}}`);
   }
 
   if (searchTerm) {
@@ -39,18 +56,8 @@ export default async function getTools({
     }
 
     const tagId = `{"${tagData[0].id}"}`;
-    console.log(tagId);
 
     query = query.or(`title.ilike.%${searchTerm}%, tags.cs.${tagId}`);
-  }
-
-  if (id) {
-    if (typeof id === "number") {
-      query = query.eq("id", id);
-    }
-    if (Array.isArray(id)) {
-      query = query.in("id", id);
-    }
   }
 
   if (slug) {
@@ -58,11 +65,36 @@ export default async function getTools({
     query = query.eq("slug", slug);
   }
 
-  const { data, error } = await query;
-
-  if (error) {
-    throw error;
+  if (pinned?.length) {
+    query = query.in("id", pinned);
   }
 
-  return data;
+  const { data: tools, error: toolsError } = await query;
+
+  if (toolsError) {
+    console.error(toolsError);
+    return;
+  }
+
+  let tagIds: any = tools
+    .flatMap((tool) => tool.tags)
+    .filter((tag) => tag !== null);
+
+  tagIds = new Set(tagIds);
+
+  const { data: tagz, error: tagzError } = await supabase
+    .from("tags")
+    .select("id, name, slug")
+    .eq("is_published", true)
+    .in("id", tagIds);
+
+  if (tagzError) {
+    console.error(tagzError);
+    return;
+  }
+
+  return {
+    tools,
+    tags: tagz,
+  };
 }

@@ -26,6 +26,11 @@
     rgb(var(--background-start-rgb));
 } */
 
+.fuel-gauge input[type="range"],
+.fuel-gauge datalist {
+  writing-mode: vertical-lr;
+}
+
 @layer utilities {
   /* For Webkit-based browsers (Chrome, Safari and Opera) */
   .scrollbar-hide::-webkit-scrollbar {

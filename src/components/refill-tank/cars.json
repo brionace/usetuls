@@ -1,0 +1,91 @@
+[
+  {
+    "make": "Ford",
+    "models": [
+      {
+        "model_name": "Fiesta",
+        "variants": [
+          {
+            "variant_name": "Zetec",
+            "fuel_tank_size": 42
+          },
+          {
+            "variant_name": "ST",
+            "fuel_tank_size": 48
+          }
+        ]
+      },
+      {
+        "model_name": "Focus",
+        "variants": [
+          {
+            "variant_name": "Titanium",
+            "fuel_tank_size": 53
+          },
+          {
+            "variant_name": "ST-Line",
+            "fuel_tank_size": 53
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "make": "Mini",
+    "models": [
+      {
+        "model_name": "Clubman",
+        "variants": [
+          {
+            "variant_name": "Zetec",
+            "fuel_tank_size": 42
+          },
+          {
+            "variant_name": "ST",
+            "fuel_tank_size": 48
+          }
+        ]
+      },
+      {
+        "model_name": "Clubvan",
+        "variants": [
+          {
+            "variant_name": "Titanium",
+            "fuel_tank_size": 53
+          },
+          {
+            "variant_name": "ST-Line",
+            "fuel_tank_size": 53
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "make": "BRIONACE",
+    "models": [
+      {
+        "model_name": "SEXY",
+        "fuel_tank_size": 42
+      }
+    ]
+  },
+  {
+    "make": "Peugeot",
+    "models": [
+      {
+        "model_name": "208",
+        "variants": [
+          {
+            "variant_name": "2019",
+            "fuel_tank_size": 40
+          },
+          {
+            "variant_name": "2012-2018",
+            "fuel_tank_size": 50
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -5,6 +5,8 @@ import {
   ModalContent,
   ModalBody,
   useDisclosure,
+  Button,
+  Avatar,
 } from "@nextui-org/react";
 
 export default function EditTools({
@@ -84,18 +86,21 @@ export default function EditTools({
     }
   }
 
+  const faviconUrl = data.is_published
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`
+    : data.favicon;
+
   return (
     <>
-      <div
-        key={data.id}
-        onClick={() => {
-          onOpen();
-        }}
-        className="w-40"
+      <Button
+        onClick={() => onOpen()}
+        // startContent={<img src={data.favicon} alt="" />}
+        color="default"
+        className="flex gap-3"
       >
-        <img src={data.favicon} alt="" />
-        <p>{data.title}</p>
-      </div>
+        <Avatar src={faviconUrl} size="sm" className="bg-transparent" />
+        <span>{data.title}</span>
+      </Button>
       {isOpen ? (
         <Modal
           backdrop={backdrop as "blur" | "transparent" | "opaque" | undefined}
@@ -110,7 +115,11 @@ export default function EditTools({
                   <form onSubmit={handleSubmit}>
                     <img src={data.favicon} alt="" />
                     <label>
-                      Favicon
+                      <Avatar
+                        src={faviconUrl}
+                        size="sm"
+                        className="bg-transparent"
+                      />
                       <br />
                       <input
                         type="text"

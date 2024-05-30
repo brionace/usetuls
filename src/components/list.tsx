@@ -1,14 +1,79 @@
-import getTools from "@/utils/getTools";
+"use client";
 import Card from "@/components/card";
+import Filter from "@/components/filter";
+import { useEffect, useState } from "react";
 
-export default async function List({ categoryId }: { categoryId?: number }) {
-  const data = await getTools({ categoryId });
+export default function List({
+  data,
+  categoryId,
+}: {
+  data?: any;
+  categoryId?: number;
+}) {
+  const [tools, setTools] = useState(data.tools);
+  const [tags, setTags] = useState(data.tags);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const fetchResponse = await fetch("/api/tools", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ tag: categoryId }),
+  //       });
+
+  //       const res = await fetchResponse.json();
+  //       setTools(res.data.tools);
+  //       setTags(res.data.tags);
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   })();
+  // }, []);
+
+  useEffect(() => {
+    if (selectedTags.length) {
+      (async () => {
+        try {
+          const fetchResponse = await fetch("/api/tools", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tag: categoryId, tags: selectedTags }),
+          });
+
+          const res = await fetchResponse.json();
+          setFilteredData(res.data.tools);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      })();
+    } else {
+      setFilteredData([]);
+    }
+  }, [selectedTags]);
+
+  const list = filteredData?.length ? filteredData : tools;
 
   return (
-    <div className="gap-5 grid min-[320px]:grid-cols-1 min-[375px]:grid-cols-2 min-[500px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 px-4">
-      {data?.map((d) => (
-        <Card key={d.id} data={d} />
-      ))}
+    <div className="max-w-[768px]">
+      <div className="flex">
+        <span>Filter:</span>
+        <Filter
+          tags={tags}
+          onSelectedTagsChange={(tags) => setSelectedTags(tags)}
+        />
+      </div>
+      <div className="flex flex-col gap-4">
+        {list?.map((d: any) => (
+          <Card key={d.id} data={d} />
+        ))}
+      </div>
     </div>
   );
 }

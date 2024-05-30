@@ -20,7 +20,7 @@ type State = {
   showAddUrl: boolean;
   showSpinner: boolean;
   showBookmarks: boolean;
-  showTool: number | null;
+  showTool: number | string | null;
   showBrowser: boolean;
 };
 

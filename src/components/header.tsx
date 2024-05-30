@@ -27,7 +27,7 @@ import AddUrl from "@/components/add-url";
 import Bookmarks from "@/components/bookmarks";
 import Browser from "@/components/browser";
 
-export default function Header({ categories }: { categories: any }) {
+export default function Header() {
   const { dispatch } = useContext(DataContext);
 
   return (
@@ -35,12 +35,9 @@ export default function Header({ categories }: { categories: any }) {
       <Search />
       <AddUrl />
       <Bookmarks />
-      <Browser categories={categories} />
+      {/* <Browser categories={categories} /> */}
       {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
-      <Navbar
-        maxWidth="full"
-        className="sticky top-0 z-50 shadow-small bg-gray-100"
-      >
+      <Navbar maxWidth="full">
         <NavbarBrand className="flex gap-1 text-sm w-auto">
           <Link href="/" className="w-6 h-6">
             <img
@@ -98,7 +95,7 @@ export default function Header({ categories }: { categories: any }) {
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem>
+          {/* <NavbarItem>
             <Button
               // variant="light"
               size="sm"
@@ -108,7 +105,7 @@ export default function Header({ categories }: { categories: any }) {
               <span className="hidden sm:inline">Add</span>
               <MdAdd />
             </Button>
-          </NavbarItem>
+          </NavbarItem> */}
           <NavbarItem>
             <Button
               // variant="light"
@@ -116,7 +113,7 @@ export default function Header({ categories }: { categories: any }) {
               className="rounded-full min-w-fit"
               onPress={() => dispatch({ type: "SHOW_BOOKMARKS" })}
             >
-              <span className="hidden sm:inline">Pin</span>
+              <span className="hidden sm:inline">My tools</span>
               <MdBookmarks />
             </Button>
           </NavbarItem>

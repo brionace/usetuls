@@ -33,11 +33,9 @@ export default function Bookmarks() {
   }, [isOpen]);
 
   const handleFetchSearchResults = async () => {
-    let pinned;
-    const pinnedFromLocalStorage = localStorage.getItem("pinned");
-    if (pinnedFromLocalStorage) {
-      pinned = JSON.parse(pinnedFromLocalStorage);
-    }
+    const pinned = JSON.parse(
+      (localStorage.getItem("pinned") as string) || "[]"
+    );
 
     if (!pinned) {
       return;
@@ -49,10 +47,9 @@ export default function Bookmarks() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: pinned }),
+        body: JSON.stringify({ pinned }),
       });
       const { data } = await response.json();
-      console.log({ data });
       setTools(data);
     } catch (error) {
       console.error(error);

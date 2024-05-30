@@ -32,31 +32,38 @@ import {
   MdMore,
   MdMoreVert,
 } from "react-icons/md";
-import { isImageLink, isSVGFormatImage, isValidUrl } from "@/utils";
+import {
+  isImageLink,
+  isSVGFormatImage,
+  isValidUrl,
+  modalSettings,
+} from "@/utils";
 import { DataContext } from "@/app/data-provider";
 import { FastAverageColor } from "fast-average-color";
 import { Expand, Pin } from "@/components/user-action";
+import Tool from "@/components/tool/tool";
 
-export default function Card({ data }: any) {
+export default function Card({ data, location }: any) {
   const [showFooter, setShowFooter] = useState(false);
   const { dispatch } = useContext(DataContext);
   const container = useRef<HTMLDivElement>(null);
   const fac = new FastAverageColor();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   // useEffect(() => {
-  if (container.current) {
-    fac
-      .getColorAsync(container.current?.querySelector("img"))
-      .then((color) => {
-        if (container.current) {
-          container.current.style.backgroundColor = color.rgba;
-          container.current.style.color = color.isDark ? "#fff" : "#000";
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
+  //   if (container.current) {
+  //     fac
+  //       .getColorAsync(container.current?.querySelector("img"))
+  //       .then((color) => {
+  //         if (container.current) {
+  //           container.current.style.backgroundColor = color.rgba;
+  //           container.current.style.color = color.isDark ? "#fff" : "#000";
+  //         }
+  //       })
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //   }
   // }, []);
 
   function truncateString({
@@ -92,81 +99,94 @@ export default function Card({ data }: any) {
     return faviconUrl;
   };
 
+  const renderedIcon = () => {
+    return isImageLink(faviconUrl) ? (
+      <Image
+        src={faviconUrl}
+        crossOrigin="anonymous"
+        className="w-full h-full"
+      />
+    ) : (
+      <Avatar
+        radius="lg"
+        showFallback
+        name={data.title.slice(0, 1)}
+        className="w-full h-full"
+      />
+    );
+  };
+
   return (
     <>
-      <NextCard
+      <div
         ref={container}
-        className="w-full pb-1 text-xs text-gray-600 tracking-wide font-light"
-        shadow="md"
+        className="group flex gap-3 justify-between cursor-pointer "
+        // onClick={() => dispatch({ type: "SHOW_TOOL", payload: data.slug })}
+        onClick={() => onOpen()}
       >
-        <CardHeader className="w-full flex items-center justify-between gap-3">
-          {/* justify-between flex-row-reverse */}
-          <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-8 h-8">
-              {isImageLink(faviconUrl) ? (
-                // <Avatar
-                //   src={faviconUrl}
-                //   radius="lg"
-                //   size="sm"
-                //   className="bg-transparent"
-                //   crossOrigin="anonymous"
-                // />
-                <Image
-                  src={faviconUrl}
-                  crossOrigin="anonymous"
-                  className="w-8 h-8 rounded-full"
-                />
-              ) : (
-                <Avatar
-                  radius="lg"
-                  showFallback
-                  name={data.title.slice(0, 1)}
-                  className="p-2 bg-blend-normal bg-gradient-to-bl from-[#f6f6f6] to-[#fdfafa]"
-                />
-              )}
-            </div>
-            <h4 className="font-medium truncate">{data.title}</h4>
+        <div className="flex gap-3">
+          <div className="max-w-[48px] max-h-[48px] w-full h-full">
+            {renderedIcon()}
           </div>
-          {/* <Button
-            color="default"
-            variant="light"
-            size="sm"
-            onPress={() => setShowFooter(!showFooter)}
-            className="!bg-transparent p-0 m-0"
-          >
-            <MdMoreVert />
-          </Button> */}
-          <Expand id={data.id} />
-        </CardHeader>
-        <CardBody className="hidden">
-          <p>
-            {truncateString({
+          <div className="flex flex-col gap-1">
+            <p className="text-gray-400 text-xs">
+              <span className="text-black font-bold">{data.title}</span>&mdash;
+              {data.description}
+              {/* {truncateString({
               str: data.description,
               url: data.url,
-            })}
-          </p>
-        </CardBody>
-        {showFooter && (
-          <CardFooter className="flex gap-2 justify-evenly">
-            {/* [&>*]:bg-default backdrop-blur-xl bg-white/10 rounded-t-xl */}
-            <Button
-              as={Link}
-              href={data.url}
-              color="default"
-              variant="light"
-              size="sm"
-              isExternal
-              isIconOnly
-              className="flex flex-column justify-center w-[30px] h-[30px] rounded-full !bg-transparent hover:!bg-default"
+            })} */}
+            </p>
+            <div className="flex items-center transform translate-y-0 transition-transform duration-500 ease-in-out">
+              <Button
+                as={Link}
+                href={data.url}
+                color="default"
+                variant="light"
+                size="sm"
+                isExternal
+                isIconOnly
+                className="flex items-center justify-center rounded-full !bg-transparent hover:!bg-default"
+              >
+                <MdOpenInNew />
+              </Button>
+              <Pin id={data.id} />
+              <Expand id={data.id} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <Modal
+        backdrop="opaque"
+        isOpen={isOpen}
+        onClose={onClose}
+        placement="top"
+        closeButton={false}
+        size="5xl"
+        motionProps={modalSettings.motionProps}
+        classNames={{
+          // body: "m-4",
+          // backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+          base: "m-4",
+          // header: "border-b-[1px] border-[#292f46]",
+          // footer: "border-t-[1px] border-[#292f46]",
+          // closeButton: "hidden",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <Tool
+              icon={renderedIcon()}
+              id={data.id}
+              title={data.title}
+              description={data.description}
+              url={data.url}
             >
-              <MdOpenInNew />
-              {/* <span>Link</span> */}
-            </Button>
-            <Pin id={data.id} />
-            <Expand id={data.id} />
-          </CardFooter>
-        )}
-      </NextCard>
+              Tags: {data.tags}
+            </Tool>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 }

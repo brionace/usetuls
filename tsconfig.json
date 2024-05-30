@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     "src/app/auth/--.ts",
     "src/app/auth/[...nextauth]REMOVE.ts"
-  ],
+, "src/components/refill-tank"  ],
   "exclude": ["node_modules"]
 }

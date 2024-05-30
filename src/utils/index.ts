@@ -49,6 +49,16 @@ export const isValidImage = (url: string) => {
   return url.match(/\.(jpeg|jpg|gif|png|ico|svg)$/) != null;
 };
 
+export async function isWebpageAvailable(url: string) {
+  try {
+    const response = await fetch(url);
+    return response.status === 200;
+  } catch (error) {
+    console.error(`Failed to fetch ${url}:`, error);
+    return false;
+  }
+}
+
 export const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
