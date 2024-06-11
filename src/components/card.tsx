@@ -40,10 +40,10 @@ import {
 } from "@/utils";
 import { DataContext } from "@/app/data-provider";
 import { FastAverageColor } from "fast-average-color";
-import { Expand, Pin } from "@/components/user-action";
+import { Expand, Bookmark } from "@/components/user-action";
 import Tool from "@/components/tool/tool";
 
-export default function Card({ data, location }: any) {
+export default function Card({ data, location, pinned }: any) {
   const [showFooter, setShowFooter] = useState(false);
   const { dispatch } = useContext(DataContext);
   const container = useRef<HTMLDivElement>(null);
@@ -92,29 +92,8 @@ export default function Card({ data, location }: any) {
   }
 
   const faviconUrl = `${process.env.NEXT_PUBLIC_SUPABASE_IMAGE_FAVICON_URL}/${data.favicon}`;
-  const SVGImage = () => {
-    if (!isSVGFormatImage(faviconUrl)) {
-      return null;
-    }
-    return faviconUrl;
-  };
 
-  const renderedIcon = () => {
-    return isImageLink(faviconUrl) ? (
-      <Image
-        src={faviconUrl}
-        crossOrigin="anonymous"
-        className="w-full h-full"
-      />
-    ) : (
-      <Avatar
-        radius="lg"
-        showFallback
-        name={data.title.slice(0, 1)}
-        className="w-full h-full"
-      />
-    );
-  };
+  console.log(data);
 
   return (
     <>
@@ -126,11 +105,16 @@ export default function Card({ data, location }: any) {
       >
         <div className="flex gap-3">
           <div className="max-w-[48px] max-h-[48px] w-full h-full">
-            {renderedIcon()}
+            <Avatar
+              radius="none"
+              showFallback
+              src={faviconUrl}
+              className="w-full h-full bg-transparent"
+            />
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-gray-400 text-xs">
-              <span className="text-black font-bold">{data.title}</span>&mdash;
+              <span className="text-black font-bold">{data.title}</span> &mdash;{" "}
               {data.description}
               {/* {truncateString({
               str: data.description,
@@ -138,7 +122,7 @@ export default function Card({ data, location }: any) {
             })} */}
             </p>
             <div className="flex items-center transform translate-y-0 transition-transform duration-500 ease-in-out">
-              <Button
+              {/* <Button
                 as={Link}
                 href={data.url}
                 color="default"
@@ -150,8 +134,18 @@ export default function Card({ data, location }: any) {
               >
                 <MdOpenInNew />
               </Button>
-              <Pin id={data.id} />
-              <Expand id={data.id} />
+            <Expand id={data.id} /> */}
+              {/* <Pin id={data.id} pinned={pinned} /> */}
+              {data?.tagz?.map((tag: any) => {
+                return (
+                  <Link
+                    href={`/browse/${tag}`}
+                    className="bg-gray-100 text-gray-500 text-xs px-1 py-0.5 rounded-full"
+                  >
+                    {tag}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -176,14 +170,17 @@ export default function Card({ data, location }: any) {
         <ModalContent>
           {(onClose) => (
             <Tool
-              icon={renderedIcon()}
-              id={data.id}
-              title={data.title}
-              description={data.description}
-              url={data.url}
-            >
-              Tags: {data.tags}
-            </Tool>
+              icon={
+                <Avatar
+                  radius="none"
+                  showFallback
+                  src={faviconUrl}
+                  className="w-24 h-24 bg-transparent"
+                />
+              }
+              data={data}
+              pinned={pinned}
+            />
           )}
         </ModalContent>
       </Modal>

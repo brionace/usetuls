@@ -1,68 +1,73 @@
 "use client";
-
-import { isValidUrl } from "@/utils";
 import { useState, type FormEvent, useEffect } from "react";
 
-export default function AddTools() {
+export default function AddTools({ categories }: any) {
   const [content, setContent] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [doingTheDeed, setDoingTheDeed] = useState(false);
 
-  useEffect(() => {
-    if (content !== "") {
+  const fetchData = async (e: any) => {
+    e.preventDefault();
+
+    setDoingTheDeed(true);
+
+    const selectedCategory = categories.find(
+      (category: any) => category.id === Number(categoryId)
+    );
+
+    if (!content || !selectedCategory) {
+      alert("Please fill in all fields");
+      setDoingTheDeed(false);
       return;
     }
 
-    const urls = localStorage.getItem("urls");
+    try {
+      const response = await fetch("/api/admin/add-tools", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content, selectedCategory }),
+      });
 
-    if (!urls) {
-      return;
-    }
+      const jsonResult = await response.json();
+      const { success } = jsonResult;
 
-    const fetchData = async () => {
-      try {
-        const fetchResponse = await fetch("/admin/api/add-tools", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ urls }),
-        });
-
-        // const res = await fetchResponse.json();
-        console.log("Response:", fetchResponse);
-
-        localStorage.removeItem("urls");
-      } catch (error) {
-        console.error("Error:", error);
+      if (success) {
+        setContent("");
+        setDoingTheDeed(false);
       }
-    };
+    } catch (error) {
+      console.error("Error:", error);
+      setDoingTheDeed(false);
+    }
+  };
 
-    fetchData();
-  }, [content]);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const cleaneadContent = content.split(",");
-    const validUrls = cleaneadContent.filter((url) => isValidUrl(url));
-
-    localStorage.setItem("urls", JSON.stringify(validUrls));
-    setContent(""); // Clear the content
-  }
-
-  function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setContent(event.target.value);
+  if (doingTheDeed) {
+    return <div>Processing...</div>;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={fetchData}>
       <div>
         <textarea
           id="content"
           value={content}
-          onChange={handleChange}
-          placeholder="Enter a list of URLs separated by commas"
+          onChange={(event) => setContent(event.target.value)}
+          placeholder="Paste JSON content here"
           cols={30}
           rows={10}
         ></textarea>
+      </div>
+      <div>
+        <select onChange={(event) => setCategoryId(event.target.value)}>
+          <option value="">Select a category</option>
+          {categories.map((category: any) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <button type="submit">Submit</button>

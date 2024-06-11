@@ -1,14 +1,74 @@
-import { createClient } from "@/utils/supabase/server";
-import { NextResponse, NextRequest } from "next/server";
+// import { type CookieOptions, createServerClient } from "@supabase/ssr";
+// import { cookies } from "next/headers";
+// import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-  const requestUrl = new URL(req.url);
-  const code = requestUrl.searchParams.get("code");
+// export const dynamic = "force-dynamic";
+
+// export async function GET(request) {
+//   const requestUrl = new URL(request.url);
+//   const code = requestUrl.searchParams.get("code");
+
+//   console.log({ code });
+
+//   if (code) {
+//     const cookieStore = cookies();
+//     const supabase = createServerClient(
+//       process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+//       {
+//         cookies: {
+//           get(name: string) {
+//             return cookieStore.get(name)?.value;
+//           },
+//           set(name: string, value: string, options: CookieOptions) {
+//             cookieStore.set({ name, value, ...options });
+//           },
+//           remove(name: string, options: CookieOptions) {
+//             cookieStore.delete({ name, ...options });
+//           },
+//         },
+//       }
+//     );
+//     await supabase.auth.exchangeCodeForSession(code);
+//   }
+
+//   return NextResponse.redirect(requestUrl.origin);
+// }
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+import { type CookieOptions, createServerClient } from "@supabase/ssr";
+
+export async function GET(request: Request) {
+  const { searchParams, origin } = new URL(request.url);
+  const code = searchParams.get("code");
+  // if "next" is in param, use it as the redirect URL
+  const next = searchParams.get("next") ?? "/";
 
   if (code) {
-    const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const cookieStore = cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            return cookieStore.get(name)?.value;
+          },
+          set(name: string, value: string, options: CookieOptions) {
+            cookieStore.set({ name, value, ...options });
+          },
+          remove(name: string, options: CookieOptions) {
+            cookieStore.delete({ name, ...options });
+          },
+        },
+      }
+    );
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      return NextResponse.redirect(`${origin}${next}`);
+    }
   }
 
-  return NextResponse.redirect(requestUrl.origin);
+  // return the user to an error page with instructions
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
 }

@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import getCategories from "./getCategories";
 
 export default async function getTools({
   searchTerm,
@@ -8,8 +7,6 @@ export default async function getTools({
   tags,
   pinned,
   page,
-  category,
-  sort,
 }: {
   searchTerm?: string;
   slug?: string;
@@ -17,8 +14,6 @@ export default async function getTools({
   tags?: number[];
   pinned?: string[];
   page?: number;
-  category?: string;
-  sort?: string;
 }) {
   const supabase = createClient();
   const itemsPerPage = 10;
@@ -26,11 +21,9 @@ export default async function getTools({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage - 1;
 
-  // const getCategory = (await getCategories({ slug: category })) || [];
-
   let query = supabase
     .from("tools")
-    .select(`id, title, favicon, description, url, slug, tags`)
+    .select(`id, title, favicon, description, url, slug, tags, tagz`)
     .eq("is_published", true)
     .limit(itemsPerPage)
     .range(startIndex, endIndex);
@@ -59,10 +52,6 @@ export default async function getTools({
     // if contains any of the tags
     query = query.overlaps("tags", tags);
     // query = query.filter("tags", "cs", `{${tags.join(",")}}`);
-  }
-
-  if (category) {
-    query = query.contains("tagz", [category]);
   }
 
   if (searchTerm) {
@@ -120,7 +109,7 @@ export default async function getTools({
 
   const toolTagz = tools?.map((tool: any) => {
     // Replace the tags property of each tool with the corresponding tags from tagz
-    tool.tags = tool?.tags?.map((tagId: any) =>
+    tool.tags = tool.tags.map((tagId: any) =>
       tagz.find((tag: any) => tag.id === tagId)
     );
     return tool;

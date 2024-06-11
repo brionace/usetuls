@@ -1,31 +1,23 @@
 import { createClient } from "@/utils/supabase/server";
 
 type Props = {
-  isPublished?: boolean;
-  id?: number;
   slug?: string;
   hasTools?: boolean;
   searchTerm?: string;
 };
 
 export default async function getCategories({
-  isPublished = true,
-  id,
   slug,
   hasTools,
   searchTerm,
 }: Props) {
-  const supabase = await createClient();
+  const supabase = createClient();
   let query = supabase
     .from("categories")
     .select(
       `id, name, description, slug${hasTools ? `, tools(category_id)` : ``}`
     )
-    .eq("is_published", isPublished !== undefined ? isPublished : true);
-
-  if (id !== undefined) {
-    query = query.eq("id", id);
-  }
+    .eq("is_published", true);
 
   if (slug) {
     query = query.eq("slug", slug);

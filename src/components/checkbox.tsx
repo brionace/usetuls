@@ -27,7 +27,7 @@ export default function Checkbox({
   children,
   onChange,
 }: {
-  value: number;
+  value: number | string;
   children: React.ReactNode;
   onChange: (value: number) => void;
 }) {

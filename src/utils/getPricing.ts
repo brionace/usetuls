@@ -1,22 +1,14 @@
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getTags({
-  id,
-}: {
-  id?: number | string[];
-}) {
+export default async function getPricing({ slug }: { slug?: string }) {
   const supabase = createClient();
   let query = supabase
-    .from("tags")
+    .from("pricing")
     .select(`id, name, slug`)
     .eq("is_published", true);
 
-  if (typeof id === "number") {
-    query = query.eq("id", id);
-  }
-
-  if (Array.isArray(id)) {
-    query = query.in("id", id);
+  if (slug) {
+    query = query.eq("slug", slug);
   }
 
   const { data, error } = await query;

@@ -9,7 +9,7 @@ export default async function List({ isPublished }: { isPublished?: boolean }) {
 
   return (
     <div className="flex flex-wrap gap-4">
-      {data?.map((d) => {
+      {data?.tools?.map((d) => {
         return <EditTools key={d.id} data={d} tags={tags} />;
       })}
     </div>

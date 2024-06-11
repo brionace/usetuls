@@ -25,7 +25,7 @@ import Search from "@/components/search";
 import { DataContext } from "@/app/data-provider";
 import AddUrl from "@/components/add-url";
 import Bookmarks from "@/components/bookmarks";
-import Browser from "@/components/browser";
+import { LoginForm } from "./auth-components";
 
 export default function Header() {
   const { dispatch } = useContext(DataContext);
@@ -34,8 +34,6 @@ export default function Header() {
     <>
       <Search />
       <AddUrl />
-      <Bookmarks />
-      {/* <Browser categories={categories} /> */}
       {/* <Search showSearch={showSearch} hideSearch={() => setShowSearch(false)} /> */}
       <Navbar maxWidth="full">
         <NavbarBrand className="flex gap-1 text-sm w-auto">
@@ -86,36 +84,17 @@ export default function Header() {
               // variant="light"
               size="sm"
               className="flex min-w-fit bg-transparent py-0"
-              onPress={() => dispatch({ type: "SHOW_BROWSER" })}
+              onPress={() => dispatch({ type: "SHOW_CATEGORIES" })}
             >
-              <span className="hidden sm:inline">Browse</span>
+              <span className="hidden sm:inline">Categories</span>
               <MdMoreVert />
               {/* {!showNav ? <MdExpandMore /> : <MdExpandLess />} */}
             </Button>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          {/* <NavbarItem>
-            <Button
-              // variant="light"
-              size="sm"
-              className="rounded-full min-w-fit"
-              onPress={() => dispatch({ type: "SHOW_ADDURL" })}
-            >
-              <span className="hidden sm:inline">Add</span>
-              <MdAdd />
-            </Button>
-          </NavbarItem> */}
           <NavbarItem>
-            <Button
-              // variant="light"
-              size="sm"
-              className="rounded-full min-w-fit"
-              onPress={() => dispatch({ type: "SHOW_BOOKMARKS" })}
-            >
-              <span className="hidden sm:inline">My tools</span>
-              <MdBookmarks />
-            </Button>
+            <LoginForm />
           </NavbarItem>
         </NavbarContent>
       </Navbar>

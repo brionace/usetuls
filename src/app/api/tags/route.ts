@@ -2,9 +2,7 @@ import getTags from "@/utils/getTags";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id") as string;
-  const results = await getTags({ id: parseInt(id) });
+  const results = await getTags({});
 
   return NextResponse.json({ data: results });
 }

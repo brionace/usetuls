@@ -1,3 +1,4 @@
+"use client";
 import { DataContext } from "@/app/data-provider";
 import { modalSettings } from "@/utils";
 import {
@@ -10,20 +11,26 @@ import {
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useState } from "react";
 import Card from "@/components/card";
+import List from "./list";
 
 export default function Bookmarks() {
   const [tools, setTools] = useState([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  // const [pinned, setPinned] = useState([]);
   const {
-    state: { showBookmarks },
+    state: { showBookmarks, bookmarks },
     dispatch,
   } = useContext(DataContext);
 
-  useEffect(() => {
-    onOpen();
-    handleFetchSearchResults();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showBookmarks === true]);
+  // useEffect(() => {
+  //   onOpen();
+  //   const pinned = JSON.parse(
+  //     (localStorage.getItem("pinned") as string) || "[]"
+  //   );
+  //   setPinned(pinned);
+  //   handleFetchSearchResults();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [showBookmarks === true]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -84,17 +91,7 @@ export default function Bookmarks() {
               <h2>Your Pinned Tools</h2>
             </ModalHeader>
             <ModalBody className="mb-8">
-              <div className="flex flex-col gap-4 place-self-center text-center">
-                <div className="flex flex-col gap-2">
-                  {tools.length > 0 ? (
-                    tools?.map((tool, i) => <Card key={i} data={tool} />)
-                  ) : (
-                    <p className="text-sm text-gray-500">
-                      You have no pinned tools yet.
-                    </p>
-                  )}
-                </div>
-              </div>
+              <List data={tools} pinned={bookmarks} />
             </ModalBody>
           </>
         )}

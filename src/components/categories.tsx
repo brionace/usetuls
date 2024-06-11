@@ -1,3 +1,4 @@
+"use client";
 import { DataContext } from "@/app/data-provider";
 import { modalSettings } from "@/utils";
 import {
@@ -15,21 +16,21 @@ import {
 import Link from "next/link";
 import React, { useContext, useEffect } from "react";
 
-export default function Browser({ categories }: { categories: any }) {
+export default function Browser() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
-    state: { showBrowser },
+    state: { showCategories, categories, tags },
     dispatch,
   } = useContext(DataContext);
 
   useEffect(() => {
     onOpen();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showBrowser === true]);
+  }, [showCategories === true]);
 
   useEffect(() => {
     if (!isOpen) {
-      dispatch({ type: "HIDE_BROWSER" });
+      dispatch({ type: "HIDE_CATEGORIES" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
@@ -48,7 +49,7 @@ export default function Browser({ categories }: { categories: any }) {
     }
   };
 
-  if (!showBrowser) {
+  if (!showCategories) {
     return null;
   }
 
@@ -66,7 +67,7 @@ export default function Browser({ categories }: { categories: any }) {
         {(onClose) => (
           <>
             <ModalHeader className="flex gap-1 pr-10">
-              <h2>Browse web tools</h2>
+              <h2>Categories</h2>
             </ModalHeader>
             <ModalBody className="mb-8">
               <div>
@@ -94,7 +95,7 @@ export default function Browser({ categories }: { categories: any }) {
                     <li key={category.name}>
                       <Button
                         as={Link}
-                        href={`/c/${category.slug}`}
+                        href={`/browse/${category.slug}`}
                         variant="flat"
                         size="sm"
                         className="text-smaller"

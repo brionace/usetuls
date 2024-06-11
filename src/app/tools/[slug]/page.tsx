@@ -5,7 +5,7 @@ import getTools from "@/utils/getTools";
 import Card from "@/components/card";
 import { isImageLink } from "@/utils";
 import { Avatar, Button, Link } from "@nextui-org/react";
-import { Pin } from "@/components/user-action";
+import { Bookmark } from "@/components/user-action";
 import { MdOpenInNew } from "react-icons/md";
 
 const content = {

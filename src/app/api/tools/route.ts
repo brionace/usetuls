@@ -16,9 +16,16 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const { tag, tags, pinned } = await req.json();
+    const { tag, tags, pinned, page, sort, category } = await req.json();
 
-    const results = await getTools({ tag, tags, pinned });
+    const results = await getTools({
+      tag,
+      tags,
+      pinned,
+      page,
+      sort,
+      category: category.name,
+    });
 
     return NextResponse.json({ data: results });
   } catch (error) {

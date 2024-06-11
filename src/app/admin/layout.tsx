@@ -15,8 +15,7 @@ export default async function Layout({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
-    return <div className="p-3">Get login in fool!</div>;
+    redirect("/auth/signin");
   }
 
   return <>{children}</>;

@@ -12,9 +12,14 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-radial":
+          "radial-gradient(ellipse at center, #8F4DFF 0.59%, #26E1BF 98.8%)",
+        // "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      transform: {
+        "flip-horizontal": "matrix(-1, 0, 0, 1, 0, 0)",
       },
     },
     // screens: {
